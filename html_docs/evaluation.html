@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluation | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Evaluation | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,62 +77,117 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>10. Model Evaluation</span>
+                    <a href="index.html">Handbook</a> &gt; <span>10. Evaluation</span>
                 </div>
 
-                <h1>10. Evaluation: Validation & Downstream Benchmarks</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>Training loss only tells you how well the model is fitting the training data, not how well it generalizes to new text or performs on reasoning tasks.
-                By evaluating the model on validation splits and reasoning benchmarks (such as HellaSwag), we can track validation loss trends and measure its common-sense understanding, preventing overfitting.</p>
+                <h1>10. Evaluation: Performance Validation</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine you are preparing a student for a final exam.
-                If you only give them the practice questions they have already studied, they will memorize the answers without understanding the underlying concepts (overfitting).</p>
-                <p>To measure their actual understanding:
+                <h2>The Token's Journey</h2>
+                <p>To confirm that our model is actually learning language patterns rather than memorizing training data, we must run validation evaluations.
+                We feed the model unseen token text (validation split) and track the loss. We also evaluate the model on the HellaSwag benchmark, where it computes the log-likelihood (log probability sum) of four potential endings to a sentence, predicting the completion with the highest score.</p>
+
+                <div class="mermaid">
+                flowchart TD
+                    Context["Context: 'A chef adds onions to a hot pan...'"] -->|Option 1| Opt1["'and stirs them with a wooden spoon.'"]
+                    Context -->|Option 2| Opt2["'and jumps out of the window.'"]
+                    Opt1 -->|Log-Likelihood| LL1["Score: -0.85 (High prob)"]
+                    Opt2 -->|Log-Likelihood| LL2["Score: -8.12 (Low prob)"]
+                    LL1 & LL2 -->|Compare Max| Pred["Model Prediction: Option 1 (Correct)"]
+                </div>
+
+                <h2>Backend Engineer Lens: Integration & Regression Testing</h2>
+                <p>In backend engineering, evaluation mirrors **regression and integration validation testing**.</p>
                 <ul>
-                    <li><strong>Validation Split:</strong> Give the student a set of test questions they have never seen before (validation split) to evaluate their generalization.</li>
-                    <li><strong>Downstream Benchmark (HellaSwag):</strong> Give them a multiple-choice common-sense exam to test their reasoning, rather than their ability to memorize text.</li>
-                </ul></p>
+                    <li><strong>Validation Loss &rarr; Integration Test:</strong> We run validation batches without updating model weights (<code>with torch.no_grad()</code>). This is identical to running a unit/integration test on a staging database to verify that API response error rates are within expected SLA bounds.</li>
+                    <li><strong>HellaSwag Completion &rarr; Comparative Routing cost:</strong> In routing systems, we calculate path costs before choosing an execution route. In HellaSwag, we calculate the negative average log probability of the generated tokens for each of the 4 completions. We route our prediction to the option that has the lowest path cost (minimum negative log probability, representing the highest likelihood).</li>
+                </ul>
 
-                <h2>Level 2 — Engineering View</h2>
-                <p>In <code>hellaswag.py:L121-L136</code>, we evaluate completion options. We concatenate the prompt context and each completion option, and run a forward pass to calculate logits.
-                We then isolate the completion token predictions, compute the log-softmax across the vocabulary dimension, and average the probabilities of the actual target completion tokens:</p>
-                <pre><code class="language-python"># Slice logits and targets to align only with the completion tokens
-logits_ending = logits[0, num_ctx - 1:]
-targets_ending = y[0, num_ctx - 1:]
+                <h2>The Code-to-Concept Map</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>PyTorch Code</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Disable Gradients</strong></td>
+                            <td><code>with torch.no_grad():</code></td>
+                            <td><a href="code_guide.html#L231">train.py: evaluation block</a></td>
+                            <td>Read-only database queries</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Model Eval Mode</strong></td>
+                            <td><code>model.eval()</code></td>
+                            <td><a href="code_guide.html#L226">train.py: evaluation block</a></td>
+                            <td>Production serving configurations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ending Logit Slicing</strong></td>
+                            <td><code>logits[0, num_ctx - 1:]</code></td>
+                            <td><a href="code_guide.html#L125">hellaswag.py: evaluate()</a></td>
+                            <td>Selective index score evaluations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gather Logprobs</strong></td>
+                            <td><code>log_probs[arange, targets]</code></td>
+                            <td><a href="code_guide.html#L132">hellaswag.py: evaluate()</a></td>
+                            <td>Cost function mappings</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-# Log probabilities (log_softmax)
-log_probs = F.log_softmax(logits_ending, dim=-1)
-
-# Gather log probs for the target tokens
-target_log_probs = log_probs[torch.arange(len(targets_ending)), targets_ending]
-
-# Average log probability for the option
-mean_log_prob = target_log_probs.mean().item()</code></pre>
-                <p>The completion option that yields the highest average log-likelihood (least negative loss) is chosen as the model's prediction.</p>
-
-                <h2>3. Mathematical View</h2>
-                <p>Given the sequence of $K$ completion target tokens $c = (c_1, \dots, c_K)$, the average log-likelihood is:
-                $$\text{LL} = \frac{1}{K} \sum_{i=1}^K \ln P(c_i \mid \text{context}, c_1, \dots, c_{i-1})$$
-                By using the average log probability (dividing by the completion length $K$), we normalize the scores, preventing the model from bias towards shorter completions due to cumulative probabilities.</p>
-
-                <h2>4. What happens if we do not mask the context tokens?</h2>
-                <p>If you do not mask out the context tokens (i.e. computing the average log-likelihood over the entire sequence including the prompt):
+                <h2>Production Relevance</h2>
                 <ul>
-                    <li>The score will be dominated by the model's predictions on the prompt tokens (which are already provided as inputs).</li>
-                    <li>Because the prompt context is identical across all four completion options, including it will dilute the scoring differences between the options.</li>
-                    <li>This makes the evaluation less sensitive to the quality of the completions, degrading the accuracy of the benchmark.</li>
-                </ul></p>
+                    <li><strong>LLM Benchmark Suites:</strong> Enterprise model validation goes beyond HellaSwag. Models are evaluated using automated test suites on benchmarks like MMLU (academic subject knowledge), GSM8k (multi-step math reasoning), and HumanEval (coding ability).</li>
+                    <li><strong>Regression Testing in Serving:</strong> When optimizing a model for production (e.g., quantizing weights from float16 to int8, compiling with TensorRT), we run evaluation benchmarks on validation sets to ensure optimization did not cause regressions in response accuracy.</li>
+                </ul>
+
+                <h2>Verification</h2>
+                <p>We verify our model checkpoint on the HellaSwag validation subset. Run this command to load a local checkpoint and compute accuracy:</p>
+                <pre><code class="language-bash">python3 hellaswag.py --checkpoint checkpoint_step_20.pt</code></pre>
+
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>How does the HellaSwag benchmark evaluate an LLM? Describe the prediction math.</summary>
+                    <p>HellaSwag evaluates commonsense reasoning by presenting a context sentence and four possible ending options.
+                    For each ending option:
+                    <ol>
+                        <li>We concatenate the context tokens and the ending tokens.</li>
+                        <li>We feed this combined sequence into the model.</li>
+                        <li>We extract the logits corresponding to the completion tokens.</li>
+                        <li>We apply a <code>log_softmax</code> to the logits to retrieve the log probability of each predicted token.</li>
+                        <li>We gather the log probabilities of the actual target completion tokens and compute their average.</li>
+                    </ol>
+                    The model predicts the option that yields the **highest average log-likelihood** (the smallest negative value).
+                    </p>
+                </details>
+
+                <details>
+                    <summary>Why do we slice logits starting at index `num_ctx - 1` in hellaswag.py?</summary>
+                    <p>In PyTorch, the outputs are shifted by 1 index because the model predicts the next token.
+                    If the context length (number of context tokens) is <code>num_ctx</code>:
+                    <ul>
+                        <li>The context tokens occupy indices <code>0</code> to <code>num_ctx - 1</code>.</li>
+                        <li>The first completion token target is at index <code>num_ctx</code>.</li>
+                        <li>The prediction (logit) for the first completion token is output by the model at the final context token position, which is index <code>num_ctx - 1</code>.</li>
+                    </ul>
+                    Therefore, to align logits with the completion targets, we slice our output logits starting at <code>num_ctx - 1</code>:
+                    <pre><code class="language-python">logits_ending = logits[0, num_ctx - 1:]</code></pre>
+                    </p>
+                </details>
 
                 <div class="prev-next-nav">
                     <a href="checkpointing.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">09. Checkpoint Restoration</span>
+                        <span class="nav-title">09. Checkpointing</span>
                     </a>
-                    <a href="experiments.html" class="prev-next-btn next">
+                    <a href="tensor_journey.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">11. Architecture Experiments</span>
+                        <span class="nav-title">11. Tensor Shape Journey</span>
                     </a>
                 </div>
             </main>

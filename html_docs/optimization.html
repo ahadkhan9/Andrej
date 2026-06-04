@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Optimization | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Hardware Speedups | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,48 +77,134 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>07. Hardware Optimization</span>
+                    <a href="index.html">Handbook</a> &gt; <span>08. Hardware Speedups</span>
                 </div>
 
-                <h1>07. Optimization: Apple Silicon & Compilers</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>Training transformers is highly compute-intensive. Without hardware and compiler optimizations, training even a small model can take hours or days.
-                Understanding memory bandwidth, mixed-precision arithmetic, and GPU execution queues allows you to maximize throughput and make full use of local hardware resources (like Apple Silicon GPU cores).</p>
+                <h1>08. Hardware Optimization: Mixed Precision & Speedups</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine a kitchen where a chef is preparing complex dishes.
-                In standard eager mode, the chef walks to the refrigerator, grabs one ingredient, walks back to the counter, chops it, walks back to the refrigerator for the next ingredient, and so on. This constant back-and-forth is slow.</p>
-                <p>To optimize this process:
-                <ul>
-                    <li><strong>Kernel Fusion (torch.compile):</strong> Plan ahead and bring all necessary ingredients to the counter at once, completing multiple steps in place before returning anything to the refrigerator.</li>
-                    <li><strong>Mixed Precision (AMP):</strong> Package ingredients in smaller containers (float16 instead of float32) so the chef can carry twice as much in each trip.</li>
-                    <li><strong>FlashAttention:</strong> Keep the most frequently used ingredients in a small basket right next to the cutting board (fast SRAM cache) instead of walking to the pantry (High Bandwidth Memory) every time.</li>
-                </ul></p>
+                <h2>The Token's Journey</h2>
+                <p>To train models in reasonable timeframes, we must optimize how token tensors are mapped and executed on GPU silicon.
+                We dispatch token tensors directly to the GPU's memory buffer, scale data down from 32-bit floats to fast 16-bit registers during mathematical operations, and compile our model's Python execution graph into fast local C++ kernels.</p>
 
-                <h2>Level 2 — Engineering View: "Why is this faster?"</h2>
-                <p>We trace performance improvements by analyzing how specific bottlenecks are resolved:</p>
+                <div class="mermaid">
+                flowchart LR
+                    FP32["FP32 Tensor: [B, T, C] (4 bytes/value)"] -->|AMP Autocast compression| FP16["FP16 Tensor: [B, T, C] (2 bytes/value)"]
+                    FP16 -->|Multiplication| GPUMatmul["GPU Matrix Core (15.2x faster)"]
+                </div>
+
+                <h2>Backend Engineer Lens: Compression & Compilation</h2>
+                <p>In backend engineering, GPU optimization mirrors **data compression and kernel compilation**.</p>
                 <ul>
-                    <li><strong>CPU vs. GPU:</strong> The CPU executes instructions sequentially on a few powerful cores. The GPU (or MPS backend) contains thousands of smaller cores designed to perform simple arithmetic operations (like matrix multiplications) in parallel, providing an immediate speedup.</li>
-                    <li><strong>FP32 vs. FP16 (AMP):</strong> FP32 uses 4 bytes per number, while FP16 uses 2 bytes. Moving to FP16 halves the amount of data transferred between memory and the GPU cores, resolving memory bandwidth bottlenecks and nearly doubling throughput.</li>
-                    <li><strong>FlashAttention:</strong> Standard attention writes the intermediate $(T, T)$ score matrix to High Bandwidth Memory (HBM) and reads it back multiple times. FlashAttention tiles the inputs to run attention calculations entirely in the GPU's fast, on-chip SRAM cache, reducing slow memory access from $O(T^2)$ to $O(T)$.</li>
-                    <li><strong>Graph Compilation (torch.compile):</strong> Standard eager mode executes PyTorch operations one-by-one, introducing overhead. <code>torch.compile</code> fuses adjacent operations (e.g. LayerNorm + Bias Add + Activation) into a single compiled kernel, keeping activations on-chip instead of round-tripping them to HBM.</li>
+                    <li><strong>Mixed Precision (AMP) &rarr; Data Type Compression:</strong> Storing database entries as <code>DOUBLE</code> (8 bytes) when <code>FLOAT</code> (4 bytes) is sufficient wastes memory bandwidth and storage. Mixed precision (AMP) compresses feature weights from float32 (4 bytes) down to float16 (2 bytes) before matrix multiplication, doubling memory throughput and slashing network data transfer times.</li>
+                    <li><strong>torch.compile &rarr; Kernel Fusion (Stored Procedures):</strong> In typical PyTorch execution, each layer operation (e.g., adding vectors, applying GELU, LayerNorm) makes an independent call from the Python interpreter to the GPU. This is like executing 10 separate SQL queries in a loop, causing massive interpreter overhead. <code>torch.compile</code> fuses these steps into a single C++ execution kernel (like compiling queries into a database stored procedure), running the entire sequence on the GPU in one round-trip.</li>
+                    <li><strong>Device Synchronization &rarr; Thread Join Operations:</strong> PyTorch commands are asynchronous non-blocking calls. When you time a step on the CPU, the GPU might still be computing in the background. To measure step execution times accurately, we call synchronization middleware (<code>torch.mps.synchronize()</code> or <code>torch.cuda.synchronize()</code>) to halt the CPU thread until the GPU has flushed its execution buffer.</li>
                 </ul>
 
-                <h2>3. Mathematical View</h2>
-                <p>Compiler graph tracing models the execution path as a Directed Acyclic Graph (DAG) of operations:
-                $$\mathcal{G} = (\mathcal{V}, \mathcal{E})$$
-                Where $\mathcal{V}$ represents operation kernels (e.g., Matrix Multiply, Add, Softmax) and $\mathcal{E}$ represents tensor data dependencies.
-                The compiler optimizes this graph by merging adjacent nodes to minimize data transfers, ensuring the GPU spends its time performing computations rather than waiting for memory transfers.</p>
+                <h2>The Code-to-Concept Map</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>PyTorch API</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Device Transfer</strong></td>
+                            <td><code>model.to(device)</code></td>
+                            <td><a href="code_guide.html#L181">train.py: main()</a></td>
+                            <td>GPU cluster node mapping</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Graph Compilation</strong></td>
+                            <td><code>torch.compile(model)</code></td>
+                            <td><a href="code_guide.html#L186">train.py: main()</a></td>
+                            <td>TensorRT / XLA Compiler</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mixed Precision (AMP)</strong></td>
+                            <td><code>torch.amp.autocast(...)</code></td>
+                            <td><a href="code_guide.html#L284">train.py: micro-step loop</a></td>
+                            <td>BF16 training on H100s</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Device Sync</strong></td>
+                            <td><code>torch.mps.synchronize()</code></td>
+                            <td><a href="code_guide.html#L300">train.py: timing block</a></td>
+                            <td>Thread joining / event syncing</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Production Relevance</h2>
+                <ul>
+                    <li><strong>BF16 (Brain Float 16) vs FP16:</strong> Modern enterprise training clusters (A100/H100) use BF16 instead of FP16. BF16 matches the dynamic range exponent size of FP32, preventing underflow issues during training and eliminating the need for dynamic loss scaling.</li>
+                    <li><strong>Triton Kernels:</strong> Serving engines like vLLM write custom GPU kernels using OpenAI's Triton language, allowing developers to write high-performance C-like GPU code in Python, bypassing standard PyTorch dispatcher limitations.</li>
+                </ul>
+
+                <h2>Verification</h2>
+                <p>We verify optimization gains using our local profiling script in <a href="code_guide.html">benchmark.py</a>. Running it on Apple Silicon demonstrates the speedups achieved by transitioning from CPU execution to optimized GPU MPS execution:</p>
+                <pre><code class="language-bash">python3 benchmark.py</code></pre>
+                
+                <h3>Apple Silicon (M4) Speed Benchmark:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Configuration</th>
+                            <th>Avg Step Time</th>
+                            <th>Throughput</th>
+                            <th>Speedup vs CPU</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CPU | FP32 | Eager</td>
+                            <td>219.06 ms</td>
+                            <td>4,674.5 tok/s</td>
+                            <td>1.00x (Baseline)</td>
+                        </tr>
+                        <tr>
+                            <td>MPS | FP32 | Eager</td>
+                            <td>26.68 ms</td>
+                            <td>38,380.4 tok/s</td>
+                            <td>8.21x</td>
+                        </tr>
+                        <tr>
+                            <td>MPS | FP16 (AMP) | Eager</td>
+                            <td>14.50 ms</td>
+                            <td>70,624.9 tok/s</td>
+                            <td>15.11x</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>What is the difference between FP16 and BF16? Why is BF16 preferred in modern LLM training?</summary>
+                    <p>Both FP16 and BF16 are 16-bit floating-point numbers, but they allocate their 16 bits differently:
+                    <ul>
+                        <li><strong>FP16:</strong> Uses 1 sign bit, 5 exponent bits, and 10 fraction bits. The small exponent range limits its maximum value to 65,504. If gradients exceed this, they overflow to <code>NaN</code>. If they drop below $6 \times 10^{-5}$, they underflow to 0. This requires dynamic loss scaling to scale values up and down during training.</li>
+                        <li><strong>BF16 (Brain Float 16):</strong> Uses 1 sign bit, 8 exponent bits (identical to FP32), and 7 fraction bits. Because its exponent range is identical to FP32, it can represent the same range of values, preventing gradient overflow and underflow and eliminating the need for loss scaling, which stabilizes training of large models.</li>
+                    </ul>
+                    </p>
+                </details>
+
+                <details>
+                    <summary>What is kernel fusion, and how does torch.compile implement it?</summary>
+                    <p>In standard PyTorch, every operation (e.g. adding residual streams and applying LayerNorm) requires reading a tensor from GPU memory, executing the mathematical operation on GPU cores, and writing the output tensor back to GPU memory.
+                    **Kernel Fusion** compiles these sequential operations into a single merged CUDA or Metal kernel. The GPU loads the tensor once, executes the entire chain of addition and normalization on-chip, and writes only the final result back to memory, saving significant memory-bandwidth time.</p>
+                </details>
 
                 <div class="prev-next-nav">
                     <a href="training_loop.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">06. Training Loop Mechanics</span>
+                        <span class="nav-title">07. Backpropagation</span>
                     </a>
-                    <a href="generation.html" class="prev-next-btn next">
+                    <a href="checkpointing.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">08. Autoregressive Generation</span>
+                        <span class="nav-title">09. Checkpointing</span>
                     </a>
                 </div>
             </main>

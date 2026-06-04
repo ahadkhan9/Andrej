@@ -3,36 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GenAI Engineer Roadmap | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Learning Roadmap | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
+        <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -44,130 +30,157 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
 
+            <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>18. GenAI Engineer Roadmap</span>
+                    <a href="index.html">Handbook</a> &gt; <span>18. Learning Roadmap</span>
                 </div>
 
-                <h1>18. GenAI Engineer Roadmap Using This Repository</h1>
-                
+                <h1>18. GenAI Developer Study Roadmap</h1>
+
                 <h2>Why should I care?</h2>
-                <p>Building a base transformer is the first step in your LLM engineering journey.
-                This roadmap connects the low-level mechanics you learned in this project (like attention, embeddings, and tokenization) to advanced concepts (such as fine-tuning, RAG, and serving), giving you a structured path to build production-ready LLM systems.</p>
+                <p>Building a local GPT model is the first step on the journey of an LLM Systems Engineer.
+                To transition from toy implementations to production architectures, you need a structured study roadmap.
+                This curriculum maps out your next steps, connecting base model theory to fine-tuning, high-throughput serving, context indexing, and agent orchestration.</p>
 
-                <h2>Backend Engineer Lens</h2>
-                <p>Think of this roadmap as an engineering progression plan.
-                You don't go from writing simple SQL queries to designing high-availability database replication systems overnight.
-                Similarly, you start by understanding the core engine internals (Stage 1), move to data serialization (Stage 2-3), learn network routing and caching (Stage 4-5), and finally build scalable, multi-node backend systems (Stage 6-7).</p>
+                <h2>The Study Roadmap</h2>
+                <div class="mermaid">
+                flowchart TD
+                    Step1["1. Base Model Reproduction (This Repo)"] --> Step2["2. Fine-Tuning & Custom Data (LoRA / SFT)"]
+                    Step2 --> Step3["3. Serving & Infrastructure (vLLM / PagedAttention)"]
+                    Step3 --> Step4["4. Context Indexing (RAG / Vector DBs)"]
+                    Step4 --> Step5["5. Agent Orchestration (Tool Calling / Loops)"]
+                </div>
 
-                <h2>The 7-Stage Curriculum</h2>
+                <h2>Backend Analogy Roadmap Mapping</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>GenAI Step</th>
+                            <th>Backend Engineer Lens</th>
+                            <th>Key Technologies</th>
+                            <th>Focal Concepts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Base Model Reproduction</strong></td>
+                            <td>Writing a custom SQL storage engine from scratch.</td>
+                            <td>PyTorch, Tiktoken</td>
+                            <td>Layer dimensions, tensor shapes, gradient flow.</td>
+                            <td>This repository</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Fine-Tuning & Alignment</strong></td>
+                            <td>Running schema migrations and altering data indexes.</td>
+                            <td>PEFT, LoRA, QLoRA, Hugging Face</td>
+                            <td>Supervised Fine-Tuning (SFT), RLHF/DPO, Adapter weight merging.</td>
+                            <td>Aligning base models to act as chat assistants</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. High-Throughput Serving</strong></td>
+                            <td>Writing an API gateway proxy with connection pooling and caching.</td>
+                            <td>vLLM, TensorRT-LLM, Triton</td>
+                            <td>KV Cache optimizations, speculative decoding, PagedAttention.</td>
+                            <td>Maximizing serving concurrency and throughput</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Context Retrieval (RAG)</strong></td>
+                            <td>Configuring Redis cache layers and search index directories.</td>
+                            <td>pgvector, Pinecone, LlamaIndex</td>
+                            <td>Semantic vector searches, chunk boundaries, retrieval pooling.</td>
+                            <td>Injecting private database records into LLM contexts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. Agent Orchestration</strong></td>
+                            <td>Writing a controller router that loops through microservice calls.</td>
+                            <td>LangGraph, CrewAI</td>
+                            <td>Tool definition contracts, state loops, fallback execution.</td>
+                            <td>Building autonomous apps that can query tools</td>
+                        </tr>
+                    </tbody>
+                </table>
 
+                <h2>Common Interview Followups</h2>
                 <details>
-                    <summary>Stage 1: Understand GPT Internals (Base Layer)</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Relevant codebase parts:</strong> <code>model.py</code>, <code>data.py</code>.</p>
-                        <p><strong>Transferable concepts:</strong> How text is tokenized, projected to embedding vectors, mixed via self-attention, and evaluated against targets.</p>
-                        <p><strong>What to learn next:</strong> Understanding modern transformer refinements like RMSNorm and Rotary Embeddings (RoPE).</p>
-                    </div>
+                    <summary>What is the difference between Supervised Fine-Tuning (SFT) and Reinforcement Learning from Human Feedback (RLHF)?</summary>
+                    <p>
+                    <ul>
+                        <li><strong>Supervised Fine-Tuning (SFT):</strong> Trains the model on direct instruction-response pairs (e.g. <code>User: "Hello", Assistant: "Hi"</code>). The model is trained using cross-entropy loss to match target text patterns. This teaches the model the **structure and style** of assistant behavior.</li>
+                        <li><strong>Reinforcement Learning from Human Feedback (RLHF):</strong> Aligns the model's behavior with human preferences (safety, helpfulness). We train a secondary "Reward Model" to score LLM responses. We then optimize the target LLM using policy gradient algorithms (like PPO or DPO) to maximize reward scores. This aligns **tone, safety, and policy compliance** beyond simple pattern matching.</li>
+                    </ul>
+                    </p>
                 </details>
 
                 <details>
-                    <summary>Stage 2: Fine-Tuning (PEFT, LoRA)</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Relevant codebase parts:</strong> <code>train.py</code>.</p>
-                        <p><strong>Transferable concepts:</strong> Backpropagation, weight updates using optimizers, and gradient computation.</p>
-                        <p><strong>What to learn next:</strong> Learn to use Parameter-Efficient Fine-Tuning (PEFT) libraries to freeze base weights and train small LoRA adapters on custom datasets.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>Stage 3: Embeddings & Vector Databases</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Relevant codebase parts:</strong> <code>model.py -> wte</code>, <code>data.py</code>.</p>
-                        <p><strong>Transferable concepts:</strong> Mapping tokens to continuous high-dimensional vector representations.</p>
-                        <p><strong>What to learn next:</strong> Learn to store embedding vectors in vector databases (e.g. Pinecone, Chroma, pgvector) and perform fast similarity search queries.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>Stage 4: Retrieval-Augmented Generation (RAG)</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Relevant codebase parts:</strong> <code>data.py</code>, <code>model.py -> generate</code>.</p>
-                        <p><strong>Transferable concepts:</strong> Generating text from context prompts.</p>
-                        <p><strong>What to learn next:</strong> Building RAG pipelines: query embedding, vector search retrieval, context injection, and generation evaluation.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>Stage 5: Inference Engines & KV Caching</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Relevant codebase parts:</strong> <code>model.py -> CausalSelfAttention</code>.</p>
-                        <p><strong>Transferable concepts:</strong> Dot-product attention scores and generation loops.</p>
-                        <p><strong>What to learn next:</strong> Implementing Key-Value (KV) caching to save past token states, and understanding PagedAttention mechanisms to speed up inference.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>Stage 6: Model Serving</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Relevant codebase parts:</strong> <code>benchmark.py</code>.</p>
-                        <p><strong>Transferable concepts:</strong> Memory scaling, throughput metrics (tokens/second), and hardware bottlenecks.</p>
-                        <p><strong>What to learn next:</strong> Hosting models behind API endpoints using serving frameworks like vLLM, Hugging Face TGI, or Ollama.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>Stage 7: Autonomous Agent Systems</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Relevant codebase parts:</strong> <code>model.py -> generate</code>.</p>
-                        <p><strong>Transferable concepts:</strong> Autoregressive generation and sampling.</p>
-                        <p><strong>What to learn next:</strong> Teaching models to use tools (tool calling/gating) and build multi-step reasoning agents using LangChain or AutoGen.</p>
-                    </div>
+                    <summary>How does Tool Calling work under the hood in Agent systems? Does the LLM execute the function?</summary>
+                    <p>No, the LLM never executes the tool code itself. The tool execution loop is handled by your backend application:
+                    <ol>
+                        <li>You provide the LLM a text description of your functions (e.g. a JSON schema for <code>fetch_user(user_id)</code>).</li>
+                        <li>The LLM decides a function call is needed and outputs a structured text string (e.g. JSON: <code>{"tool": "fetch_user", "args": {"user_id": 12}}</code>) instead of a natural response.</li>
+                        <li>Your backend application reads this output, parses the JSON payload, runs the actual Python/C# function locally, and retrieves the results.</li>
+                        <li>The application formats the function results as a text string, appends it back to the LLM's context, and queries the LLM again to synthesize the final answer.</li>
+                    </ol>
+                    </p>
                 </details>
 
                 <div class="prev-next-nav">
-                    <a href="gpt2_to_real_llms.html" class="prev-next-btn">
+                    <a href="code_guide.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">17. GPT-2 to Real LLMs</span>
+                        <span class="nav-title">17. How to Read Code</span>
                     </a>
-                    <a href="interview_intent.html" class="prev-next-btn next">
+                    <a href="glossary.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">19. What Interviewers Are Testing</span>
+                        <span class="nav-title">19. Glossary & Index</span>
                     </a>
                 </div>
             </main>
 
+            <!-- Table of Contents Sidebar -->
             <aside class="toc-sidebar">
                 <div class="toc-title">ON THIS PAGE</div>
                 <ul class="toc-list" id="toc-list"></ul>

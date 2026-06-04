@@ -1,28 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Core Documentation Search Index
     const searchIndex = [
-        { title: "Home Dashboard", url: "index.html", desc: "Overview, hyperparameters, codebase structure, and local hardware requirements." },
-        { title: "Architecture: Token-to-Loss Lifecycle", url: "architecture.html", desc: "Step-by-step activations, token embeddings, layer normalizations, tensor shape dimensions, parameters, and FLOP math." },
-        { title: "Causal Multi-Head Self-Attention", url: "attention.html", desc: "QKV mathematical derivation, attention scores, causal masking, MHA heads, and FlashAttention memory bandwidth optimization." },
-        { title: "Transformer Block Internals", url: "transformer_block.html", desc: "Pre-LN vs Post-LN structures, feed-forward expansion layers, GELU activation, residual scaling, and initialization logic." },
-        { title: "Tokenization & Byte Pair Encoding", url: "tokenization.html", desc: "BPE theory, tiktoken usage, vocabulary limits, out-of-vocabulary fallback, and parameter-tying lm_head." },
-        { title: "DataLoaderLite & Splits", url: "data_pipeline.html", desc: "Offset batching calculations, wrap-around index boundary checks, and train/val Shakespeare splits." },
-        { title: "Training Loop: Mechanics & Schedule", url: "training_loop.html", desc: "Gradient accumulation scaling, weight decay optimization, AdamW decay groups, and cosine learning rate warmup schedules." },
-        { title: "Optimization: Apple Silicon & Compilers", url: "optimization.html", desc: "MPS device synchronizations, AMP autocasting mixed-precision training, torch.compile graph optimization, and bottlenecks." },
-        { title: "Autoregressive Generation", url: "generation.html", desc: "Generative loop, cropping context lengths, temperature scaling calculations, top-k filtering, and multinomial samplers." },
-        { title: "Checkpointing & Restoration", url: "checkpointing.html", desc: "Serialization mappings, config and optimizer tracking, and CPU-first deterministic weight restoration patterns." },
-        { title: "Evaluation & validation", url: "evaluation.html", desc: "Validation losses, HellaSwag evaluation, log-likelihood calculations, and context token ignore mappings." },
-        { title: "Structural Experiments", url: "experiments.html", desc: "Systematic experiments (removing residuals, position embeddings, modifying width, custom activations)." },
-        { title: "The Tensor Shape Journey", url: "tensor_journey.html", desc: "Trace tensor shapes from input tokens to output predictions and loss scalars." },
-        { title: "Memory & Performance", url: "memory_performance.html", desc: "Analyze parameters, gradients, optimizer footprint, and activation memory." },
-        { title: "Connections to Modern LLMs", url: "modern_llms.html", desc: "Evolution comparison of GPT-2 to Llama, Gemma, DeepSeek, Mistral, Claude, and GPT-4 covering RoPE, RMSNorm, GQA, SwiGLU, and MoE." },
-        { title: "The Debugging Handbook", url: "debugging.html", desc: "Troubleshooting guide covering NaN losses, exploding gradients, and mask errors." },
-        { title: "Code Reading Guide", url: "code_guide.html", desc: "File-by-file roadmap explaining architecture connections and takeaways." },
-        { title: "GPT-2 to Real LLMs", url: "gpt2_to_real_llms.html", desc: "Mapping the codebase to modern instruction tuning, serving, and RAG architectures." },
-        { title: "GenAI Engineer Roadmap", url: "engineer_roadmap.html", desc: "7-stage study curriculum connecting base models to agents." },
-        { title: "What Interviewers Are Testing", url: "interview_intent.html", desc: "Graded GenAI/AI/LLM system design questions." },
-        { title: "Glossary of Terms", url: "glossary.html", desc: "Core terminology definitions including KV cache, Perplexity, FLOPs, weight tying, and BF16." },
-        { title: "My Learning Journal", url: "learning_journal.html", desc: "A personal log to record lessons, experiment results, and observations." }
+        { title: "00. Overview: The Journey of a Token", url: "index.html", desc: "How a piece of text becomes an LLM response. Mentally maps out input to token predictions." },
+        { title: "01. Tokenization: Payload Parsing", url: "tokenization.html", desc: "Byte Pair Encoding (BPE), subword tokenization, tiktoken usage, and translating strings to primary keys (IDs)." },
+        { title: "02. Embeddings: Mapping to Vector Space", url: "architecture.html", desc: "Token and position embeddings (wte & wpe), dynamic lookup directories, dimensions, and broadcasting." },
+        { title: "03. Attention: The Context Index", url: "attention.html", desc: "Causal Multi-Head Self-Attention, Query-Key-Value similarity search analogy, causal masking, and FlashAttention." },
+        { title: "04. MLP & LayerNorm: Processing Pipelines", url: "transformer_block.html", desc: "Transformer blocks, feed-forward networks (MLP), standardizing inputs (LayerNorm), and residual context retention middleware." },
+        { title: "05. The Output: Next-Token Prediction", url: "generation.html", desc: "LM head projections, next-token probabilities, temperature scaling, top-k sampling, and autoregressive generation loops." },
+        { title: "06. Data Loader: Streaming Batches", url: "data_pipeline.html", desc: "DataLoaderLite batches, context window slices, shifted targets as state logs, and epoch wraps." },
+        { title: "07. Backpropagation: The Feedback Loop", url: "training_loop.html", desc: "AdamW parameter weight decay groups, gradient accumulation batch processing, and cosine warmup schedules." },
+        { title: "08. Hardware: Mixed Precision & Speedups", url: "optimization.html", desc: "Apple Silicon MPS synchronizations, mixed-precision FP16 (AMP) datatype compression, and torch.compile graph compilation." },
+        { title: "09. Checkpoints: Application Snapshots", url: "checkpointing.html", desc: "Serialization mappings, config and optimizer state dicts, and Conv1D weight transpositions." },
+        { title: "10. Evaluation: Performance Validation", url: "evaluation.html", desc: "Validation loss tracking, HellaSwag benchmark completions, and option log-likelihood scoring." },
+        { title: "11. The Tensor Shape Journey", url: "tensor_journey.html", desc: "Trace batch shape dimensions [B, T, C] through the embedding, attention, MLP, and output projection layers." },
+        { title: "12. Memory Audit: Where Memory Goes", url: "memory_performance.html", desc: "Train memory footprint audit: dividing memory between parameters, gradients, optimizer states, and forward activations." },
+        { title: "13. Failure Gallery: Debugging & Troubleshooting", url: "debugging.html", desc: "Common deep learning bugs including NaNs, exploding gradients, mask mismatches, and shape crashes." },
+        { title: "14. Experiment Lab: Structural Modifications", url: "experiments.html", desc: "Ablation tests: removing residual streams, removing position embeddings, width adjustments, and custom activations." },
+        { title: "15. GPT-2 to Modern LLMs: Architecture Evolution", url: "modern_llms.html", desc: "Evolution comparison of GPT-2 to Llama, Gemma, and Mistral covering RoPE, RMSNorm, GQA, SwiGLU, and serving architectures (vLLM, LoRA)." },
+        { title: "16. Interview Guide: Grilling the LLM Engineer", url: "interview_intent.html", desc: "System design and implementation questions commonly asked in GenAI systems and LLM engineering interviews." },
+        { title: "17. How to Read the Codebase", url: "code_guide.html", desc: "Step-by-step reading order guide for model.py, generate.py, train.py, and hellaswag.py." },
+        { title: "18. Learning Roadmap: Next Steps", url: "engineer_roadmap.html", desc: "GenAI developer roadmap scaling from toy GPTs to fine-tuning, RAG, LLMOps, and serving systems." },
+        { title: "19. Glossary of Terms", url: "glossary.html", desc: "Key transformer terminology including KV cache, Perplexity, FLOPs, weight tying, and mixed precision." }
     ];
 
     // 2. Setup Search Overlay Elements

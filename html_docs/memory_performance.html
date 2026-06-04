@@ -3,36 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory & Performance | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Memory Audit | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
+        <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -44,104 +30,205 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
 
+            <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>13. Memory & Performance</span>
+                    <a href="index.html">Handbook</a> &gt; <span>12. Memory Audit</span>
                 </div>
 
-                <h1>13. Memory & Performance optimization</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>LLM training and serving are heavily constrained by memory.
-                If you do not understand where memory is spent, you cannot deploy models locally, write efficient fine-tuning scripts, or design serving systems that avoid out-of-memory (OOM) crashes.
-                Managing memory parameters determines how large of a model or batch size you can support on your hardware.</p>
+                <h1>12. Memory Audit: Where Memory Goes</h1>
 
-                <h2>Backend Engineer Lens</h2>
-                <p>Think of GPU memory allocation like managing memory in a backend database cache.
-                If you load an entire database table of 100M rows into memory (equivalent to full weights and AdamW states), you will crash the node.
-                To scale cache performance, we index data (weight tying), compress formats (quantization), and limit temporary allocations (PEFT/LoRA).</p>
+                <h2>The Token's Journey</h2>
+                <p>When training our model, floating-point weights and activation tensors consume physical memory in our GPU's RAM. We must audit this consumption to prevent Out-Of-Memory (OOM) crashes and optimize execution throughput.</p>
 
-                <h2>Memory Allocations in Training</h2>
-                <p>During training, memory is split into four primary categories:</p>
-                
-                <h3>1. Model Parameters (Weights)</h3>
-                <p>The static weights of the model. Stored in float32:
-                $$\text{Memory} = N \times 4\text{ bytes}$$
-                Where $N$ is parameter count. For our $30\text{M}$ parameter model, this takes $\approx 120\text{ MB}$.</p>
+                <div class="mermaid">
+                classDiagram
+                    class GPUMemory {
+                        +Model Weights (~40MB)
+                        +Gradients (~40MB)
+                        +Optimizer States (~80MB)
+                        +Forward Activations (Dynamic)
+                    }
+                </div>
 
-                <h3>2. Gradients</h3>
-                <p>The calculated derivatives for each weight. Stored in float32:
-                $$\text{Memory} = N \times 4\text{ bytes} \approx 120\text{ MB}$$</p>
-
-                <h3>3. Optimizer States (AdamW)</h3>
-                <p>The adaptive learning rate moment trackers. AdamW tracks two moments (mean and variance) per parameter in float32:
-                $$\text{Memory} = N \times 8\text{ bytes} \approx 240\text{ MB}$$</p>
-
-                <h3>4. Activations (The hidden states)</h3>
-                <p>Intermediate tensor outputs generated during the forward pass must be saved in memory to compute gradients during backpropagation.
-                This is the primary memory driver. It scales with batch size $B$, context length $T$, layer count $L$, and embedding dimension $C$. For our model:
-                $$\text{Activation Memory} \approx B \times T \times C \times L \times 4\text{ bytes} \approx 180\text{ MB}$$</p>
-
-                <h2>Why Inference is Cheaper</h2>
-                <p>Inference (generation) requires significantly less memory than training because:
+                <h2>Backend Engineer Lens: Memory Profiling</h2>
+                <p>Auditing training memory is identical to **profiling a high-concurrency API server under heavy request loads**.</p>
                 <ul>
-                    <li>No backpropagation: We do not need to compute or store gradients.</li>
-                    <li>No optimizer: We do not need to store AdamW moments.</li>
-                    <li>No activation cache: We do not need to save intermediate states once the output token is predicted.</li>
+                    <li><strong>Model Weights & Gradients &rarr; Static Heap Allocation:</strong> These occupy a fixed size on the heap. Once the server boots, they remain constant, comparable to loading config caches and thread pools.</li>
+                    <li><strong>Optimizer States &rarr; Index Metadata Overhead:</strong> AdamW tracks historical values (mean and variance) for each parameter. This is like maintaining secondary index logs, consuming a static 8 bytes per parameter.</li>
+                    <li><strong>Activations &rarr; Request Stack Allocation:</strong> When a server processes an incoming request payload, it allocates transient stack memory to compute variables. If batch size $B$ or sequence length $T$ grows, activation memory scales linearly, representing transient request thread buffers. High concurrency (large batch sizes) will blow up activation memory, causing OOM crashes.</li>
                 </ul>
-                This reduces the memory footprint for a $30\text{M}$ model from $\approx 660\text{ MB}$ (during training) to just $\approx 120\text{ MB}$ (during inference).</p>
 
-                <h2>PEFT, LoRA, and QLoRA</h2>
-                <p>To train large models on limited hardware, we use **Parameter-Efficient Fine-Tuning (PEFT)** techniques like **LoRA (Low-Rank Adaptation)**:
+                <h2>Peak Training Memory Breakdown</h2>
+                <p>For a model with $N$ parameters, trained using **AdamW** in **FP32** precision, memory is distributed as follows:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Formula</th>
+                            <th>RAM for 10M Model</th>
+                            <th>RAM for 70B Model</th>
+                            <th>RAM Behavior</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Model Parameters</strong></td>
+                            <td>$4 \text{ bytes} \times N$</td>
+                            <td>~40 MB</td>
+                            <td>280 GB</td>
+                            <td>Static</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gradients</strong></td>
+                            <td>$4 \text{ bytes} \times N$</td>
+                            <td>~40 MB</td>
+                            <td>280 GB</td>
+                            <td>Static</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Optimizer States (AdamW)</strong></td>
+                            <td>$8 \text{ bytes} \times N$</td>
+                            <td>~80 MB</td>
+                            <td>560 GB</td>
+                            <td>Static</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Activations</strong></td>
+                            <td>Scales with $B \times T \times L \times C$</td>
+                            <td>Dynamic (~120 MB)</td>
+                            <td>Dynamic (Terabytes)</td>
+                            <td>Scales linearly with batch size</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>The Code-to-Concept Map</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>PyTorch Code</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Parameter Audit</strong></td>
+                            <td><code>sum(p.numel() for p in ...)</code></td>
+                            <td><a href="code_guide.html#L111">train.py: configure_optimizers()</a></td>
+                            <td>Memory usage footprint mapping</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Clear Grad Memory</strong></td>
+                            <td><code>optimizer.zero_grad()</code></td>
+                            <td><a href="code_guide.html#L274">train.py: train step loop</a></td>
+                            <td>Garbage collection of temporary buffers</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Release Activation</strong></td>
+                            <td>Gradient graph deletion post step</td>
+                            <td><a href="code_guide.html#L296">train.py: optimizer.step()</a></td>
+                            <td>Garbage collecting request session scopes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Production Relevance</h2>
                 <ul>
-                    <li><strong>Freezing Weights:</strong> We freeze the original model weights, meaning we do not compute gradients or store AdamW moments for them, saving significant memory.</li>
-                    <li><strong>Adapter weights:</strong> We inject small, trainable parameter blocks ($W_{adapter} = A \cdot B$) into attention linear layers. Only these adapter weights compute gradients and update optimizer states.</li>
-                    <li><strong>QLoRA:</strong> Quantizes the frozen weights to 4-bit representation (reducing weight footprint by 8x) while training 16-bit adapters, allowing large models (e.g. 8B parameters) to be fine-tuned on a single consumer GPU.</li>
-                </ul></p>
+                    <li><strong>Activation Checkpointing:</strong> To save memory during deep model training, we use activation checkpointing. Instead of saving all activation vectors during the forward pass (which consumes massive memory), we discard them. During the backward pass, we re-compute them on-the-fly by running the forward pass for that block again. This reduces peak activation memory usage by 70% at the cost of a ~30% computation time overhead.</li>
+                    <li><strong>Quantization (INT8 / INT4):</strong> When serving a model in production, we do not compute gradients or track optimizer states. Weights can be quantized from float16 down to int4 (using engines like GPTQ or AWQ) to compress weight size, allowing a 70B parameter model (~140GB in FP16) to fit onto a single 80GB A100 GPU.</li>
+                </ul>
+
+                <h2>Verification</h2>
+                <p>We audit parameters using the optimizer configuration step in `train.py`. The ~10M model correctly reports ~10.4 Million learnable parameters, taking up less than 200MB of static training RAM on our local Mac Mini M4, well within the 16GB system limit.</p>
+
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>Why does training a model require significantly more GPU memory than running inference on the same model?</summary>
+                    <p>In inference, we only need to load the model parameters into GPU RAM, and we do not calculate gradients or track optimizer metrics. The only dynamic memory consumer is the KV Cache, which is minor.
+                    In training, we require:
+                    <ol>
+                        <li><strong>Model weights</strong> (4 bytes per parameter).</li>
+                        <li><strong>Gradients</strong> (4 bytes per parameter).</li>
+                        <li><strong>Optimizer states</strong> (8 bytes per parameter for AdamW to store moving averages of gradients).</li>
+                        <li><strong>Activations:</strong> We must keep every block's forward activation tensor in memory because they are required to compute derivatives during the backward pass.</li>
+                    </ol>
+                    Thus, training a 70B model requires over 1.1 Terabytes of GPU memory, whereas inference only requires ~140 GB.
+                    </p>
+                </details>
+
+                <details>
+                    <summary>What is Activation Checkpointing, and what engineering trade-off does it present?</summary>
+                    <p>Activation Checkpointing is a memory optimization technique that trades compute cycles for RAM.
+                    During the standard forward pass, the model caches activations for all layers in memory so the backward pass can use them to compute gradients.
+                    With activation checkpointing:
+                    <ul>
+                        <li>We only save activations at the boundaries of major segments (e.g. at the input of every 4th transformer block).</li>
+                        <li>All intermediate block activations are discarded from memory.</li>
+                        <li>During the backward pass, we re-run the forward pass locally starting from the nearest saved boundary checkpoint to re-generate the discarded activations.</li>
+                    </ul>
+                    This reduces peak memory usage from $O(\text{layers})$ to $O(\sqrt{\text{layers}})$, allowing much larger batch sizes at the expense of a 30-33% increase in total training step time due to redundant forward computations.</p>
+                </details>
 
                 <div class="prev-next-nav">
                     <a href="tensor_journey.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">12. The Tensor Shape Journey</span>
+                        <span class="nav-title">11. Tensor Shape Journey</span>
                     </a>
-                    <a href="modern_llms.html" class="prev-next-btn next">
+                    <a href="debugging.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">14. Connections to Modern LLMs</span>
+                        <span class="nav-title">13. Failure Gallery</span>
                     </a>
                 </div>
             </main>
 
+            <!-- Table of Contents Sidebar -->
             <aside class="toc-sidebar">
                 <div class="toc-title">ON THIS PAGE</div>
                 <ul class="toc-list" id="toc-list"></ul>

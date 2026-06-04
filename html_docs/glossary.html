@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glossary | GPT Reproduction Handbook</title>
-            <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Glossary & Index | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,95 +77,92 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>14. Glossary of Terms</span>
+                    <a href="index.html">Handbook</a> &gt; <span>19. Glossary & Index</span>
                 </div>
 
-                <h1>14. Glossary of Terms</h1>
-                <p>A quick-reference index of core terminology, metrics, and optimization concepts used in Large Language Model engineering.</p>
+                <h1>19. Glossary of Terms & Index</h1>
 
-                <div class="search-box" style="margin-bottom: 24px;">
-                    <input type="text" class="search-input" id="glossary-filter" placeholder="Filter glossary terms..." style="width: 100%; padding-left: 12px;">
-                </div>
+                <h2>Why should I care?</h2>
+                <p>This reference index provides concise, systems-level definitions of core Large Language Model (LLM) and transformer terminology, mapping each concept to its backend parallel and codebase location.</p>
 
-                <table id="glossary-table">
+                <h2>Terminology Directory</h2>
+                <table>
                     <thead>
                         <tr>
-                            <th style="width: 250px;">Term</th>
-                            <th>Definition</th>
+                            <th>Term</th>
+                            <th>Systems Definition</th>
+                            <th>Backend Engineer Lens</th>
+                            <th>Code Pointer</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Activation</strong></td>
-                            <td>Intermediate tensor outputs computed during the forward pass of a model (e.g. outputs of linear layers, attention weights) that must be saved in memory to compute gradients during backpropagation.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>AdamW</strong></td>
-                            <td>An optimizer that combines adaptive learning rates with decoupled weight decay (L2 regularization), updating model weights based on historical gradient moments.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>BF16 (Bfloat16)</strong></td>
-                            <td>Brain Floating Point (16-bit). A numerical format that has the same dynamic range as float32 but lower precision, offering better numerical stability than standard float16 without requiring loss scaling.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Causal Masking</strong></td>
-                            <td>A mechanism in decoder-only models that prevents tokens from attending to future positions, implemented by adding an upper-triangular matrix of $-\infty$ to the attention logits.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>FlashAttention</strong></td>
-                            <td>An optimized attention algorithm that tiles computation into SRAM cache blocks, reducing HBM memory access from $O(T^2)$ to $O(T)$ to speed up execution.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>FLOPs</strong></td>
-                            <td>Floating Point Operations. A metric used to measure computational workload. The forward and backward passes of a transformer require roughly $6N$ FLOPs per token (where $N$ is parameter count).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>GQA</strong></td>
-                            <td>Grouped Query Attention. An attention mechanism where multiple Query heads share a single Key-Value head, reducing the KV cache size to speed up inference.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Gradient Accumulation</strong></td>
-                            <td>A training technique that sums gradients over multiple micro-batches before taking an optimizer step, simulating a large batch size on hardware with limited memory.</td>
-                        </tr>
-                        <tr>
                             <td><strong>KV Cache</strong></td>
-                            <td>Storing Key ($K$) and Value ($V$) projections of past tokens in memory during generation, avoiding redundant calculations for new token predictions.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>LayerNorm</strong></td>
-                            <td>Layer Normalization. Normalizes activations across the embedding dimension for each token, improving training stability.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Perplexity</strong></td>
-                            <td>An evaluation metric defined as $e^{\mathcal{L}}$ (where $\mathcal{L}$ is cross-entropy loss). It represents the effective branching factor of the model's predictions.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Pre-LN</strong></td>
-                            <td>Applying Layer Normalization to inputs <em>before</em> passing them to the attention or MLP blocks, maintaining a clean gradient path through residual connections.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>RMSNorm</strong></td>
-                            <td>Root Mean Square Normalization. A simplified version of LayerNorm that normalizes activations using only the root mean square value, reducing computational overhead by omitting mean calculations.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>RoPE</strong></td>
-                            <td>Rotary Position Embedding. Projects Query and Key vectors into the complex plane to inject relative positional information, enabling context length scaling.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>SwiGLU</strong></td>
-                            <td>A gated feed-forward activation function that combines the Swish activation with a Gated Linear Unit, improving convergence rates in modern LLMs.</td>
+                            <td>Caching Key and Value tensors of past sequence tokens during autoregressive inference to prevent $O(T^2)$ recomputations.</td>
+                            <td>Caching read indexes of static database assets to reduce request processing time to $O(1)$.</td>
+                            <td>N/A (KV Cache scale details are in <a href="modern_llms.html">Chapter 15</a>)</td>
                         </tr>
                         <tr>
                             <td><strong>Weight Tying</strong></td>
-                            <td>Sharing parameters between the input token embedding matrix (<code>wte</code>) and the final projection head (<code>lm_head</code>) to reduce model memory footprint.</td>
+                            <td>Sharing parameters between the input token embedding layer (`wte`) and the output language modeling head (`lm_head`).</td>
+                            <td>Sharing database schema memory configurations across multiple services to minimize local storage requirements.</td>
+                            <td><a href="code_guide.html#L194">model.py: wte weight tie</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Residual Stream</strong></td>
+                            <td>The skip connection pathway that adds block inputs directly to block outputs, allowing gradients to bypass layers during backprop.</td>
+                            <td>Request Context bypass middleware, safeguarding original request state from downstream mutations.</td>
+                            <td><a href="code_guide.html#L157">model.py: Block.forward()</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>LayerNorm</strong></td>
+                            <td>Standardizing hidden activation distributions to mean 0 and variance 1 across the final dimension to prevent optimization collapse.</td>
+                            <td>Input data formatting and validation middleware, guarding against numeric database anomalies.</td>
+                            <td><a href="code_guide.html#L152">model.py: ln_1, ln_2</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Perplexity</strong></td>
+                            <td>Exponentiated cross-entropy loss, measuring a model's uncertainty when predicting the next token.</td>
+                            <td>System anomaly rate or latencies metrics mapping confidence.</td>
+                            <td>Calculated from evaluation loss in <a href="evaluation.html">Chapter 10</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Causal Masking</strong></td>
+                            <td>An upper-triangular negative-infinity bias matrix applied to attention scores to prevent tokens from looking ahead at future targets.</td>
+                            <td>SQL isolation levels, enforcing `Read Uncommitted` boundaries to prevent database leaks.</td>
+                            <td><a href="code_guide.html#L93">model.py: register_buffer</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>FLOPs</strong></td>
+                            <td>Floating-Point Operations, measuring the computational complexity of running model training or inference.</td>
+                            <td>CPU/GPU cycle budgets or server resource constraints.</td>
+                            <td>Traced during speed checks in <a href="optimization.html">Chapter 08</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mixed Precision (AMP)</strong></td>
+                            <td>Executing matrix multiplications in lower-precision formats (FP16 or BF16) while keeping master copies in FP32 format.</td>
+                            <td>Data type compression, reducing field sizes from 64-bit to 32-bit/16-bit to double cache throughput.</td>
+                            <td><a href="code_guide.html#L284">train.py: autocast blocks</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>BPE Merges</strong></td>
+                            <td>Merges common subword sequences iteratively based on pair frequency, building the tokenizer vocabulary.</td>
+                            <td>Token dictionary compilation, defining catalog primary keys.</td>
+                            <td><a href="code_guide.html#L27">data.py: tiktoken load</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Triton Kernels</strong></td>
+                            <td>GPU execution modules written in OpenAI's Triton language, bypassing standard PyTorch dispatcher limitations.</td>
+                            <td>Writing inline C++ assemblies or assembly-level drivers for database lookups instead of utilizing an ORM.</td>
+                            <td>Used in production equivalent serving systems (vLLM)</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <div class="prev-next-nav">
-                    <a href="interview_guide.html" class="prev-next-btn">
+                    <a href="engineer_roadmap.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">13. LLM Interview Guide</span>
+                        <span class="nav-title">18. Learning Roadmap</span>
                     </a>
                     <div></div>
                 </div>
@@ -182,20 +177,5 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
-    <script>
-        document.getElementById("glossary-filter").addEventListener("input", (e) => {
-            const filter = e.target.value.toLowerCase();
-            const rows = document.querySelectorAll("#glossary-table tbody tr");
-            rows.forEach((row) => {
-                const term = row.querySelector("td:first-child").textContent.toLowerCase();
-                const def = row.querySelector("td:last-child").textContent.toLowerCase();
-                if (term.includes(filter) || def.includes(filter)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        });
-    </script>
 </body>
 </html>

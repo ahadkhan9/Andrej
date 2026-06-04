@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkpointing | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Checkpointing | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,64 +77,99 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>09. Checkpoint Restoration</span>
+                    <a href="index.html">Handbook</a> &gt; <span>09. Checkpointing</span>
                 </div>
 
                 <h1>09. Checkpointing: Serialization & State Restoration</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>Training runs often take days or weeks. Hardware failures, network drops, or kernel panics are inevitable during long runs.
-                Understanding checkpoint serialization, optimizer state restoration, and device mappings is essential for saving progress and resuming training without losing work.</p>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine you are reading a long book and need to pause.
-                To resume reading later:
+                <h2>The Token's Journey</h2>
+                <p>As training steps execute, the weights of all layers ($wte$, blocks, output head) are continuously modified by gradients. If our training process crashes, all learning states are lost.
+                Every 20 steps, the model freezes execution, compiles its parameter states into a dictionary object, and writes a serialized checkpoint snapshot (<code>checkpoint_step_N.pt</code>) to local disk storage.</p>
+
+                <div class="mermaid">
+                flowchart TD
+                    InMem["In-Memory Tensors (model + optimizer state)"] -->|torch.save dict| Disk[".pt Checkpoint file on disk"]
+                    Disk -->|torch.load map_location| Restore["Restored Tensors mapped to Device RAM"]
+                </div>
+
+                <h2>Backend Engineer Lens: Snapshots & Migrations</h2>
+                <p>In backend engineering, checkpointing matches **application snapshot serialization and database backup restoration**.</p>
                 <ul>
-                    <li>You save your current page number (the <strong>step index</strong>).</li>
-                    <li>You place a bookmark in the book (the <strong>model parameters</strong>).</li>
-                    <li>You write down a summary of the story's events in a notepad (the <strong>optimizer states</strong>).</li>
+                    <li><strong>Serialization &rarr; Redis Snapshot:</strong> A checkpoint dictionary maps parameter names (like database schema columns) to multi-dimensional float arrays. Saving this is identical to serializing an in-memory session cache to disk.</li>
+                    <li><strong>map_location &rarr; Target Environment Configuration:</strong> If you try to restore a database backup saved on a production Postgres instance directly to your local development host without mapping target parameters, connection configurations crash. Similarly, loading a checkpoint saved on GPU memory directly to a machine without a GPU will cause a crash unless you specify <code>map_location=device</code> to direct the tensors to the local host's CPU/MPS RAM.</li>
+                    <li><strong>Weight Transpositions &rarr; Schema Migrations:</strong> Hugging Face's official GPT-2 weights are saved in a custom Conv1D format that expects weights to be aligned as $X \cdot W$. PyTorch's standard `nn.Linear` expects weights to be $X \cdot W^T$. When loading pretrained weights, we must execute a data schema migration—applying a matrix transpose operation (<code>weight.t()</code>) to align the tables before copying them into memory.</li>
                 </ul>
-                If you forget the notepad summary, you can still read the book, but you will lose the context of the story so far. Similarly, if you load a checkpoint without the optimizer states, the model will lose its historical gradient tracking and may fail to resume training stably.</p>
 
-                <h2>Level 2 — Engineering View</h2>
-                <p>We serialize the training state using <code>torch.save</code> in <code>train.py:L254-L264</code>:</p>
-                <pre><code class="language-python">checkpoint = {
-    "model": model.state_dict(),
-    "optimizer": optimizer.state_dict(),
-    "config": config,
-    "step": step,
-    "val_loss": val_loss_accum
-}
-torch.save(checkpoint, checkpoint_path)</code></pre>
-                <p>When loading a checkpoint, we use the saved configuration to reconstruct the model architecture before restoring the weight tensors. We must set <code>map_location</code> to the target hardware device to prevent cross-device load errors:</p>
-                <pre><code class="language-python"># From hellaswag.py:L168-L176
-checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
-config = checkpoint["config"]
-model = GPT(config)
-model.load_state_dict(checkpoint["model"])
-model.to(device)</code></pre>
+                <h2>The Code-to-Concept Map</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>PyTorch Code</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Save Checkpoint</strong></td>
+                            <td><code>torch.save(checkpoint, path)</code></td>
+                            <td><a href="code_guide.html#L263">train.py: main() save block</a></td>
+                            <td>Redis backup dumps</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Load Checkpoint</strong></td>
+                            <td><code>torch.load(..., map_location=device)</code></td>
+                            <td><a href="code_guide.html#L170">hellaswag.py: main()</a></td>
+                            <td>Database restore scripts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weight Transpose</strong></td>
+                            <td><code>sd[k].copy_(sd_hf[k].t())</code></td>
+                            <td><a href="code_guide.html#L317">model.py: from_pretrained()</a></td>
+                            <td>Data schema column migrations</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                <h2>3. Mathematical View</h2>
-                <p>The state dictionary maps parameter layer names to weight tensors:
-                $$S = \{ \text{key}_i : W_i \}$$
-                Where $\text{key}_i$ is a string representation of the layer (e.g. <code>"transformer.h.0.attn.c_attn.weight"</code>) and $W_i \in \mathbb{R}^{D_{out} \times D_{in}}$ is the weight tensor.
-                When restoring a checkpoint, <code>load_state_dict</code> performs an element-wise copy of these tensors into the model's memory layout.</p>
-
-                <h2>4. What happens if we do not map the device location on load?</h2>
-                <p>If you call <code>torch.load(path)</code> without specifying <code>map_location</code>:
+                <h2>Production Relevance</h2>
                 <ul>
-                    <li>PyTorch will attempt to load the saved tensors directly into the memory of the device they were originally saved on (e.g. CUDA GPU 0).</li>
-                    <li>If you run this load step on a machine without that hardware (such as your Mac Mini M4, which only has MPS and CPU), the operation will throw a runtime error (e.g. <code>RuntimeError: Attempting to deserialize object on a CUDA device but torch.cuda.is_available() is False</code>), crashing the program.</li>
-                </ul></p>
+                    <li><strong>Model Registries:</strong> In enterprise ML pipelines, checkpoints are versioned and stored in Model Registries (such as Hugging Face Hub, MLflow, or Weights & Biases) to serve as release tags for staging and production serving environments.</li>
+                    <li><strong>Safetensors Format:</strong> PyTorch's default `.pt` checkpoint format uses Python's `pickle` library for serialization. Pickled files can execute arbitrary Python scripts on the host system during load, presenting a security vulnerability. Modern production pipelines enforce the use of **Safetensors** files, which only store raw tensor byte values, completely preventing Remote Code Execution (RCE) hazards.</li>
+                </ul>
+
+                <h2>Verification</h2>
+                <p>We verify our checkpoint restoration by running text generation using pre-trained weights. If the transpositions were incorrect, the output logits would fail parity checks, and the model would generate gibberish characters. The parity check passes with negligible variance ($10^{-5}$):</p>
+                <pre><code class="language-bash">python3 generate.py --run_test</code></pre>
+
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>Why do we transpose Hugging Face's Conv1D weights when loading them into standard PyTorch Linear layers?</summary>
+                    <p>In standard PyTorch, an <code>nn.Linear</code> layer performs matrix multiplication using:
+                    $$Y = X \cdot W^T + b$$
+                    Where $W$ is the weight matrix and $X$ is the input tensor.
+                    Hugging Face's original GPT-2 implementation used a custom <code>Conv1D</code> layer (which behaves like a linear layer but uses a different memory layout) that computed:
+                    $$Y = X \cdot W + b$$
+                    Because the weight matrix $W$ in the Conv1D file is saved transposed relative to PyTorch's expectation, loading it directly causes a shape mismatch crash. We must transpose the matrix using <code>.t()</code> before loading:
+                    <pre><code class="language-python">sd[k].copy_(sd_hf[k].t())</code></pre>
+                    </p>
+                </details>
+
+                <details>
+                    <summary>What is state_dict in PyTorch, and what does it contain?</summary>
+                    <p>A <code>state_dict</code> is a standard Python dictionary that maps each trainable layer parameter name (string) to its corresponding tensor weights.
+                    It only contains the learnable weights and biases of the model, excluding the architectural configuration or non-trainable buffers (unless registered explicitly).
+                    During checkpointing, we save both the model's `state_dict` and the optimizer's `state_dict` (which tracks momentum terms) to allow complete restoration of the training state.</p>
+                </details>
 
                 <div class="prev-next-nav">
-                    <a href="generation.html" class="prev-next-btn">
+                    <a href="optimization.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">08. Autoregressive Generation</span>
+                        <span class="nav-title">08. Hardware Speedups</span>
                     </a>
                     <a href="evaluation.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">10. Model Evaluation</span>
+                        <span class="nav-title">10. Evaluation</span>
                     </a>
                 </div>
             </main>

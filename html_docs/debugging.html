@@ -3,36 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debugging Handbook | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Failure Gallery | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
+        <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -44,132 +30,179 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
 
+            <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>15. Debugging Handbook</span>
+                    <a href="index.html">Handbook</a> &gt; <span>13. Failure Gallery</span>
                 </div>
 
-                <h1>15. The Debugging Handbook</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>Training and evaluating transformer models is notoriously difficult to debug.
-                Because models fail silently (e.g. generating text but returning high perplexity, or training but converging to local minima), you must learn to read indicators like loss logs, gradient norms, and activation variance to identify and resolve bugs.</p>
+                <h1>13. Failure Gallery: Debugging & Troubleshooting</h1>
 
-                <h2>Backend Engineer Lens</h2>
-                <p>Think of model debugging like tracing a distributed system failure.
-                If an API returns a 500 error, you inspect stack traces, check database locks, and run query plans.
-                Similarly, when a model returns NaN loss, you inspect gradient norms, trace backpropagation steps, and verify weight initialization bounds.</p>
+                <h2>The Token's Journey</h2>
+                <p>During neural network execution, a single incorrect matrix operation, scale factor omission, or datatype overflow will corrupt token representations, propagating errors that lead to system crashes or training collapse.
+                This gallery maps the most common training bugs to their diagnostics and code solutions.</p>
 
-                <h2>Troubleshooting Matrix</h2>
+                <h2>Backend Engineer Lens: Crash Logs</h2>
+                <p>Debugging neural network training collapse maps directly to **interpreting server crash logs and troubleshooting database leaks**.</p>
+                <ul>
+                    <li><strong>NaN Loss &rarr; Silent segmentation faults / divide-by-zero:</strong> A <code>NaN</code> (Not a Number) value is a silent database corruption. It usually originates from dividing by zero in softmax or floating-point overflow, propagating to corrupt every subsequent weight record.</li>
+                    <li><strong>Exploding Gradients &rarr; Stack overflow:</strong> Occurs when feedback adjustments compound across deep recursive calls, causing gradient numbers to grow exponentially until they exceed memory buffers, crashing the optimizer. We prevent this by setting a rate-limit guard (gradient clipping).</li>
+                    <li><strong>Causal Mask Leakage &rarr; Read Uncommitted Data isolation breach:</strong> If the attention layer neglects to mask future tokens, it creates a data isolation leak. The model queries data that hasn't been officially committed to the timeline yet. It achieves 0 training error by copying target values directly, but crashes during production serving where future data is unavailable.</li>
+                </ul>
 
+                <h2>The Failure Gallery Directory</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Symptom</th>
+                            <th>Backend Analogy</th>
+                            <th>Root Cause</th>
+                            <th>Code Diagnostic / Fix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Loss becomes <code>NaN</code></strong></td>
+                            <td>Database corruption / Divide-by-zero</td>
+                            <td>FP16 mixed precision overflow, or learning rate too high ($>0.01$).</td>
+                            <td>
+                                <ol>
+                                    <li>Add PyTorch gradient scaler.</li>
+                                    <li>Clip gradients to <code>1.0</code>.</li>
+                                    <li>Reduce learning rate.</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gradient Explosion</strong></td>
+                            <td>Stack overflow</td>
+                            <td>Unbounded parameters accumulating feedback variance.</td>
+                            <td>
+                                Add gradient clipping:
+                                <pre><code class="language-python">nn.utils.clip_grad_norm_(
+    model.parameters(), 1.0
+)</code></pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Shape Mismatch Crash</strong></td>
+                            <td>API Payload validation failure</td>
+                            <td>Incorrect dimension reshaping in multi-head attention splits.</td>
+                            <td>
+                                Verify transposition order:
+                                <pre><code class="language-python"># MUST transpose to [B, H, T, D]
+x.view(B, T, H, D).transpose(1, 2)</code></pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Target Leakage</strong></td>
+                            <td>Read Uncommitted data isolation leak</td>
+                            <td>Omitting causal mask in manual attention computation.</td>
+                            <td>
+                                Verify mask bias registration:
+                                <pre><code class="language-python">att = att.masked_fill(
+    self.bias[:, :, :T, :T] == 0,
+    float('-inf')
+)</code></pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weight Transpose Error</strong></td>
+                            <td>Schema migration mapping mismatch</td>
+                            <td>Loading Hugging Face Conv1D weights directly into Linear layers.</td>
+                            <td>
+                                Transpose HF weights on load:
+                                <pre><code class="language-python">sd[k].copy_(sd_hf[k].t())</code></pre>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Production Relevance</h2>
+                <ul>
+                    <li><strong>NaN Auditing:</strong> When training large models (e.g. 70B), a NaN loss step is extremely expensive, costing thousands of dollars in wasted compute time. Production monitoring systems (like Weights & Biases or TensorBoard) alert engineers immediately on NaN spikes. We keep multiple rolling checkpoints in our model registry so we can roll back and resume training from a healthy state after adjusting hyperparameter bounds.</li>
+                    <li><strong>Deterministic Seeds:</strong> During debugging, we enforce deterministic seed settings across all libraries (PyTorch, NumPy, MPS, CUDA) to reproduce the exact step where a crash occurred:
+                        <pre><code class="language-python">torch.manual_seed(42)  # guarantees identical initialization</code></pre>
+                    </li>
+                </ul>
+
+                <h2>Common Interview Followups</h2>
                 <details>
-                    <summary>1. Loss Is Not Decreasing (Stagnant Training)</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Symptoms:</strong> Loss remains flat around random baseline ($\approx 10.8$ for GPT-2 vocab size) and does not decrease over multiple steps.</p>
-                        <p><strong>Likely Causes:</strong>
-                            <ul>
-                                <li>Learning rate is too low.</li>
-                                <li>Incorrect weight initialization.</li>
-                                <li>Target index leakage or data coordinates shifted.</li>
-                            </ul>
-                        </p>
-                        <p><strong>How to investigate:</strong> Run the <code>--overfit</code> batch test. If the loss does not drop close to 0 within 100 steps on a single batch, the issue is structural.</p>
-                        <p><strong>How to fix:</strong> Verify weight initializations are set to Normal(0, 0.02) and that target offset shifting is correct: <code>y = buf[1:]</code> and <code>x = buf[:-1]</code>.</p>
-                        <p><strong>Real-world Frequency:</strong> Extremely common in initial setups.</p>
-                    </div>
+                    <summary>If your training loss suddenly becomes NaN at step 100, what are the first three troubleshooting steps you should take?</summary>
+                    <p>
+                    <ol>
+                        <li><strong>Check gradient norm values:</strong> If the gradient norm is spiking before NaN, apply or tighten gradient clipping (e.g., reduce clip threshold from 1.0 to 0.5) to prevent optimization steps from overshooting.</li>
+                        <li><strong>Audit FP16 precision:</strong> FP16 has a maximum value of 65,504. If weight values exceed this, they overflow to NaN. Switch to **BF16** or FP32, or add a gradient scaler (<code>GradScaler</code>) to scale loss down before backward passes.</li>
+                        <li><strong>Reduce learning rate:</strong> A learning rate that is too high can cause parameters to step into divergent mathematical spaces, causing logits to overflow. Reduce the learning rate by a factor of 2 or 10.</li>
+                    </ol>
+                    </p>
                 </details>
 
                 <details>
-                    <summary>2. Loss Returns NaN (Not a Number)</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Symptoms:</strong> Loss values suddenly display as <code>NaN</code>, and training halts.</p>
-                        <p><strong>Likely Causes:</strong>
-                            <ul>
-                                <li>Gradient explosion (extremely large weight updates).</li>
-                                <li>Division by zero in LayerNorm or attention scaling.</li>
-                                <li>AMP FP16 mixed precision overflow.</li>
-                            </ul>
-                        </p>
-                        <p><strong>How to investigate:</strong> Log gradient norms at each step. If the norm exceeds 10.0, the gradients are exploding.</p>
-                        <p><strong>How to fix:</strong> Enable gradient clipping (limit norm to 1.0) and verify that scaling initializations are scaled down by $1/\sqrt{2 \times \text{layers}}$.</p>
-                        <p><strong>Real-world Frequency:</strong> Common when scaling model size or batch size.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>3. Generation Loops & Repetitive Outputs</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Symptoms:</strong> The model generates the same phrase repeatedly during inference (e.g. <code>"and the and the and the"</code>).</p>
-                        <p><strong>Likely Causes:</strong>
-                            <ul>
-                                <li>Greedy decoding (argmax) is used instead of multinomial sampling.</li>
-                                <li>Temperature is set too low (e.g. $T < 0.2$).</li>
-                                <li>Under-regularized model (missing dropout).</li>
-                            </ul>
-                        </p>
-                        <p><strong>How to investigate:</strong> Log the selected token probabilities. If one token consistently dominates, the distribution is too narrow.</p>
-                        <p><strong>How to fix:</strong> Increase the temperature ($T \approx 0.8$) or enable top-k sampling to encourage variety.</p>
-                        <p><strong>Real-world Frequency:</strong> Common in base model inference.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>4. Checkpoint Loading Failures</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Symptoms:</strong> Loading a checkpoint throws shape mismatch errors or device deserialization crashes.</p>
-                        <p><strong>Likely Causes:</strong>
-                            <ul>
-                                <li>Attempting to load weights saved on a GPU directly onto a CPU or MPS device without mapping.</li>
-                                <li>Model configuration changed since checkpoint was saved.</li>
-                            </ul>
-                        </p>
-                        <p><strong>How to fix:</strong> Always specify the target device during load: <code>torch.load(path, map_location=device)</code>.</p>
-                    </div>
+                    <summary>What is Causal Mask Leakage? What symptom does it produce in validation metrics?</summary>
+                    <p>Causal Mask Leakage occurs when the causal mask in the attention layer is missing or configured incorrectly, allowing tokens to attend to future tokens in the sequence.
+                    Because the target tokens in training are simply the input sequence shifted right by 1, a model with mask leakage can simply copy the target token from its immediate right neighbor.
+                    This produces a **near-zero training loss** almost immediately.
+                    However, during validation or inference where future tokens are not visible, the model fails completely, yielding high validation loss and generating repetitive, incoherent text.</p>
                 </details>
 
                 <div class="prev-next-nav">
-                    <a href="modern_llms.html" class="prev-next-btn">
+                    <a href="memory_performance.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">14. Connections to Modern LLMs</span>
+                        <span class="nav-title">12. Memory Audit</span>
                     </a>
-                    <a href="code_guide.html" class="prev-next-btn next">
+                    <a href="experiments.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">16. Code Reading Guide</span>
+                        <span class="nav-title">14. Experiment Lab</span>
                     </a>
                 </div>
             </main>
 
+            <!-- Table of Contents Sidebar -->
             <aside class="toc-sidebar">
                 <div class="toc-title">ON THIS PAGE</div>
                 <ul class="toc-list" id="toc-list"></ul>

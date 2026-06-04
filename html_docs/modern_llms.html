@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern LLMs | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>From GPT-2 to Modern AI Systems | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,91 +77,158 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>12. Connections to Modern LLMs</span>
+                    <a href="index.html">Handbook</a> &gt; <span>15. GPT-2 to Modern LLMs</span>
                 </div>
 
-                <h1>12. Connections to Modern LLMs</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>The transformer architecture has evolved significantly since GPT-2 was introduced in 2019.
-                Modern models (such as Llama, Gemma, and Mistral) incorporate optimizations designed to scale context lengths, reduce inference latency, and speed up training.
-                Understanding these evolutionary steps is essential for designing custom training runs, optimizing model deployment, and working with modern LLM systems.</p>
+                <h1>15. From GPT-2 to Modern AI Systems</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Think of GPT-2 as an early internal combustion engine. It established the core principles of operation, but was inefficient and lacked refinements.
-                Modern models are like modern hybrid engines:
-                <ul>
-                    <li><strong>RoPE:</strong> Replaces absolute position markings with a relative system, allowing the model to generalize to much longer context windows.</li>
-                    <li><strong>RMSNorm:</strong> Simplifies LayerNorm by assuming the mean of activations is 0, reducing computational overhead.</li>
-                    <li><strong>Grouped Query Attention (GQA):</strong> Divides Query heads into groups that share Key-Value heads, significantly reducing KV cache memory usage during inference.</li>
-                    <li><strong>SwiGLU:</strong> Introduces a gating mechanism to the MLP block, allowing the model to learn complex coordinate-wise multiplicative interactions.</li>
-                </ul></p>
+                <h2>The Token's Journey</h2>
+                <p>Reproducing a base transformer model like GPT-2 is the foundation of LLM engineering. However, in modern production architectures (e.g. Llama 3, Mistral, Gemini), the token flows through refined structural gates (RoPE, RMSNorm, GQA) and operates within a layered enterprise system stack (Fine-Tuning, Serving, RAG, and Agents).</p>
 
-                <h2>Level 2 — Engineering View: Comparative Evolution</h2>
-                <p>The following table tracks how these core components evolved from GPT-2 to modern architectures:</p>
+                <h2>Backend Engineer Lens: Architecture Evolution & Serving Layers</h2>
+                <p>Think of this codebase as a **raw database storage engine**.
+                You understand how it writes parameters to disk (checkpointing) and retrieves indexes (attention).
+                But in production, you don't expose raw storage layers directly to users.
+                You wrap the database in an ORM (PEFT/LoRA), place it behind an API Gateway proxy (inference servers like vLLM), cache context requests (RAG), and script automation workflows (Agents).</p>
+
+                <div class="mermaid">
+                flowchart TD
+                    repo["This Repository: Base GPT-2 Engine"] -->|PEFT / LoRA fine-tuning| ft["Instruction Alignment (Chat Model)"]
+                    ft -->|Quantization / vLLM| serving["Model Serving (PagedAttention API)"]
+                    serving -->|Context Injection| rag["RAG Systems (Vector DB Lookup)"]
+                    rag -->|Orchestration / Tool Call| agents["Autonomous Agents (APIs & Tools)"]
+                </div>
+
+                <h2>GPT-2 vs. Modern LLM Structures</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Component</th>
-                            <th>GPT-2 Design</th>
-                            <th>Modern Design (Llama-3, Gemma-2, Qwen-2.5)</th>
-                            <th>Why it changed</th>
+                            <th>Feature</th>
+                            <th>GPT-2 Baseline (This Repo)</th>
+                            <th>Modern LLMs (Llama 3 / Gemma)</th>
+                            <th>Engineering Trade-off / Advantage</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Position Representation</strong></td>
-                            <td>Absolute Positional Embeddings (learnable matrix of size $T \times C$)</td>
+                            <td><strong>Position Embeddings</strong></td>
+                            <td>Absolute Lookup Table (`wpe`)</td>
                             <td>Rotary Position Embeddings (RoPE)</td>
-                            <td>Enables context length scaling (e.g. from 1k to 128k+ tokens) during inference.</td>
+                            <td>Enables context window scaling during inference.</td>
                         </tr>
                         <tr>
-                            <td><strong>Normalization</strong></td>
-                            <td>LayerNorm (calculates both mean and variance)</td>
-                            <td>RMSNorm (calculates root mean square only)</td>
-                            <td>Reduces computational overhead by 10-50% for normalization layers, improving training speed.</td>
+                            <td><strong>Normalization Placement</strong></td>
+                            <td>Pre-LayerNorm (before block layers)</td>
+                            <td>Pre-RMSNorm</td>
+                            <td>Removes mean calculations, speeding up GPU runtime by 10-50%.</td>
                         </tr>
                         <tr>
-                            <td><strong>Attention</strong></td>
+                            <td><strong>Attention Design</strong></td>
                             <td>Multi-Head Attention (MHA)</td>
-                            <td>Grouped Query Attention (GQA)</td>
-                            <td>Reduces the KV cache memory footprint by 8x, allowing larger batch sizes during inference.</td>
+                            <td>Grouped-Query Attention (GQA)</td>
+                            <td>Reduces KV Cache RAM usage by sharing Key/Value heads across groups.</td>
                         </tr>
                         <tr>
-                            <td><strong>MLP block</strong></td>
-                            <td>Standard FFN with GELU activation</td>
-                            <td>SwiGLU FFN</td>
-                            <td>Introduces a gating mechanism that improves model convergence rates.</td>
+                            <td><strong>MLP Activation</strong></td>
+                            <td>GELU (approximate="tanh")</td>
+                            <td>SwiGLU Gated Activation</td>
+                            <td>Improves model capacity and representational quality.</td>
                         </tr>
                         <tr>
-                            <td><strong>Model Architecture</strong></td>
-                            <td>Dense model</td>
-                            <td>Mixture of Experts (MoE) (in DeepSeek, Mixtral, GPT-4)</td>
-                            <td>Allows scaling the total parameter count while keeping the active parameter count per token small.</td>
+                            <td><strong>Output Projections</strong></td>
+                            <td>Weight Tying (`wte` ties to `lm_head`)</td>
+                            <td>Untied Head projections</td>
+                            <td>Improves logit generation quality at scale at the cost of more weights.</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <h2>3. Mathematical View: RoPE and RMSNorm</h2>
-                <h3>RMSNorm:</h3>
-                <p>RMSNorm simplifies LayerNorm by omitting the mean calculation, normalizing activations using only the root mean square value:
-                $$\text{RMSNorm}(x) = \frac{x}{\sqrt{\frac{1}{d} \sum_{i=1}^d x_i^2 + \epsilon}} \odot \gamma$$</p>
+                <h2>The Production Stack Mapping</h2>
+                
+                <h3>1. PagedAttention & Serving (vLLM)</h3>
+                <ul>
+                    <li><strong>This Repository:</strong> Standard Multi-Head Attention dot products in <a href="code_guide.html#L70">model.py:CausalSelfAttention</a>.</li>
+                    <li><strong>Production Equivalent:</strong> **vLLM** serving engines. Sharing KV states (KV Cache) in GPU memory is critical to handle multiple concurrent clients. vLLM uses virtual memory paging concepts (PagedAttention) to prevent fragmentation, allowing a 10x throughput speedup during high-concurrency API calls.</li>
+                </ul>
 
-                <h3>Rotary Position Embeddings (RoPE):</h3>
-                <p>RoPE represents Query and Key vectors in the complex plane, applying a rotation matrix based on token position $m$:
-                $$R_{\Theta, m}^d = \text{diag}\left( R_{\theta_1, m}, R_{\theta_2, m}, \dots, R_{\theta_{d/2}, m} \right)$$
-                Where $R_{\theta_i, m}$ is a 2D rotation matrix:
-                $$R_{\theta_i, m} = \begin{pmatrix} \cos(m\theta_i) & -\sin(m\theta_i) \\ \sin(m\theta_i) & \cos(m\theta_i) \end{pmatrix}$$
-                By applying this rotation to $Q$ and $K$, the attention dot product becomes dependent only on the relative distance between tokens ($m - n$), allowing the model to generalize to longer context windows.</p>
+                <h3>2. Adapter Fine-Tuning (LoRA / QLoRA)</h3>
+                <ul>
+                    <li><strong>This Repository:</strong> Full parameter backpropagation updating every single weight in <a href="code_guide.html#L142">train.py</a>.</li>
+                    <li><strong>Production Equivalent:</strong> Parameter-Efficient Fine-Tuning (**PEFT**) using **LoRA** (Low-Rank Adaptation). Base weights are frozen (read-only), and tiny sidecar projection weights are trained. **QLoRA** quantizes base weights to 4-bit, allowing fine-tuning on consumer-grade hardware.</li>
+                </ul>
+
+                <h3>3. RAG & Vector Search Databases</h3>
+                <ul>
+                    <li><strong>This Repository:</strong> Local tiktoken subword encoding in <a href="code_guide.html#L17">data.py:DataLoaderLite</a>.</li>
+                    <li><strong>Production Equivalent:</strong> Retrieval-Augmented Generation (**RAG**). In production, context is dynamically injected. Unstructured document payloads are split, converted into embedding vectors, and stored in vector databases (e.g. pgvector, Pinecone). When a query arrives, we perform a vector similarity search, retrieve matching records, and paste them into the LLM context.</li>
+                </ul>
+
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>Why do modern LLMs use Grouped-Query Attention (GQA) instead of standard Multi-Head Attention (MHA)?</summary>
+                    <p>In Multi-Head Attention, every Query head has a corresponding Key and Value head. During autoregressive generation, we cache all Key and Value tensors in memory (KV Cache).
+                    At large batch sizes and long context lengths, this KV Cache consumes massive GPU RAM, limiting throughput.
+                    **Grouped-Query Attention** (GQA) groups Query heads (e.g., 8 Query heads per group) and shares a single Key and Value head pair across each group.
+                    This reduces the memory footprint of the KV Cache by up to 8x, allowing significantly larger serving batch sizes and longer context windows while maintaining near-identical model accuracy.</p>
+                </details>
+
+                <details>
+                    <summary>What is SwiGLU Gated Activation, and why is it preferred over GELU?</summary>
+                    <p>SwiGLU is a Gated Linear Unit activation function defined as:
+                    $$\text{SwiGLU}(x) = (\text{Swish}(x W) \otimes x V)$$
+                    Where $W$ and $V$ are projection weight matrices, and $\otimes$ is element-wise multiplication.
+                    Unlike standard GELU which simply applies a static non-linear threshold to a single projection output, SwiGLU uses a gating mechanism where one projection ($x W$) dynamically scales the activations of a secondary projection ($x V$).
+                    This gating structure increases representational capacity, allowing the network to learn complex logical relationships more efficiently than standard GELU networks.</p>
+                </details>
+
+                <details>
+                    <summary>Compare Fine-Tuning, RAG, and Prompt Engineering in terms of cost, dynamic updates, and architectural focus.</summary>
+                    <p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Memory/Learning Scope</th>
+                                <th>Cost (Compute)</th>
+                                <th>Real-Time Updates</th>
+                                <th>Primary Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Prompt Engineering</strong></td>
+                                <td>Short-term Context (In-Context)</td>
+                                <td>Low (Inference only)</td>
+                                <td>Yes (Instant context swap)</td>
+                                <td>Quick task guidance</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RAG</strong></td>
+                                <td>Dynamic External Database</td>
+                                <td>Medium (DB index queries)</td>
+                                <td>Yes (Instant DB updates)</td>
+                                <td>Enterprise knowledge access</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fine-Tuning (LoRA)</strong></td>
+                                <td>Long-term weights (Behavior)</td>
+                                <td>High (Training runs)</td>
+                                <td>No (Requires retraining)</td>
+                                <td>Task / Style / Tool alignment</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </p>
+                </details>
 
                 <div class="prev-next-nav">
                     <a href="experiments.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">11. Architecture Experiments</span>
+                        <span class="nav-title">14. Experiment Lab</span>
                     </a>
-                    <a href="interview_guide.html" class="prev-next-btn next">
+                    <a href="interview_intent.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">13. LLM Interview Guide</span>
+                        <span class="nav-title">16. Interview Guide</span>
                     </a>
                 </div>
             </main>

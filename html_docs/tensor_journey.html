@@ -3,36 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tensor Journey | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Tensor Journey | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
+        <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -44,136 +30,216 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
 
+            <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>12. Tensor Shape Journey</span>
+                    <a href="index.html">Handbook</a> &gt; <span>11. Tensor Shape Journey</span>
                 </div>
 
-                <h1>12. The Tensor Shape Journey</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>In deep learning, shape mismatch errors are the most common source of runtime crashes.
-                Because PyTorch relies on dynamic graph execution, a single incorrect transpose, squeeze, or dimension broadcast will cause your matrix multiplications to fail.
-                Tracing the exact shape transformations through each layer of the model is essential for debugging and writing custom network architectures.</p>
+                <h1>11. The Tensor Shape Journey</h1>
 
-                <h2>Backend Engineer Lens</h2>
-                <p>Think of tensor shapes as type definitions in a data pipeline.
-                If you pass a JSON object of type <code>{id: int, name: str}</code> to a service that expects a list of items <code>[{id: int}]</code>, the schema validation fails.
-                Similarly, tensor shapes define the API contract between layers: the output dimensions of one layer must align with the input expectations of the next.</p>
+                <h2>The Token's Journey</h2>
+                <p>We trace the exact shape dimensions of our batch as it moves step-by-step through our model configuration.
+                Given parameters: Batch size $B=4$, Context length $T=256$, Embedding size $C=384$, Vocabulary size $V=50257$, Attention heads $H=6$, and Head dimension $D=64$ ($C = H \times D$).</p>
 
-                <h2>The Shape Journey ($B=4, T=256, C=384, V=50257, H=6$)</h2>
-                
                 <div class="mermaid">
                 flowchart TD
-                    Step1["Input IDs: [B, T]"] -->|wte lookup| Step2["Token Embeds: [B, T, C]"]
-                    Step1 -->|wpe lookup| Step3["Position Embeds: [T, C]"]
-                    Step2 & Step3 -->|Sum (Broadcast)| Step4["Summed Embeds: [B, T, C]"]
-                    Step4 -->|Attention Projections| Step5["QKV Projection: [B, T, 3C]"]
-                    Step5 -->|Head Split| Step6["Q, K, V Heads: [B, H, T, D]"]
-                    Step6 -->|Softmax Dot Product| Step7["Attention Context: [B, T, C]"]
-                    Step7 -->|MLP Expansion| Step8["MLP Inner: [B, T, 4C]"]
-                    Step8 -->|MLP Contraction| Step9["MLP Output: [B, T, C]"]
-                    Step9 -->|LM Head Projection| Step10["Logits: [B, T, V]"]
-                    Step10 & Targets["Targets: [B, T]"] -->|Cross Entropy| Step11["Loss: Scalar []"]
+                    In["Input tokens: [4, 256]"] -->|wte lookup| WTE["tok_emb: [4, 256, 384]"]
+                    Pos["Pos indices: [256]"] -->|wpe lookup| WPE["pos_emb: [256, 384]"]
+                    WTE & WPE -->|Broadcast Sum| Summed["x: [4, 256, 384]"]
+                    Summed -->|c_attn projection| QKV["QKV unified: [4, 256, 1152]"]
+                    QKV -->|Split & Transpose| Q["Q, K, V heads: [4, 6, 256, 64]"]
+                    Q & K -->|Q @ K.T| Scores["Scores: [4, 6, 256, 256]"]
+                    Scores & V -->|Softmax @ V| Context["Context: [4, 6, 256, 64]"]
+                    Context -->|Transpose & View| BlockIn["Block Output: [4, 256, 384]"]
+                    BlockIn -->|MLP c_fc projection| MLPUp["MLP Expanded: [4, 256, 1536]"]
+                    MLPUp -->|MLP c_proj projection| MLPDown["MLP Output: [4, 256, 384]"]
+                    MLPDown -->|lm_head projection| Logits["Logits: [4, 256, 50257]"]
+                    Logits & Targets["Targets: [4, 256]"] -->|Flatten & CrossEntropy| Loss["Loss: Scalar []"]
                 </div>
 
-                <h3>1. Input Tokens (<code>idx</code>)</h3>
-                <ul>
-                    <li><strong>Shape:</strong> <code>[4, 256]</code> representing <code>[B, T]</code>.</li>
-                    <li><strong>Why it has this shape:</strong> Contains 4 batch sequences, each containing 256 token IDs.</li>
-                    <li><strong>Common bugs:</strong> Passing floats instead of integers, or sequences longer than <code>block_size</code>.</li>
-                </ul>
+                <h2>Backend Engineer Lens: Shape API Contracts</h2>
+                <p>In software engineering, tensor shapes act as **data model type contracts** between layers.</p>
+                <p>If you pass a list payload when an API gateway expects a map object, the validation parser throws a schema exception.
+                Similarly, in PyTorch, layers expect precise dimension schemas.
+                A shape mismatch error (e.g. <code>RuntimeError: mat1 and mat2 shapes cannot be multiplied</code>) is simply a schema validation crash.
+                Understanding shape dimensions prevents these API contract failures.</p>
 
-                <h3>2. Embeddings Sum (<code>tok_emb + pos_emb</code>)</h3>
-                <ul>
-                    <li><strong>Input Shapes:</strong> <code>tok_emb</code>: <code>[4, 256, 384]</code>; <code>pos_emb</code>: <code>[256, 384]</code>.</li>
-                    <li><strong>Output Shape:</strong> <code>[4, 256, 384]</code>.</li>
-                    <li><strong>Why it changes:</strong> PyTorch automatically broadcasts the positional embeddings across the batch dimension (duplicating them 4 times) during element-wise addition.</li>
-                    <li><strong>Common bugs:</strong> Embedding dimensions not matching, causing addition to fail.</li>
-                </ul>
+                <h2>Step-by-Step Dimensions</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Step</th>
+                            <th>Operation</th>
+                            <th>Input Shapes</th>
+                            <th>Output Shape</th>
+                            <th>Dynamic Reasoning</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1</strong></td>
+                            <td>Token IDs</td>
+                            <td>N/A</td>
+                            <td><code>[4, 256]</code> (B, T)</td>
+                            <td>4 sequences, each containing 256 token integers.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2</strong></td>
+                            <td>Embedding lookup</td>
+                            <td><code>idx</code>: <code>[4, 256]</code></td>
+                            <td><code>tok_emb</code>: <code>[4, 256, 384]</code></td>
+                            <td>Maps token IDs to 384 float features.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3</strong></td>
+                            <td>Sum position</td>
+                            <td><code>tok_emb</code>: <code>[4, 256, 384]</code><br><code>pos_emb</code>: <code>[256, 384]</code></td>
+                            <td><code>x</code>: <code>[4, 256, 384]</code></td>
+                            <td>PyTorch broadcasts <code>pos_emb</code> across the batch of 4.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4</strong></td>
+                            <td>QKV Projection</td>
+                            <td><code>x</code>: <code>[4, 256, 384]</code></td>
+                            <td><code>q, k, v</code>: <code>[4, 256, 1152]</code></td>
+                            <td>Combines Query, Key, and Value projections ($3 \times 384 = 1152$).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5</strong></td>
+                            <td>Head Splitting</td>
+                            <td><code>q, k, v</code>: <code>[4, 256, 384]</code> each</td>
+                            <td><code>Q, K, V</code>: <code>[4, 6, 256, 64]</code> each</td>
+                            <td>Splits feature size 384 into 6 heads of 64 dimensions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6</strong></td>
+                            <td>Attention Scores</td>
+                            <td><code>Q, K</code>: <code>[4, 6, 256, 64]</code></td>
+                            <td><code>Scores</code>: <code>[4, 6, 256, 256]</code></td>
+                            <td>Multiplies 256 queries by 256 keys ($Q \cdot K^T$) for each head.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>7</strong></td>
+                            <td>Context output</td>
+                            <td><code>Scores</code>: <code>[4, 6, 256, 256]</code><br><code>V</code>: <code>[4, 6, 256, 64]</code></td>
+                            <td><code>y</code>: <code>[4, 256, 384]</code></td>
+                            <td>Aggregates values and reshapes/concatenates heads back to $C=384$.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>8</strong></td>
+                            <td>MLP Expansion</td>
+                            <td><code>y</code>: <code>[4, 256, 384]</code></td>
+                            <td><code>mlp_up</code>: <code>[4, 256, 1536]</code></td>
+                            <td>Projects features up by a factor of 4 ($4 \times 384 = 1536$).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>9</strong></td>
+                            <td>MLP Contraction</td>
+                            <td><code>mlp_up</code>: <code>[4, 256, 1536]</code></td>
+                            <td><code>mlp_out</code>: <code>[4, 256, 384]</code></td>
+                            <td>Compresses features back down to the residual size.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>10</strong></td>
+                            <td>LM Head Logits</td>
+                            <td><code>x</code>: <code>[4, 256, 384]</code></td>
+                            <td><code>logits</code>: <code>[4, 256, 50257]</code></td>
+                            <td>Projects normalized state up to vocabulary space.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>11</strong></td>
+                            <td>Loss Calculation</td>
+                            <td><code>logits</code>: <code>[1024, 50257]</code><br><code>targets</code>: <code>[1024]</code></td>
+                            <td><code>loss</code>: Scalar <code>[]</code></td>
+                            <td>Flattens batch/sequence to compute cross-entropy mean.</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                <h3>3. Attention Projections (<code>c_attn</code>)</h3>
-                <ul>
-                    <li><strong>Input Shape:</strong> <code>[4, 256, 384]</code>.</li>
-                    <li><strong>Output Shape:</strong> <code>[4, 256, 1152]</code> representing <code>[B, T, 3C]</code>.</li>
-                    <li><strong>Why it changes:</strong> The input is projected from dimension $C \to 3C$ to generate Query, Key, and Value vectors.</li>
-                </ul>
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>Why do we transpose Q, K, V from [B, T, H, D] to [B, H, T, D] before computing attention?</summary>
+                    <p>In PyTorch, the batch matrix multiplication operator (<code>@</code> or <code>torch.matmul</code>) performs matrix multiplications on the **final two dimensions** of a tensor, treating all preceding dimensions as batch index dimensions.
+                    If we kept the shape as <code>[B, T, H, D]</code>, running <code>Q @ K.transpose(-2, -1)</code> would try to multiply dimension $H$ by $H$, which is mathematically incorrect for our attention heads.
+                    By transposing the dimensions to <code>[B, H, T, D]</code>:
+                    <ul>
+                        <li>We treat both $B$ (batch) and $H$ (head count) as batch indices.</li>
+                        <li>The final two dimensions represent sequence length $T$ and head feature dimension $D$.</li>
+                        <li>Running <code>Q @ K.transpose(-2, -1)</code> computes the matrix multiplication $[T, D] \times [D, T]$ for all heads and batch elements in parallel, producing the correct score matrix of shape <code>[B, H, T, T]</code>.</li>
+                    </ul>
+                    </p>
+                </details>
 
-                <h3>4. Multi-Head Split</h3>
-                <ul>
-                    <li><strong>Input Shape:</strong> <code>[4, 256, 1152]</code>.</li>
-                    <li><strong>Output Shape:</strong> <code>[4, 6, 256, 64]</code> representing <code>[B, H, T, D]</code>.</li>
-                    <li><strong>Why it changes:</strong> The embedding dimension $C=384$ is split across $H=6$ attention heads, giving a head dimension of $D=64$.</li>
-                    <li><strong>Common bugs:</strong> Reshaping dimensions in the wrong order. Always verify your transpositions:
-                        <pre><code class="language-python"># Correct reshaping:
-x.view(B, T, H, D).transpose(1, 2)  # Output shape: [B, H, T, D]</code></pre>
-                    </li>
-                </ul>
-
-                <h3>5. Attention Logits (<code>Q @ K.T</code>)</h3>
-                <ul>
-                    <li><strong>Input Shape:</strong> $Q, K$: <code>[4, 6, 256, 64]</code>.</li>
-                    <li><strong>Output Shape:</strong> <code>[4, 6, 256, 256]</code> representing <code>[B, H, T, T]</code>.</li>
-                    <li><strong>Why it changes:</strong> Multiplying queries by keys computes the similarity score between every token and all other tokens in the sequence.</li>
-                </ul>
-
-                <h3>6. LM Head Logits (<code>lm_head</code>)</h3>
-                <ul>
-                    <li><strong>Input Shape:</strong> <code>[4, 256, 384]</code>.</li>
-                    <li><strong>Output Shape:</strong> <code>[4, 256, 50257]</code> representing <code>[B, T, V]</code>.</li>
-                    <li><strong>Why it changes:</strong> Projects normalized token vectors back to the vocabulary space.</li>
-                </ul>
-
-                <h3>7. Loss calculation</h3>
-                <ul>
-                    <li><strong>Input Shape:</strong> Logits: <code>[1024, 50257]</code>; Targets: <code>[1024]</code> (both flattened).</li>
-                    <li><strong>Output Shape:</strong> Scalar <code>[]</code>.</li>
-                    <li><strong>Why it changes:</strong> Cross-entropy loss averages the prediction errors across all tokens, returning a single scalar value.</li>
-                </ul>
+                <details>
+                    <summary>Why must we call .contiguous() before calling .view() when merging attention heads in model.py?</summary>
+                    <p>In PyTorch, tensors are stored in memory as contiguous blocks of bytes.
+                    Operations like <code>.transpose()</code> do not actually move data in memory; they simply modify the metadata stride index mapping to tell PyTorch how to read the tensor.
+                    However, the <code>.view()</code> method requires that the underlying data be stored contiguously in memory to compute shape changes.
+                    If you try to call <code>.view()</code> on a transposed tensor, it crashes with a runtime layout error.
+                    Calling <code>.contiguous()</code> forces PyTorch to copy the data and re-write it in memory in the new transposed order, allowing <code>.view()</code> to execute successfully:
+                    <pre><code class="language-python"># Merging heads in model.py:
+y = y.transpose(1, 2).contiguous().view(B, T, C)</code></pre>
+                    </p>
+                </details>
 
                 <div class="prev-next-nav">
-                    <a href="experiments.html" class="prev-next-btn">
+                    <a href="evaluation.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">11. Architecture Experiments</span>
+                        <span class="nav-title">10. Evaluation</span>
                     </a>
                     <a href="memory_performance.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">13. Memory & Performance</span>
+                        <span class="nav-title">12. Memory Audit</span>
                     </a>
                 </div>
             </main>
 
+            <!-- Table of Contents Sidebar -->
             <aside class="toc-sidebar">
                 <div class="toc-title">ON THIS PAGE</div>
                 <ul class="toc-list" id="toc-list"></ul>

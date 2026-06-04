@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transformer Block | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Transformer Block | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,78 +77,130 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>03. Transformer Block</span>
+                    <a href="index.html">Handbook</a> &gt; <span>04. MLP & LayerNorm</span>
                 </div>
 
-                <h1>03. Transformer Block: Internals & Normalization</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>A single transformer block contains multiple components: Layer Normalization, Self-Attention, Feed-Forward Networks, and Residual Connections.
-                If you do not understand how these layers interact, you cannot debug training instability (like vanishing or exploding gradients).
-                Properly configuring normalization locations (Pre-LN vs. Post-LN) and initialization scaling is the difference between a model that converges stably and one that returns NaNs.</p>
+                <h1>04. MLP & LayerNorm: Processing Pipelines</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine a pipeline where a signal is processed by a sequence of processing stations.
-                If each station simply transforms the signal, any errors or distortion introduced early on will be amplified at each step, eventually ruining the signal.</p>
-                <p>To prevent this, we introduce two key designs:
+                <div class="cycle-banner">
+                    <span class="cycle-step">00. Overview</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">01. BPE Parsing</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">02. Embeddings</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">03. Attention</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step active">04. Pipelines</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">05. Generation</span>
+                </div>
+
+                <h2>The Token's Journey</h2>
+                <p>Having gathered context from surrounding tokens during attention, our token vector $x$ must now be standardized, individual features mapped, and values integrated back into the residual highway.</p>
+                <ol>
+                    <li><strong>Pre-Layer Normalization:</strong> Before entering attention or the feed-forward network, "The Token's" hidden activations are normalized to mean 0 and variance 1 to maintain mathematical stability.</li>
+                    <li><strong>Residual Skip (Attention):</strong> The output from attention is added back to "The Token's" original incoming state:
+                        <pre><code class="language-python">x = x + attention(ln_1(x))</code></pre>
+                    </li>
+                    <li><strong>Multi-Layer Perceptron (MLP):</strong> Standardized vector features are projected up to 4x width (from $C=384$ to $4C=1536$), filtered through a GELU activation function, and projected back down to $C=384$.</li>
+                    <li><strong>Residual Skip (MLP):</strong> The final processed state is added back to the residual stream:
+                        <pre><code class="language-python">x = x + mlp(ln_2(x))</code></pre>
+                    </li>
+                </ol>
+
+                <div class="mermaid">
+                flowchart TD
+                    Input["Incoming Vector: x"] -->|Pre-LN 1| LN1["LayerNorm [B, T, C]"]
+                    LN1 -->|Attention Block| Attn["Attention Output [B, T, C]"]
+                    Input & Attn -->|Residual Add| Add1["Summed Stream: x + Attn"]
+                    Add1 -->|Pre-LN 2| LN2["LayerNorm [B, T, C]"]
+                    LN2 -->|Linear c_fc| UpProj["Expanded Features: [B, T, 4C]"]
+                    UpProj -->|GELU Activation| Act["Non-Linear Filtering"]
+                    Act -->|Linear c_proj| DownProj["MLP Output: [B, T, C]"]
+                    Add1 & DownProj -->|Residual Add| Output["Final Block Output: x + MLP"]
+                </div>
+
+                <h2>Backend Engineer Lens: Middleware Chains</h2>
+                <p>In software architecture, the Transformer Block structure mirrors a **middleware request-response preservation chain**.</p>
                 <ul>
-                    <li><strong>Residual Connections:</strong> Instead of passing the transformed signal directly to the next station, we add the transformation back to the original input signal ($x + f(x)$). This preserves a clean copy of the original signal throughout the pipeline.</li>
-                    <li><strong>Layer Normalization:</strong> Before a station processes the signal, we normalize its values to prevent them from growing too large or too small. This keeps the signal magnitude stable at every step.</li>
-                </ul></p>
+                    <li><strong>LayerNorm &rarr; Input Standardization:</strong> Think of this as parameter formatting middleware. It standardizes inputs so that data anomalies don't cause processing exceptions (underflow/overflow) down the line.</li>
+                    <li><strong>Residual Streams &rarr; Request Context Bypass:</strong> Think of the residual connection as passing the original HTTP <code>Request Context</code> object down the handler chain. Each handler (Attention or MLP) returns a payload difference that is added to the context. Even if a handler fails or collapses values to zero, the original request payload is still safely preserved and bypassed down the stream.</li>
+                    <li><strong>MLP Block &rarr; Worker Thread Handlers:</strong> Attention lets tokens talk to each other (cross-node communications). Once context is gathered, the MLP acts like independent CPU worker threads executing business logic on each token record individually, without communicating with other threads.</li>
+                </ul>
 
-                <h2>Level 2 — Engineering View</h2>
-                <p>In <code>model.py:L144-L170</code>, the <code>Block</code> class defines a single transformer block:
-                <pre><code class="language-python">class Block(nn.Module):
-    def __init__(self, config: GPTConfig) -> None:
-        super().__init__()
-        self.ln_1 = nn.LayerNorm(config.n_embd)
-        self.attn = CausalSelfAttention(config)
-        self.ln_2 = nn.LayerNorm(config.n_embd)
-        self.mlp = MLP(config)
+                <h2>The Code-to-Concept Map</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Tensor Shape</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Pre-LayerNorm</strong></td>
+                            <td><code>[B, T, C]</code></td>
+                            <td><a href="code_guide.html#L152">model.py: ln_1, ln_2</a></td>
+                            <td>Input normalization middleware</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MLP Projection Up</strong></td>
+                            <td><code>[B, T, 4C]</code> (1536)</td>
+                            <td><a href="code_guide.html#L50">model.py: self.c_fc</a></td>
+                            <td>Intermediate feature projection</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GELU Activation</strong></td>
+                            <td><code>[B, T, 1536]</code></td>
+                            <td><a href="code_guide.html#L51">model.py: self.gelu</a></td>
+                            <td>SwiGLU activation in modern models</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Block Routing</strong></td>
+                            <td><code>[B, T, C]</code></td>
+                            <td><a href="code_guide.html#L157">model.py: Block.forward()</a></td>
+                            <td>Sequential middleware processing</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = x + self.attn(self.ln_1(x))
-        x = x + self.mlp(self.ln_2(x))
-        return x</code></pre>
-                This structure implements **Pre-LN**, applying LayerNorm to the hidden states before passing them to the Attention and MLP blocks.</p>
+                <h2>Production Relevance</h2>
+                <ul>
+                    <li><strong>Pre-LN Stability:</strong> Original transformers (Post-LN) normalized activations *after* residual additions. This caused gradients near output layers to be massive while vanishing near input layers, requiring delicate learning rate schedules. Pre-LN (used in GPT-2 and modern Llama models) normalizes inputs *before* each block, allowing gradients to propagate directly through the clean residual highway during backpropagation, stabilizing large-scale training.</li>
+                    <li><strong>RMSNorm Upgrade:</strong> In production models (e.g. Gemma, Llama), standard LayerNorm (which calculates mean and variance) is replaced by Root Mean Square Normalization (RMSNorm). RMSNorm omits calculating the mean, scaling activations based solely on their root mean square. This reduces math calculations, speeding up GPU runtime by 10-50%.</li>
+                </ul>
 
-                <h2>3. Mathematical View & Gradient Flow</h2>
-                <p>In the Pre-LN layout:
-                $$x^{(l)} = x^{(l-1)} + F_l(\text{LayerNorm}(x^{(l-1)}))$$
-                Applying the chain rule, the gradient of the loss $\mathcal{L}$ with respect to the input $x^{(0)}$ is:
-                $$\frac{\partial \mathcal{L}}{\partial x^{(0)}} = \frac{\partial \mathcal{L}}{\partial x^{(L)}} \left( I + \sum_{l=1}^L \frac{\partial F_l(\text{LayerNorm}(x^{(l-1)}))}{\partial x^{(0)}} \right)$$
-                Because of the identity matrix term $I$, gradients can propagate directly from the final layer back to the input, preventing the vanishing gradient problem.</p>
+                <h2>Verification</h2>
+                <p>We verify the stability of this pipeline by running the overfitting check: without Pre-LN and residual scales, training gradients explode immediately. With them, training loss decreases monotonically from $10.8$ to under $0.01$ in under 120 steps on a single batch:</p>
+                <pre><code class="language-bash">python3 train.py --overfit</code></pre>
 
-                <h2>4. Build Intuition through Numbers: LayerNorm Walkthrough</h2>
-                <p>Let's calculate Layer Normalization manually for a single token embedding vector $X = [4.0, 2.0]$ (dimension $C=2$).
-                Assume the learnable parameters are initialized to their defaults: scale $\gamma = [1.0, 1.0]$ and shift $\beta = [0.0, 0.0]$, and $\epsilon = 1e-5$.
-                
-                <p><strong>Step 1: Compute Mean ($\mu$)</strong></p>
-                $$\mu = \frac{4.0 + 2.0}{2} = 3.0$$
-                
-                <p><strong>Step 2: Compute Variance ($\sigma^2$)</strong></p>
-                $$\sigma^2 = \frac{(4.0 - 3.0)^2 + (2.0 - 3.0)^2}{2} = \frac{1.0 + 1.0}{2} = 1.0$$
-                
-                <p><strong>Step 3: Normalize</strong></p>
-                $$\hat{X}_1 = \frac{4.0 - 3.0}{\sqrt{1.0 + 1e-5}} \approx 1.0$$
-                $$\hat{X}_2 = \frac{2.0 - 3.0}{\sqrt{1.0 + 1e-5}} \approx -1.0$$
-                
-                <p><strong>Step 4: Scale and Shift</strong></p>
-                $$Y = \gamma \odot \hat{X} + \beta = [1.0, 1.0] \odot [1.0, -1.0] + [0.0, 0.0] = [1.0, -1.0]$$
-                The input vector $[4.0, 2.0]$ has been normalized to $[1.0, -1.0]$, keeping the activation magnitudes stable.</p>
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>Why do residual skip connections solve the vanishing gradient problem?</summary>
+                    <p>In backpropagation, we calculate the derivative of a block output with respect to its input.
+                    Given a residual block $y = x + F(x)$, the derivative of $y$ with respect to $x$ is:
+                    $$\frac{\partial y}{\partial x} = 1 + \frac{\partial F(x)}{\partial x}$$
+                    When computing backpropagation, the gradient is multiplied by this term. Even if the sub-layer weights degrade and the local gradient $\frac{\partial F(x)}{\partial x}$ vanishes to zero, the "$1 +$" term ensures that the gradient can flow back completely unimpeded along the entire network depth, directly back to the initial embeddings.</p>
+                </details>
 
-                <h2>5. What happens if we remove LayerNorm?</h2>
-                <p>If we remove all LayerNorm layers, training will fail to converge. 
-                Without normalization, activation magnitudes grow exponentially as they pass through the layers and blocks. When they reach the final classification layer, the logits will be extremely large, pushing the softmax function to return gradients near 0. This is the **vanishing gradient problem**, which halts weight updates and stops learning.</p>
+                <details>
+                    <summary>Why does GPT-2 scale weights at residual projections by $1/\sqrt{2 \cdot \text{n\_layer}}$ during initialization?</summary>
+                    <p>Every time we pass through a transformer block, we add a residual block output to the main vector stream: $x_{next} = x + F(x)$.
+                    Adding these independent random variables increases the variance of the activation signals. If the variance grows too large, activations blow up near output layers, destabilizing training.
+                    To prevent this, we scale the weight initialization of all residual projection layers (`c_proj` in attention and MLP) by a factor of $\frac{1}{\sqrt{2 \cdot N}}$ (where $N$ is the number of layers), ensuring activation variance remains stable at 1.0 throughout the entire network depth.</p>
+                </details>
 
                 <div class="prev-next-nav">
                     <a href="attention.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">02. Causal Self-Attention</span>
+                        <span class="nav-title">03. Attention</span>
                     </a>
-                    <a href="tokenization.html" class="prev-next-btn next">
+                    <a href="generation.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">04. Byte Pair Encoding</span>
+                        <span class="nav-title">05. Generation</span>
                     </a>
                 </div>
             </main>

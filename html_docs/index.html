@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Overview | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation (dynamically updated by script) -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,71 +77,103 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>Welcome & Overview</span>
+                    <a href="index.html">Handbook</a> &gt; <span>00. Overview</span>
                 </div>
 
-                <h1>00. Welcome & Course Overview</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>Most software engineers treat Large Language Models (LLMs) as black boxes, calling APIs (like OpenAI or Anthropic) or loading pre-trained models via library imports. But the moment you need to optimize inference latency, write custom fine-tuning code, reduce KV Cache memory usage, debug a model returning NaN, or discuss core scaling architectures during a staff-level systems interview, black-box knowledge fails.
-                Understanding transformers from first principles—down to the exact PyTorch tensors, gradient updates, and memory allocations—is the dividing line between an application developer and a senior AI/ML systems engineer.</p>
+                <h1>How Text Becomes Intelligence: A Backend Engineer's Guide to Building an LLM</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine a team of 6 researchers (the <strong>Transformer Blocks</strong>) sitting in a line. A document is passed down the line, page by page. 
-                Before the document enters the room, we translate all words into a standardized numeric format (<strong>Tokenization</strong>) and assign each word a baseline folder containing its raw definition and its page number (<strong>Embeddings</strong>).</p>
-                <p>As the document passes through the researchers:
-                <ul>
-                    <li>Each researcher runs a "Self-Attention" pass: they look at all pages received so far, drawing red marker lines between words that relate to each other (e.g., connecting "he" back to "Alan Turing").</li>
-                    <li>Then, they run an "MLP" pass: each researcher works individually on their assigned page, using their own reference manual to look up facts, cross-reference data, and rewrite the summary details.</li>
-                    <li>Finally, the document reaches the supervisor (the <strong>LM Head</strong>), who looks at the final summary of the final word and makes a prediction on what word should come next.</li>
-                </ul></p>
+                <div class="cycle-banner">
+                    <span class="cycle-step active">00. Overview</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">01. BPE Parsing</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">02. Embeddings</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">03. Attention</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">04. Pipelines</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">05. Generation</span>
+                </div>
 
-                <h2>Level 2 — Engineering View</h2>
-                <p>This codebase (located under <code>/Users/ahadk9/Projects/Andrej/</code>) implements this complete workflow by separating concerns across components. The raw dataset loader feeds batched inputs, embeddings map indices to dense layers, and block modules orchestrate self-attention passes.</p>
-                <h2>System Flowchart</h2>
-                <p>The following diagram traces the end-to-end forward pass lifecycle from raw text inputs to training loss calculation:</p>
+                <h2>The Core Question</h2>
+                <p>Most software engineers treat Large Language Models (LLMs) as black boxes, invoking endpoints or importing pre-packaged pipelines. But when latency budgets blow up, context windows choke memory, or predictions collapse into <code>NaN</code>, black-box abstraction fails.</p>
+                <p>This handbook answers a single, fundamental question: <strong>"How does a piece of text become an LLM response?"</strong></p>
+                <p>We trace the exact lifecycle of data through our custom GPT-2 implementation (~10M parameters, configured in <a href="code_guide.html">model.py</a> and optimized in <a href="code_guide.html">train.py</a> for a Mac Mini M4). We will look at it not through academic abstractions, but through the lens of data schemas, database indexes, and middleware processing chains.</p>
+
+                <h2>Meet "The Token"</h2>
+                <p>To guide our understanding, we will follow a character—<strong>"The Token"</strong>—as it enters, travels through, and exits the transformer system.</p>
+
                 <div class="mermaid">
                 flowchart TD
-                    RawText["Raw Text Input"]
-                    TokenIDs["Token IDs: shape [B, T]"]
-                    TokenEmbed["Token Embeddings: shape [B, T, C]"]
-                    PosEmbed["Positional Embeddings: shape [T, C]"]
-                    InputState["X_0: shape [B, T, C]"]
-                    Block1["Block 1"]
-                    Block6["Block 6"]
-                    FinalNorm["Normalized X: shape [B, T, C]"]
-                    Logits["Logits: shape [B, T, V]"]
-                    Loss["Loss Scalar"]
-
-                    RawText -->|data.py: tiktoken BPE| TokenIDs
-                    TokenIDs -->|model.py: wte| TokenEmbed
-                    TokenIDs -->|model.py: wpe| PosEmbed
-                    TokenEmbed & PosEmbed -->|Sum| InputState
-                    
-                    subgraph Blocks["6x Transformer Blocks"]
-                        InputState --> Block1
-                        Block1 --> Block6
-                    end
-                    
-                    Block6 -->|model.py: ln_f| FinalNorm
-                    FinalNorm -->|model.py: lm_head| Logits
-                    Logits & Targets[Targets: shape B, T] -->|CrossEntropyLoss| Loss
+                    RawText["1. Raw Text: 'Hello Ahad'"] -->|01. BPE Tokenizer| TokenID["2. Token ID: [15496] (Primary Key)"]
+                    TokenID -->|02. Embedding Lookup| Vector["3. Embeddings: [1, 384] Float Vector"]
+                    Vector -->|03. Causal Attention| Context["4. Contextual Vector: Gathers surrounding info"]
+                    Context -->|04. FFN/MLP Pipeline| Features["5. Processed Features: Refined understanding"]
+                    Features -->|05. Output Head| Logits["6. Logits: Probability distribution over 50,257 tokens"]
+                    Logits -->|Sampler| NextToken["7. Next Token: ID [382] (' determined')"]
                 </div>
 
-                <h2>Level 3 — Mathematical View</h2>
-                <p>The core training objective is to find parameter weights $\theta$ that minimize the cross-entropy loss over a sequence of tokens.
-                Given a sequence of input tokens $x = (x_1, x_2, \dots, x_T)$, the model computes conditional probabilities for each position $t$:
-                $$P(x_t \mid x_{1}, \dots, x_{t-1}) = \text{Softmax}(\text{lm\_head}(h_t^{(L)}))$$
-                Where $h_t^{(L)}$ is the final representation of token $t$ after passing through all $L$ transformer blocks.
-                The loss function (negative log-likelihood) is computed over the entire sequence:
-                $$\mathcal{L} = -\frac{1}{T} \sum_{t=1}^T \ln P(x_t \mid x_{1}, \dots, x_{t-1})$$
-                By calculating the derivative of this loss with respect to all parameter weights ($\nabla_\theta \mathcal{L}$), the optimizer (AdamW) updates the model parameters to make correct word predictions more likely.</p>
+                <h2>The Token's Lifecycle Checklist</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Conceptual Analogy</th>
+                            <th>Tensor Shape</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>01. Tokenization</strong></td>
+                            <td>Payload Parsing (String &rarr; ID)</td>
+                            <td><code>[B, T]</code></td>
+                            <td><code>data.py:DataLoaderLite</code></td>
+                            <td>BPE Tokenizer (tiktoken)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>02. Embeddings</strong></td>
+                            <td>Primary Key Directory Lookup</td>
+                            <td><code>[B, T, C]</code></td>
+                            <td><code>model.py:wte</code>, <code>wpe</code></td>
+                            <td>Vector Search Directories</td>
+                        </tr>
+                        <tr>
+                            <td><strong>03. Attention</strong></td>
+                            <td>Relational Similarity Search</td>
+                            <td><code>[B, H, T, D]</code></td>
+                            <td><code>model.py:CausalSelfAttention</code></td>
+                            <td>vLLM, KV Cache Optimization</td>
+                        </tr>
+                        <tr>
+                            <td><strong>04. MLP Block</strong></td>
+                            <td>Parallel Execution Pipelines</td>
+                            <td><code>[B, T, 4C]</code></td>
+                            <td><code>model.py:MLP</code></td>
+                            <td>Deep Neural Projections</td>
+                        </tr>
+                        <tr>
+                            <td><strong>05. Generation</strong></td>
+                            <td>Queue Buffer Appending</td>
+                            <td><code>[B, T, V]</code></td>
+                            <td><code>model.py:GPT.generate</code></td>
+                            <td>Streaming SSE Event Stream</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert tip">
+                    <div class="alert-title">How to read this textbook</div>
+                    <p>Navigate sequentially down the sidebar modules. Each page starts with the intuitive <strong>Token Journey</strong> step, maps the math to a <strong>Backend Engineer Lens</strong>, shows the exact **PyTorch code symbols**, and wraps up with <strong>Common Interview Followups</strong> to prepare you for systems and AI/ML interviews.</p>
+                </div>
 
                 <div class="prev-next-nav">
                     <div></div>
-                    <a href="architecture.html" class="prev-next-btn next">
+                    <a href="tokenization.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">01. Architecture Lifecycle</span>
+                        <span class="nav-title">01. Tokenization</span>
                     </a>
                 </div>
             </main>

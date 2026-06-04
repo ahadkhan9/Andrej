@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tokenization | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Tokenization | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,59 +77,114 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>04. Byte Pair Encoding</span>
+                    <a href="index.html">Handbook</a> &gt; <span>01. Tokenization</span>
                 </div>
 
-                <h1>04. Tokenization: Byte Pair Encoding (BPE)</h1>
+                <h1>01. Tokenization: Payload Parsing</h1>
+
+                <div class="cycle-banner">
+                    <span class="cycle-step">00. Overview</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step active">01. BPE Parsing</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">02. Embeddings</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">03. Attention</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">04. Pipelines</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">05. Generation</span>
+                </div>
+
+                <h2>The Token's Journey</h2>
+                <p>Our journey begins with raw text payload: <code>"Hello Ahad"</code>.
+                Before entering the neural processing layers, this unstructured string must be parsed into integer primary keys.
+                The Byte Pair Encoding (BPE) tokenizer scans the string, recognizes subword patterns, and converts the text into a sequence of two IDs: <code>[15496, 20921]</code>.</p>
+
+                <div class="mermaid">
+                flowchart LR
+                    Raw["String: 'Hello Ahad'"] -->|tiktoken split| Subwords["Subwords: 'Hello' + ' Ahad'"]
+                    Subwords -->|vocabulary lookup| IDs["Integer IDs: [15496, 20921]"]
+                </div>
+
+                <h2>Backend Engineer Lens: Payload Parsing</h2>
+                <p>Think of tokenization as **payload parsing**.
+                When client data arrives as a raw JSON string, your server doesn't execute logic on the raw string bytes.
+                Instead, you parse it into internal data structures—mapping strings to enumerated IDs or primary keys.
+                Similarly, a transformer cannot process raw Unicode strings.
+                Tokenization maps unstructured text to a set of precompiled primary keys (vocabulary index 0 to 50,256) stored in a local static directory.</p>
                 
-                <h2>Why should I care?</h2>
-                <p>Computers do not process words directly. How you split text into numerical tokens affects everything downstream: the model's vocabulary size, context window efficiency, parameter counts, and its ability to represent new or rare words.
-                Understanding BPE tokenization prevents common bugs, such as character set representation errors, out-of-vocabulary crashes, or excessive parameter counts in the embedding layers.</p>
+                <div class="alert info">
+                    <div class="alert-title">Transitioning to Code</div>
+                    <p>Once parsed into IDs, the sequence is packed into a PyTorch <code>LongTensor</code>. We do not use floating-point types for tokens because they represent discrete catalog items (indexes), which will be used for matrix row lookups.</p>
+                </div>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine you have a dictionary with a limited number of pages.
-                If you assign a unique code to every individual character, your dictionary will be very small, but writing a single sentence will require a massive string of codes.
-                If you assign a unique code to every single word, writing a sentence will be short, but your dictionary will need millions of pages and will fail whenever you encounter a new word (like a name or slang).</p>
-                <p><strong>Byte Pair Encoding (BPE)</strong> is the middle ground:
+                <h2>The Code-to-Concept Map</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Tensor Shape / Type</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vocabulary Size ($V=50257$)</strong></td>
+                            <td>Static Int Config</td>
+                            <td><a href="code_guide.html#L33">model.py: GPTConfig.vocab_size</a></td>
+                            <td>Llama 3 (128,256 tokens)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Encoding Text</strong></td>
+                            <td>String &rarr; List[int]</td>
+                            <td><a href="code_guide.html#L27">data.py: DataLoaderLite</a></td>
+                            <td>Hugging Face <code>AutoTokenizer</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Batch Payload</strong></td>
+                            <td><code>[B, T]</code> (torch.long)</td>
+                            <td><a href="code_guide.html#L50">data.py: next_batch()</a></td>
+                            <td>Inference Engine API payload</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Production Relevance</h2>
                 <ul>
-                    <li>We start with a dictionary of the basic building blocks (individual bytes).</li>
-                    <li>We scan our text and find the most common pairs of blocks (e.g. <code>t</code> and <code>h</code>) and merge them into a single new block (<code>th</code>).</li>
-                    <li>We repeat this process until our dictionary reaches a target size (50,257).</li>
+                    <li><strong>Context Window Allocation:</strong> Because computational cost scales quadratically with sequence length, token length directly bounds your context window limits (e.g. 8k context = 8,192 token IDs).</li>
+                    <li><strong>RAG Text Chunking:</strong> When chunking text for retrieval, splitting by character counts can break a subword token in half (e.g. splitting <code>"running"</code> into <code>"run"</code> and <code>"ning"</code> across chunks). This alters their embeddings and degrades vector search relevance. Always chunk using token counts, not character counts.</li>
                 </ul>
-                This allows common words (like "the") to be represented by a single code, while rare words are broken down into smaller, recognized sub-words or characters, ensuring we can represent any text without needing an infinite dictionary.</p>
 
-                <h2>Level 2 — Engineering View</h2>
-                <p>In our data pipeline (<code>data.py:L26-L29</code>), we use OpenAI's <code>tiktoken</code> library to load the GPT-2 BPE tokenizer, convert input text to token IDs, and store them as a PyTorch tensor:</p>
-                <pre><code class="language-python">enc = tiktoken.get_encoding("gpt2")
-tokens = enc.encode(text)
-self.tokens = torch.tensor(tokens, dtype=torch.long)</code></pre>
-                <p>Because the token embedding matrix (<code>wte</code>) and the output classification layer (<code>lm_head</code>) both depend on the vocabulary size ($V$), they account for a large portion of our model's parameters.
-                To save memory, we tie the weights of these two layers in <code>model.py:L194</code>:</p>
-                <pre><code class="language-python">self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
-self.transformer.wte.weight = self.lm_head.weight</code></pre>
+                <h2>Verification</h2>
+                <p>We verify our tokenizer using the logit parity test and generation script. Run this command to verify that token decoding maps perfectly back to original strings:</p>
+                <pre><code class="language-bash">python3 generate.py --prompt "Alan Turing determined that" --max_tokens 1</code></pre>
 
-                <h2>3. Mathematical View</h2>
-                <p>The token embedding lookup is a matrix multiplication:
-                $$E = O_x \cdot W_{emb}$$
-                Where $O_x \in \{0, 1\}^{B \times T \times V}$ is a one-hot representation of the input tokens, and $W_{emb} \in \mathbb{R}^{V \times C}$ is the embedding matrix.
-                In practice, PyTorch performs this lookup efficiently using index offsets rather than large matrix multiplications, but the mathematical representation remains equivalent.</p>
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>Why do we use Byte Pair Encoding (BPE) instead of character or word tokenization?</summary>
+                    <p>BPE is a subword tokenization algorithm. It merges frequently occurring byte pairs.
+                    Word-level tokenization is fragile because it cannot handle new/misspelled words, and results in a massive, sparse vocabulary matrix.
+                    Character-level tokenization has a tiny vocabulary but makes sequence lengths extremely long, blowing up attention compute cost ($O(T^2)$).
+                    BPE balances this by merging common words into single tokens while decomposing rare words into character fragments, preventing out-of-vocabulary (OOV) errors.</p>
+                </details>
 
-                <h2>4. What happens if we remove weight tying?</h2>
-                <p>If we untie the weights of <code>wte</code> and <code>lm_head</code>:
-                <ul>
-                    <li>The model's parameter footprint increases by $V \times C = 19.3\text{M}$ parameters (growing from 30M to 49M parameters).</li>
-                    <li>During training, we must allocate additional GPU memory to store the gradients and optimizer states for this second matrix, increasing memory overhead by approximately $150\text{ MB}$.</li>
-                    <li>Convergence will be slightly slower, as the input embeddings and output projections must learn their semantic representations independently rather than sharing updates.</li>
-                </ul></p>
+                <details>
+                    <summary>What is the out-of-vocabulary (OOV) problem, and how does BPE solve it?</summary>
+                    <p>The OOV problem occurs when a model encounters a word not present in its training dictionary.
+                    BPE handles this by building its vocabulary on top of raw byte representations (values 0-255).
+                    If a word is entirely unknown, the tokenizer decomposes it down to its raw character or individual byte tokens, ensuring the model can always parse and process any input text without throwing errors.</p>
+                </details>
 
                 <div class="prev-next-nav">
-                    <a href="transformer_block.html" class="prev-next-btn">
+                    <a href="index.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">03. Transformer Block</span>
+                        <span class="nav-title">00. Overview</span>
                     </a>
-                    <a href="data_pipeline.html" class="prev-next-btn next">
+                    <a href="architecture.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">05. Data Pipeline Details</span>
+                        <span class="nav-title">02. Embeddings</span>
                     </a>
                 </div>
             </main>

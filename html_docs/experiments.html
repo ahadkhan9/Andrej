@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experiments | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Experiment Lab | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,90 +77,117 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>11. Architecture Experiments</span>
+                    <a href="index.html">Handbook</a> &gt; <span>14. Experiment Lab</span>
                 </div>
 
-                <h1>11. Experiments: Structural Interventions</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>Understanding a system requires knowing not only how it works, but also how it fails.
-                By examining what happens when core architectural components are removed or modified, you gain a deeper understanding of why they exist and the training failures they prevent.</p>
+                <h1>14. Experiment Lab: Structural Modifications</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Think of the transformer architecture as a suspension bridge.
-                Each steel cable, anchor point, and crossbeam has a specific purpose.
-                If you remove a main cable (residual connection), the bridge collapses. If you remove the expansion joints (LayerNorm), temperature swings will warp the steel until it snaps. If you remove the road signs (position embeddings), drivers won't know which lane to use.</p>
+                <h2>The Token's Journey</h2>
+                <p>By conducting systematic ablation studies (removing or altering specific model structures), we observe exactly how each component affects the token's information flow and training convergence.</p>
 
-                <h2>Level 2 — Engineering View: Failure Scenarios</h2>
-                <p>We document six structural experiments, detailing their behaviors and failure modes:</p>
+                <h2>Backend Engineer Lens: Infrastructure A/B Testing</h2>
+                <p>Systematic ablation studies mirror **A/B testing database indexing structures and disabling middleware components** to isolate performance bottlenecks.</p>
+                <ul>
+                    <li><strong>Removing Residual Skip Connections &rarr; Disabling request context bypass:</strong> If we delete residual additions, the gradient feedback trace cannot bypass layers. Optimization fails because the feedback never reaches the initial layers.</li>
+                    <li><strong>Removing Position Embeddings &rarr; Dropping database sort order indexes:</strong> Removing positional embeddings is identical to stripping a database query of <code>ORDER BY</code> indexes. The database treats records as a bag-of-words. The model loses all grammatical and semantic order awareness.</li>
+                    <li><strong>Swapping GELU for ReLU &rarr; Downgrading validation logic:</strong> ReLU acts like a strict validator that throws an exception for negative values (zeroes out negative parameters). Swapping to GELU (Gaussian Error Linear Unit) allows a smooth, non-zero gradient for negative values, preventing "dead neuron" bottlenecks.</li>
+                </ul>
 
+                <h2>Ablation Experiment Registry</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Experiment</th>
+                            <th>Hypothesis</th>
+                            <th>Code Modification Instruct</th>
+                            <th>Observed Loss / Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ablate Residual Skip Connections</strong></td>
+                            <td>Without skip connections, deep backpropagation gradients vanish, and training stalls immediately.</td>
+                            <td>
+                                In <a href="code_guide.html#L157">model.py: Block.forward()</a>, change:
+                                <pre><code class="language-python"># Before:
+x = x + self.attn(self.ln_1(x))
+# After:
+x = self.attn(self.ln_1(x))</code></pre>
+                            </td>
+                            <td>
+                                <strong>Failed ❌</strong><br>
+                                Loss gets stuck at initial values (~10.8) and fails to optimize.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ablate Position Embeddings (wpe)</strong></td>
+                            <td>The model behaves as a bag-of-words and cannot learn sentence grammar or order.</td>
+                            <td>
+                                In <a href="code_guide.html#L239">model.py: GPT.forward()</a>, change:
+                                <pre><code class="language-python"># Before:
+x = tok_emb + pos_emb
+# After:
+x = tok_emb</code></pre>
+                            </td>
+                            <td>
+                                <strong>Degraded ⚠️</strong><br>
+                                Validation loss stalls at a high value. Text generated lacks grammatical coherence.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>GELU vs ReLU</strong></td>
+                            <td>ReLU zeroes out negative values, creating "dead neurons". GELU maintains smooth learning convergence.</td>
+                            <td>
+                                In <a href="code_guide.html#L51">model.py: MLP</a>, swap activation:
+                                <pre><code class="language-python"># Before:
+self.gelu = nn.GELU(approximate="tanh")
+# After:
+self.gelu = nn.ReLU()</code></pre>
+                            </td>
+                            <td>
+                                <strong>Stable but slower ⚠️</strong><br>
+                                Model converges but final training loss is 10-15% higher than GELU baseline.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>How to Conduct Experiments</h2>
+                <p>To run these ablation tests on your machine:</p>
+                <ol>
+                    <li>Apply the respective code modification outlined in the table above inside `model.py`.</li>
+                    <li>Launch training for 60 steps using FP16 mixed precision:
+                        <pre><code class="language-bash">python3 train.py --steps 60 --amp</code></pre>
+                    </li>
+                    <li>Observe validation loss values output to the console and compare against healthy baseline parameters.</li>
+                </ol>
+
+                <h2>Common Interview Followups</h2>
                 <details>
-                    <summary>1. Removing Positional Embeddings</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> The model trains and loss decreases slightly, but generated text becomes repetitive, grammatically incorrect, and loses coherence quickly. Downstream reasoning accuracy drops close to random chance.</p>
-                        <p><strong>Why it happens:</strong> Self-attention is permutation-invariant: it treats the input sequence as a "bag of words" without inherent order. Without positional embeddings, the model cannot distinguish word order.</p>
-                        <p><strong>What to observe in logs:</strong> Slower training loss decay, and repetitive generation loops (e.g. <code>"the the the"</code>).</p>
-                    </div>
+                    <summary>Why do we use GELU instead of ReLU in modern transformer networks?</summary>
+                    <p>ReLU is defined as:
+                    $$\text{ReLU}(x) = \max(0, x)$$
+                    If a neuron receives a negative input, its output is zero, and its gradient is also zero. If weights update such that a neuron always receives negative inputs, its weights will never update again, rendering it permanently inactive ("dead neuron").
+                    **GELU** (Gaussian Error Linear Unit) scales inputs smoothly:
+                    $$\text{GELU}(x) = x \cdot \Phi(x)$$
+                    Where $\Phi(x)$ is the cumulative distribution function of the standard normal distribution. Because it is non-zero for negative inputs, it allows a small gradient to propagate, preventing dead neurons and stabilizing training.</p>
                 </details>
 
                 <details>
-                    <summary>2. Removing Residual Connections</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Training fails to converge. Gradients either vanish or explode, causing the model to return <code>NaN</code>.</p>
-                        <p><strong>Why it happens:</strong> Without residual connections ($x + f(x)$), gradients must flow back through a chain of multiplications of weights and activations. Early layers receive virtually no gradient signal during backpropagation.</p>
-                        <p><strong>What to observe in logs:</strong> Loss remains stuck at random baseline ($\approx 10.8$) or returns <code>NaN</code> within the first few steps.</p>
-                    </div>
+                    <summary>What occurs if you remove position embeddings from a transformer model?</summary>
+                    <p>If you remove position embeddings, the model becomes completely order-blind.
+                    Because the self-attention formula computes dot-products between all token pairs, the output for "dog bites man" and "man bites dog" will be identical.
+                    The model treats the input as a "bag of words" and loses all awareness of syntax, grammar, and word ordering, resulting in high validation losses and ungrammatical generated sentences.</p>
                 </details>
-
-                <details>
-                    <summary>3. Removing LayerNorm</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Training fails immediately with loss returning <code>NaN</code>.</p>
-                        <p><strong>Why it happens:</strong> Without normalization layers, activation magnitudes grow exponentially as they pass through the blocks, causing arithmetic overflow (exceeding float range) during forward and backward passes.</p>
-                        <p><strong>What to observe in logs:</strong> Weight values and loss return <code>NaN</code> at step 0 or 1.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>4. Removing Causal Masking</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Training loss drops to near 0 quickly, but the model fails to generate coherent text during inference.</p>
-                        <p><strong>Why it happens:</strong> Without the causal mask, tokens can look ahead to future target tokens. The model learns to simply copy the next token from the input rather than learning semantic structures, making it useless for autoregressive generation.</p>
-                        <p><strong>What to observe in logs:</strong> Training loss decays abnormally fast to near 0, but generated outputs are repetitive loops of the prompt tokens.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>5. Removing Weight Tying</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Model trains successfully, but parameter count increases by $19.3\text{M}$ and training memory increases by $\approx 150\text{ MB}$.</p>
-                        <p><strong>Why it happens:</strong> Tying the weights of <code>wte</code> and <code>lm_head</code> shares their parameters. Untying them requires allocating separate memory for both layers' weights, gradients, and optimizer states.</p>
-                        <p><strong>What to observe in logs:</strong> Increased memory usage and slightly slower initial convergence.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>6. Removing Gradient Clipping</summary>
-                    <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Training runs normally for a few steps, but occasionally destabilizes, with loss spikes or <code>NaN</code> errors.</p>
-                        <p><strong>Why it happens:</strong> If the model encounters a steep region of the loss landscape, gradient values can grow extremely large. Without clipping, the optimizer takes an excessively large step, pushing weights to extreme values and causing the loss to explode.</p>
-                        <p><strong>What to observe in logs:</strong> Sudden spikes in gradient norm followed by loss returning <code>NaN</code>.</p>
-                    </div>
-                </details>
-
-                <h2>3. Mathematical View: Vanishing Gradients</h2>
-                <p>The derivative of the loss $\mathcal{L}$ with respect to the input $x_0$ through $L$ non-residual blocks is:
-                $$\frac{\partial \mathcal{L}}{\partial x_0} = \frac{\partial \mathcal{L}}{\partial x_L} \prod_{l=1}^L \frac{\partial f_l(x_{l-1})}{\partial x_{l-1}}$$
-                If the Jacobian matrices $\frac{\partial f_l}{\partial x}$ have singular values less than 1.0, the product decays exponentially with depth ($L$), causing gradients in early layers to approach 0. Residual connections resolve this by introducing an identity term ($I$), ensuring stable gradient flow.</p>
 
                 <div class="prev-next-nav">
-                    <a href="evaluation.html" class="prev-next-btn">
+                    <a href="debugging.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">10. Model Evaluation</span>
+                        <span class="nav-title">13. Failure Gallery</span>
                     </a>
                     <a href="modern_llms.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">12. Connections to Modern LLMs</span>
+                        <span class="nav-title">15. GPT-2 to Modern LLMs</span>
                     </a>
                 </div>
             </main>

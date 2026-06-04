@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Architecture | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Embeddings | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,108 +77,114 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>01. Architecture Lifecycle</span>
+                    <a href="index.html">Handbook</a> &gt; <span>02. Embeddings</span>
                 </div>
 
-                <h1>01. Architecture: Token-to-Loss Lifecycle</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>An LLM is a complex mathematical pipeline. When you scale up training across thousands of GPUs, or deploy a model to run on edge devices, you must be able to track every single tensor dimension and state modification.
-                If you cannot trace the exact shapes, parameter counts, and memory layout at every line of code, you cannot debug shape mismatch errors, optimize memory allocations, or calculate the hardware limits of your training infrastructure.</p>
+                <h1>02. Embeddings: Mapping to Vector Space</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Think of the transformer architecture as a factory production line. Raw materials (text characters) enter at the front, get processed, packaged, and stamped with predictions at the end.</p>
-                <p>The core layout consists of three primary zones:
-                <ul>
-                    <li><strong>The Loading Dock (Embeddings):</strong> Raw text characters are translated into numerical tokens, which are then mapped to continuous embedding vectors. Positional embeddings are added to provide spatial context.</li>
-                    <li><strong>The Assembly Line (Transformer Blocks):</strong> The vectors pass sequentially through multiple blocks. In each block, self-attention mixes information between tokens, while the MLP extracts features from each token individually.</li>
-                    <li><strong>The Packaging Station (Head & Loss):</strong> The vectors are mapped back to vocabulary scores (logits) to predict the next token. During training, the cross-entropy loss measures the difference between these predictions and the target tokens.</li>
-                </ul></p>
+                <div class="cycle-banner">
+                    <span class="cycle-step">00. Overview</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">01. BPE Parsing</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step active">02. Embeddings</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">03. Attention</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">04. Pipelines</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">05. Generation</span>
+                </div>
 
-                <h2>Level 2 — Engineering View: The Tensor Shape Journey</h2>
-                <p>Let's trace a batch of data through our model using our active repository hyperparameters:
-                <br>Batch Size $B=4$, context length $T=256$, embedding dimension $C=384$, vocabulary size $V=50257$, and heads $H=6$ (dimension per head $D=64$).</p>
-                
+                <h2>The Token's Journey</h2>
+                <p>Our token character ID <code>15496</code> ("Hello") has no semantic meaning or context of where it sits in the sequence. It's just a raw primary key.</p>
+                <ol>
+                    <li><strong>Token Lookup (wte):</strong> The index is used to fetch the 15,496th row of the Token Embedding weight matrix. This yields a dense feature vector of dimension <code>[384]</code>.</li>
+                    <li><strong>Position Lookup (wpe):</strong> Because attention calculations are position-blind, we fetch position index <code>0</code> (for the first token in the sequence) from the Position Embedding matrix, yielding another <code>[384]</code> vector.</li>
+                    <li><strong>Summation:</strong> We add these two vectors together: <code>x = tok_emb + pos_emb</code>, producing a single tensor of shape <code>[B, T, C]</code>.</li>
+                </ol>
+
                 <div class="mermaid">
                 flowchart TD
-                    Input["Raw Text: 'Alan Turing...'"]
-                    Shape1["idx Tensor: shape [4, 256]"]
-                    Shape2["wte Tensor: shape [4, 256, 384]"]
-                    Shape3["wpe Tensor: shape [256, 384]"]
-                    Shape4["x_0 Tensor: shape [4, 256, 384]"]
-                    Shape5["x_out Tensor: shape [4, 256, 384]"]
-                    Shape6["Normalized States: shape [4, 256, 384]"]
-                    Shape7["Logits: shape [4, 256, 50257]"]
-                    Targets["Targets: shape [4, 256]"]
-                    Loss["Loss: Scalar Tensor"]
-
-                    Input -->|data.py: DataLoaderLite| Shape1
-                    Shape1 -->|model.py: self.transformer.wte| Shape2
-                    Shape1 -->|model.py: self.transformer.wpe| Shape3
-                    Shape2 & Shape3 -->|Sum| Shape4
-                    Shape4 -->|6x Blocks| Shape5
-                    Shape5 -->|model.py: self.transformer.ln_f| Shape6
-                    Shape6 -->|model.py: self.lm_head| Shape7
-                    Shape7 & Targets -->|train.py: F.cross_entropy| Loss
+                    ID["Token ID [15496]"] -->|wte lookup| WTE["tok_emb vector [384]"]
+                    Pos["Pos Index [0]"] -->|wpe lookup| WPE["pos_emb vector [384]"]
+                    WTE & WPE -->|Element-wise Sum| Summed["Output Vector [384]"]
                 </div>
 
-                <h3>Detailed Shape Stages:</h3>
+                <h2>Backend Engineer Lens: Index Lookups</h2>
+                <p>In backend engineering, an embedding lookup is a standard **indexed primary key query** in an in-memory directory.</p>
+                <p>Think of <code>wte</code> as a database table of pre-computed floats of size <code>[50257, 384]</code>.
+                When we query the table using the token ID, we retrieve a dense record representing the token's initial semantic values.</p>
+                <p>Since attention is completely order-independent (like a bag-of-words or database rows without sorting), we must inject ordering metadata.
+                We do this by adding a secondary index record—the positional embedding vector `wpe`—directly to our semantic record.</p>
+
+                <div class="alert info">
+                    <div class="alert-title">Transitioning to Code</div>
+                    <p>In PyTorch, <code>nn.Embedding</code> acts as a lookup wrapper around a learnable parameter matrix of size <code>[num_embeddings, embedding_dim]</code>. Under the hood, this is a fast row-index gather operation (comparable to `W[idx]`), not a matrix multiplication.</p>
+                </div>
+
+                <h2>The Code-to-Concept Map</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Tensor Shape</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Token Embedding Matrix (wte)</strong></td>
+                            <td><code>[vocab_size, n_embd]</code></td>
+                            <td><a href="code_guide.html#L185">model.py: transformer.wte</a></td>
+                            <td>Embedding weights in OpenAI API</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Position Embedding Matrix (wpe)</strong></td>
+                            <td><code>[block_size, n_embd]</code></td>
+                            <td><a href="code_guide.html#L186">model.py: transformer.wpe</a></td>
+                            <td>Rotary Positional Embeddings (RoPE)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vector Sum & Broadcast</strong></td>
+                            <td><code>[B, T, C]</code></td>
+                            <td><a href="code_guide.html#L239">model.py: GPT.forward()</a></td>
+                            <td>Input embedding compilation</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Production Relevance</h2>
                 <ul>
-                    <li><strong>Input Tensors:</strong> <code>idx</code> is a 2D integer tensor of shape <code>[B, T]</code> ($4 \times 256$).</li>
-                    <li><strong>Token Embeddings:</strong> <code>wte(idx)</code> maps each integer token to a dense representation, returning shape <code>[B, T, C]</code> ($4 \times 256 \times 384$).</li>
-                    <li><strong>Position Embeddings:</strong> <code>wpe(pos)</code> maps sequence positions to vectors of shape <code>[T, C]</code> ($256 \times 384$). When added to the token embeddings, PyTorch broadcasts the positional vectors across the batch dimension, returning a summed tensor of shape <code>[B, T, C]</code>.</li>
-                    <li><strong>Transformer Blocks:</strong> The hidden state maintains the shape <code>[B, T, C]</code> through all 6 blocks, ensuring compatibility with residual connections.</li>
-                    <li><strong>Final Logits:</strong> The final linear layer (<code>lm_head</code>) maps each token vector from dimension $C$ to the vocabulary size $V$, returning a tensor of shape <code>[B, T, V]</code> ($4 \times 256 \times 50257$).</li>
+                    <li><strong>Vector Databases:</strong> When building a RAG application, your vector search database (pgvector, Chroma, Milvus) index operates in this exact embedding vector space. User query embeddings are compared against document chunk embeddings using cosine similarity dot-products.</li>
+                    <li><strong>Shared Weights (Weight Tying):</strong> In GPT-2, we tie the weights of <code>wte</code> directly to the output projection head <code>lm_head</code>. This means the matrix mapping words to vectors is the exact same matrix mapping vectors back to words, reducing our model memory footprint by ~19M parameters!</li>
                 </ul>
 
-                <h2>3. Mathematical View</h2>
-                <p>Each block update can be written as:
-                $$x^{(l)} = x^{(l-1)} + \text{Attention}(\text{LayerNorm}(x^{(l-1)}))$$
-                $$x^{(l)} = x^{(l)} + \text{MLP}(\text{LayerNorm}(x^{(l)}))$$
-                The final classification score (logits) for a target token at index $t$ is:
-                $$z_t = W_{tie} \cdot \text{LayerNorm}(x_t^{(L)})$$
-                Where $W_{tie}$ is the shared weight tensor of shape $(V, C)$ used for both the input embeddings and output projection.</p>
+                <h2>Verification</h2>
+                <p>We verify embedding shape behavior by checking the output size of the summed embeddings in `forward`: `tok_emb` of shape <code>[4, 256, 384]</code> and `pos_emb` of shape <code>[256, 384]</code> correctly sum to produce a <code>[4, 256, 384]</code> tensor due to PyTorch broadcast rules. All logit outputs match HF expectations to $10^{-5}$ precision.</p>
 
-                <h2>4. What happens if we remove residual connections?</h2>
-                <p>If we remove the residual connections (i.e., updating states as $x_{l+1} = f(x_l)$ rather than $x_{l+1} = x_l + f(x_l)$), the model fails to train entirely.
-                Mathematically, the derivative of the output with respect to the input through $L$ residual layers is:
-                $$\frac{\partial x_L}{\partial x_0} = I + \sum_{l=1}^L \frac{\partial f_l(x_{l-1})}{\partial x_0}$$
-                This addition of the identity matrix $I$ ensures that gradients can propagate back to early layers without being scaled down. Without the identity path, gradients must flow back through a chain of multiplications of weights and non-linearities:
-                $$\frac{\partial x_L}{\partial x_0} = \prod_{l=1}^L \frac{\partial f_l(x_{l-1})}{\partial x_{l-1}}$$
-                If the weight values are small ($< 1.0$), gradients vanish to zero. If they are large ($> 1.0$), gradients explode, causing the model to return <code>NaN</code> within the first few steps.</p>
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>Why do we sum token and position embeddings instead of concatenating them?</summary>
+                    <p>Concatenating them would result in a larger vector dimension (e.g. $384 + 384 = 768$), which doubles the parameter count and computation cost of all subsequent linear projection layers.
+                    Summing keeps the dimension size at 384. Because our transformer blocks are composed of linear layers, the model can mathematically learn to project and separate the position information from semantic features internally, behaving identically to concatenation without the memory penalty.</p>
+                </details>
 
-                <h2>5. Build Intuition through Numbers: Parameter Sizing</h2>
-                <p>Let's calculate the exact parameter count for our custom model config:
-                <ul>
-                    <li><strong>Embeddings:</strong>
-                        <ul>
-                            <li><code>wte</code>: $50257 \times 384 = 19,298,688$ parameters.</li>
-                            <li><code>wpe</code>: $256 \times 384 = 98,304$ parameters.</li>
-                        </ul>
-                    </li>
-                    <li><strong>Layers per Block (x6 Blocks):</strong>
-                        <ul>
-                            <li><code>ln_1</code> and <code>ln_2</code>: $2 \times (384 \text{ weights} + 384 \text{ biases}) = 1,536$ parameters.</li>
-                            <li><code>c_attn</code>: $(384 \times 1152) \text{ weights} + 1152 \text{ biases} = 443,520$ parameters.</li>
-                            <li><code>c_proj</code> (attention output): $(384 \times 384) \text{ weights} + 384 \text{ biases} = 147,840$ parameters.</li>
-                            <li><code>c_fc</code> (MLP expand): $(384 \times 1536) \text{ weights} + 1536 \text{ biases} = 591,360$ parameters.</li>
-                            <li><code>c_proj</code> (MLP contract): $(1536 \times 384) \text{ weights} + 384 \text{ biases} = 590,208$ parameters.</li>
-                            <li><strong>Block total:</strong> $1,536 + 443,520 + 147,840 + 591,360 + 590,208 = 1,774,464$ parameters.</li>
-                        </ul>
-                    </li>
-                    <li><strong>Total Non-Embedding parameters:</strong>
-                        $$6 \times 1,774,464 \text{ (Blocks)} + 768 \text{ (ln\_f)} = \mathbf{10,745,856 \text{ parameters}}$$
-                    </li>
-                </ul></p>
+                <details>
+                    <summary>What is the limitation of absolute positional embeddings (wpe) used in GPT-2 compared to Rotary Position Embeddings (RoPE)?</summary>
+                    <p>Absolute positional embeddings (used in GPT-2) learn a static index parameter for every step up to <code>block_size</code> (e.g. 0 to 1023). If you try to feed the model a context sequence of length 2048, it will crash because the position matrix lacks rows beyond index 1023.
+                    Rotary Position Embeddings (RoPE, used in Llama 3) apply a rotational transform to Query and Key vectors during the attention step. This calculates relative distances between tokens dynamically rather than absolute indexes, allowing context length extrapolation during serving.</p>
+                </details>
 
                 <div class="prev-next-nav">
-                    <a href="index.html" class="prev-next-btn">
+                    <a href="tokenization.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">00. Welcome & Overview</span>
+                        <span class="nav-title">01. Tokenization</span>
                     </a>
                     <a href="attention.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">02. Causal Self-Attention</span>
+                        <span class="nav-title">03. Attention</span>
                     </a>
                 </div>
             </main>

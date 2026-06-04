@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generation | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Generation | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,68 +77,137 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>08. Autoregressive Generation</span>
+                    <a href="index.html">Handbook</a> &gt; <span>05. The Output & Prediction</span>
                 </div>
 
-                <h1>08. Generation: Autoregressive Decoding</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>Generating text from an LLM is a dynamic process.
-                Adjusting decoding parameters (like temperature and top-k) determines whether the model's outputs are deterministic, creative, repetitive, or nonsensical.
-                Understanding these sampling algorithms is essential for tuning generation behavior to fit specific use cases (such as creative writing vs. code generation).</p>
+                <h1>05. Next-Token Prediction & Generation</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine you are a writer picking the next word in a story. You look at the sentence you have written so far, and list possible next words with their likelihoods.</p>
-                <p>To write the next sentence, you use a few rules:
+                <div class="cycle-banner">
+                    <span class="cycle-step">00. Overview</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">01. BPE Parsing</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">02. Embeddings</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">03. Attention</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">04. Pipelines</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step active">05. Generation</span>
+                </div>
+
+                <h2>The Token's Journey</h2>
+                <p>Our token has navigated all 6 transformer blocks, picking up contextual properties. We now arrive at the model's output gate, where the mathematical features are translated back into a token prediction.</p>
+                <ol>
+                    <li><strong>Final LayerNorm (ln_f):</strong> Standardizes the output features of the residual stream one last time.</li>
+                    <li><strong>Language Modeling Head (lm_head):</strong> Projects the normalized vector of shape <code>[B, T, C]</code> up to shape <code>[B, T, V]</code> (where $V=50257$). These raw, unscaled output scores are called <strong>logits</strong>.</li>
+                    <li><strong>Logit Selection:</strong> We slice the logits to retrieve the scores for the final sequence token (index $-1$), scaling the values by a <strong>temperature</strong> factor.</li>
+                    <li><strong>Top-K Filtering & Softmax:</strong> We retain only the $K$ highest logits, zero out the rest to $-\infty$, and apply Softmax to convert the scores into a probability distribution.</li>
+                    <li><strong>Sampling & Appending:</strong> A multinomial sampler picks the next token ID (e.g. <code>382</code> for <code>" determined"</code>). We append this new ID to our context queue, shift the context window, and feed it back into the loop.</li>
+                </ol>
+
+                <div class="mermaid">
+                flowchart TD
+                    BlockOut["Final Block Output: [B, T, C]"] -->|ln_f LayerNorm| Norm["Normalized State: [B, T, C]"]
+                    Norm -->|Linear lm_head| Logits["All Logits: [B, T, V]"]
+                    Logits -->|Slice index -1| LastLogit["Last Token Logits: [B, V]"]
+                    LastLogit -->|Divide by Temperature| ScaledLogits["Scaled Logits: [B, V]"]
+                    ScaledLogits -->|Top-K Crop| CroppedLogits["Cropped Logits: [B, V]"]
+                    CroppedLogits -->|Softmax| Probs["Probabilities: [B, V]"]
+                    Probs -->|Multinomial Sample| NextID["Next Token ID: [B, 1]"]
+                    NextID -->|Concatenate| Append["Append to Context: [B, T+1]"]
+                </div>
+
+                <h2>Backend Engineer Lens: Streaming Buffers</h2>
+                <p>In backend engineering, autoregressive text generation is structured like an **incremental queue/buffer append loop** (similar to pushing events to an HTTP Server-Sent Events (SSE) stream).</p>
                 <ul>
-                    <li><strong>Greedy Selection (Argmax):</strong> Always pick the single most probable word. This often leads to repetitive and boring sentences.</li>
-                    <li><strong>Temperature:</strong> Control how willing you are to choose less likely words. A low temperature makes you stick strictly to safe, highly probable words, while a high temperature encourages you to pick more creative, unusual words.</li>
-                    <li><strong>Top-k Filtering:</strong> Throw out the bottom portion of your word list. This ensures you never pick a completely irrelevant word from the tail of the distribution.</li>
-                </ul></p>
+                    <li><strong>Logits &rarr; Priority Values:</strong> Think of logits as raw, unnormalized priority metrics. They represent raw voting counts for each item in the token database.</li>
+                    <li><strong>Temperature &rarr; Load Balancing:</strong> High temperature acts like round-robin load balancing, spreading traffic across less optimal routes (creating creative, diverse outputs). Low temperature acts like rigid failover routing, forwarding all requests exclusively to the primary node with the highest score (greedy deterministic outputs).</li>
+                    <li><strong>Generation Loop &rarr; Buffer Writing:</strong> We read the current context window buffer, calculate the next index, write the index to our buffer queue, and stream the parsed word token back to the client immediately before repeating.</li>
+                </ul>
 
-                <h2>Level 2 — Engineering View</h2>
-                <p>In <code>model.py:L327-L370</code>, the <code>generate</code> function coordinates this process.
-                Because the position embedding matrix (<code>wpe</code>) has a fixed context length of <code>block_size</code> (256), the model cannot accept sequences longer than 256. We crop the context window before passing it to the forward pass:</p>
-                <pre><code class="language-python"># From model.py:L348
-idx_cond = idx[:, -self.config.block_size:]</code></pre>
-                <p>We scale the raw outputs (logits) by the temperature parameter:
-                <pre><code class="language-python"># From model.py:L354
-logits = logits[:, -1, :] / temperature</code></pre>
-                We then apply top-k filtering, setting all logits below the top-k threshold to $-\infty$ so they receive a probability of 0:
-                <pre><code class="language-python"># From model.py:L357-L359
-if top_k is not None:
-    v, _ = torch.topk(logits, min(top_k, logits.size(-1)))
-    logits[logits < v[:, [-1]]] = -float('Inf')</code></pre>
-                Finally, we convert these filtered logits to a probability distribution using softmax and sample a token ID using <code>torch.multinomial</code>:</p>
-                <pre><code class="language-python">probs = F.softmax(logits, dim=-1)
-idx_next = torch.multinomial(probs, num_samples=1)
-idx = torch.cat((idx, idx_next), dim=1)</code></pre>
+                <h2>The Code-to-Concept Map</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Tensor Shape</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>LM Head Projection</strong></td>
+                            <td><code>[B, T, V]</code></td>
+                            <td><a href="code_guide.html#L249">model.py: logits = self.lm_head(x)</a></td>
+                            <td>Output layer projection</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Context Window Crop</strong></td>
+                            <td><code>[B, block_size]</code></td>
+                            <td><a href="code_guide.html#L348">model.py: idx[:, -block_size:]</a></td>
+                            <td>Sliding window context buffer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Temperature & Sampling</strong></td>
+                            <td><code>[B, 1]</code></td>
+                            <td><a href="code_guide.html#L354">model.py: GPT.generate()</a></td>
+                            <td>vLLM sampler backend</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                <h2>3. Mathematical View</h2>
-                <p>Temperature scaling modifies the softmax probability distribution:
-                $$P(x_i) = \frac{e^{z_i / T}}{\sum_j e^{z_j / T}}$$
-                Where $z_i$ represents the raw logit score for token $i$, and $T$ is the temperature.
+                <h2>Production Relevance</h2>
                 <ul>
-                    <li>As $T \to 0$, the probability of the most likely token approaches 1, matching greedy decoding (argmax).</li>
-                    <li>As $T \to \infty$, the probability distribution becomes uniform, making token selection completely random.</li>
-                </ul></p>
+                    <li><strong>Time-to-First-Token (TTFT) vs Inter-Token Latency:</strong> Generating text token-by-token is slow because each step must reload all model parameters to project the new logit. This makes generation **memory-bandwidth bound**. In serving frameworks (vLLM, Hugging Face TGI), we stream each token to the client as it is sampled using SSE events, minimizing TTFT and improving user perceived latency.</li>
+                    <li><strong>Speculative Decoding:</strong> To bypass memory loading bottlenecks, speculative decoding runs a fast, lightweight "draft model" (e.g. 1B parameters) to generate 5-10 draft tokens in a row. The large "target model" (e.g. 70B parameters) evaluates all draft tokens in parallel in a **single forward pass**, accepting or rejecting them. This yields up to a 2x inference speedup without altering output mathematics.</li>
+                </ul>
 
-                <h2>4. What happens if we remove top-k filtering?</h2>
-                <p>If we remove top-k filtering (and keep temperature $T = 1.0$ or higher):
-                <ul>
-                    <li>The model will occasionally sample low-probability tokens from the long tail of the vocabulary distribution.</li>
-                    <li>Once an incorrect or nonsensical token is generated, it becomes part of the context for subsequent predictions, causing errors to compound.</li>
-                    <li>This typically causes the generated text to quickly devolve into gibberish or spelling errors.</li>
-                </ul></p>
+                <h2>Verification</h2>
+                <p>We test our generation loop by running text generation using pre-trained GPT-2 (124M) weights on our custom architecture. Run the command below to witness readable English output:</p>
+                <pre><code class="language-bash">python3 generate.py --prompt "Alan Turing determined that" --max_tokens 30</code></pre>
+
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>What is the mathematical role of Temperature in generation? Show the equations.</summary>
+                    <p>Temperature $T$ scales the logits before applying the Softmax function:
+                    $$P(x_i) = \frac{e^{z_i / T}}{\sum_j e^{z_j / T}}$$
+                    Where $z_i$ is the raw logit score for token $i$.
+                    <ul>
+                        <li><strong>Low Temperature ($T \to 0$):</strong> Logit differences are amplified. The probability of the highest logit approaches 1.0, while all other probabilities drop to 0, resulting in deterministic greedy selection.</li>
+                        <li><strong>High Temperature ($T \to \infty$):</strong> Logit differences are compressed towards 0. The terms $z_i / T$ approach 0, so $e^0 = 1$. The probabilities converge to a uniform distribution, producing high-entropy, random text.</li>
+                    </ul>
+                    </p>
+                </details>
+
+                <details>
+                    <summary>What is the difference between Top-K and Top-P (nucleus) sampling?</summary>
+                    <p>
+                    <ul>
+                        <li><strong>Top-K:</strong> Restricts sampling to a static number ($K$) of highest-probability tokens. While fast, if $K=50$ and only 2 tokens are relevant, the model is forced to sample from 48 noise tokens.</li>
+                        <li><strong>Top-P (Nucleus):</strong> Restricts sampling dynamically to the smallest set of tokens whose cumulative probability sum exceeds threshold $P$ (e.g. $P=0.90$). If the model is confident, the candidate pool might shrink to 2 tokens; if the model is confused, the pool expands to 100 tokens, yielding higher coherence.</li>
+                    </ul>
+                    </p>
+                </details>
+
+                <details>
+                    <summary>Why must we crop the input context window before passing it to the model during generation?</summary>
+                    <p>In our model configuration, the positional embedding matrix <code>wpe</code> has a fixed size of <code>block_size=256</code> (or 1024 for official GPT-2).
+                    If a sequence length exceeds this capacity, accessing <code>wpe</code> throws an index out-of-bounds error.
+                    To prevent this, the code crops the context window to the last <code>block_size</code> tokens:
+                    <pre><code class="language-python">idx_cond = idx[:, -self.config.block_size:]</code></pre>
+                    This implements a sliding-window buffer, discarding historical tokens beyond capacity limits.</p>
+                </details>
 
                 <div class="prev-next-nav">
-                    <a href="optimization.html" class="prev-next-btn">
+                    <a href="transformer_block.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">07. Hardware Optimization</span>
+                        <span class="nav-title">04. MLP & LayerNorm</span>
                     </a>
-                    <a href="checkpointing.html" class="prev-next-btn next">
+                    <a href="data_pipeline.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">09. Checkpoint Restoration</span>
+                        <span class="nav-title">06. Data Loader</span>
                     </a>
                 </div>
             </main>

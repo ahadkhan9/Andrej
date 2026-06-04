@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training Loop | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Backpropagation | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,90 +77,115 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>06. Training Loop Mechanics</span>
+                    <a href="index.html">Handbook</a> &gt; <span>07. Backpropagation</span>
                 </div>
 
-                <h1>06. Training Loop: Mechanics & Schedule</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>The training loop controls how the model learns from data.
-                Understanding the mechanics of gradient accumulation, learning rate scheduling, and weight decay is essential for stabilizing training and preventing issues like exploding gradients or stuck loss curves.
-                Configuring these parameters correctly is critical for ensuring the model converges efficiently.</p>
+                <h1>07. Backpropagation: The Feedback Loop</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine you are guiding a hiker down a foggy mountain to find the lowest valley (the lowest loss).
-                If you take steps that are too large, you might overshoot the valley and end up on another peak. If you take steps that are too small, the journey will take forever.</p>
-                <p>To guide the hiker effectively, we use a few strategies:
+                <h2>The Token's Journey</h2>
+                <p>During training, predicting the next token is only half the battle. To improve, the model needs a feedback loop to correct its parameters.
+                Our token travels forward, producing a loss score. This loss launches a backward wave: gradients flow in reverse through all layers, computing how each weight parameter contributed to the prediction error, allowing the AdamW optimizer to update weights.</p>
+
+                <div class="mermaid">
+                flowchart TD
+                    Inputs["Inputs [B, T]"] -->|Forward Pass| Loss["Cross Entropy Loss: Scalar"]
+                    Loss -->|Backward Pass loss.backward| Grads["Gradients computed for all layers"]
+                    Grads -->|Grad Clipping| Clip["Gradients scaled if norm > 1.0"]
+                    Clip -->|Optimizer optimizer.step| Update["AdamW adjusts model weights"]
+                </div>
+
+                <h2>Backend Engineer Lens: Batch Processing</h2>
+                <p>In backend engineering, backpropagation acts like a **distributed transaction rollback and performance log ledger**.</p>
                 <ul>
-                    <li><strong>Warmup:</strong> Start with small, cautious steps (low learning rate) until the hiker gets their bearings, then increase step size.</li>
-                    <li><strong>Cosine Decay:</strong> As the hiker gets closer to the valley floor, gradually reduce the step size to avoid overshooting.</li>
-                    <li><strong>Gradient Accumulation:</strong> Instead of asking the hiker to make a decision after every step, let them take a few steps, average their path, and then make a correction.</li>
-                    <li><strong>Gradient Clipping:</strong> If the hiker starts sliding down a steep cliff (exploding gradient), pull them back to prevent a crash.</li>
-                </ul></p>
+                    <li><strong>Loss Metric &rarr; Exception Rate / SLA Drift:</strong> The loss represents how far our system deviated from the target SLA. A zero loss means the system processed the request flawlessly.</li>
+                    <li><strong>Gradient &rarr; Stack Trace:</strong> The gradient is a backward stack trace. It traces the exception back through all services (layers), assigning an exact coefficient of error contribution to each database table and API interface.</li>
+                    <li><strong>Gradient Accumulation &rarr; Batching Transactions:</strong> Running a database commit (updating weights) at every single write is slow due to transaction overhead. In GPU training, we accumulate gradients over $N$ micro-batches (writing updates to an in-memory buffer) before executing a single transaction commit (<code>optimizer.step()</code>). This simulates a massive batch size without running out of RAM.</li>
+                    <li><strong>AdamW Optimizer &rarr; Rate Limiter with Momentum:</strong> AdamW controls weight update writes, using exponential averages of past updates (momentum) to ensure the system doesn't overshoot values during correction.</li>
+                </ul>
 
-                <h2>Level 2 — Engineering View: What is happening in memory?</h2>
-                <p>Let's estimate the GPU/MPS memory requirements during a training step for our configuration ($30\text{M}$ parameters, $B=4$, $T=256$):</p>
+                <h2>The Code-to-Concept Map</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Memory Element</th>
-                            <th>Calculation / Value Tracking</th>
-                            <th>Estimated Size</th>
+                            <th>Concept</th>
+                            <th>PyTorch Code</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Model Parameters</strong></td>
-                            <td>$30\text{M}$ weights stored in float32 (4 bytes per param)</td>
-                            <td>~120 MB</td>
+                            <td><strong>Parameter Decay Grouping</strong></td>
+                            <td><code>decay_params = [p for p in ... if p.dim() >= 2]</code></td>
+                            <td><a href="code_guide.html#L103">train.py: configure_optimizers()</a></td>
+                            <td>Weight decay parameter splits</td>
                         </tr>
                         <tr>
-                            <td><strong>Gradients</strong></td>
-                            <td>$30\text{M}$ gradients stored in float32 (4 bytes per param)</td>
-                            <td>~120 MB</td>
+                            <td><strong>Gradient Accumulation</strong></td>
+                            <td><code>loss.backward()</code> over micro-steps</td>
+                            <td><a href="code_guide.html#L278">train.py: accum loop</a></td>
+                            <td>Batch transaction buffer loading</td>
                         </tr>
                         <tr>
-                            <td><strong>Optimizer States</strong></td>
-                            <td>AdamW tracks 2 moments (mean/variance) per weight in float32 (8 bytes per param)</td>
-                            <td>~240 MB</td>
+                            <td><strong>Gradient Clipping</strong></td>
+                            <td><code>nn.utils.clip_grad_norm_(..., 1.0)</code></td>
+                            <td><a href="code_guide.html#L295">train.py: grad clipping</a></td>
+                            <td>Overflow protection/rate limits</td>
                         </tr>
                         <tr>
-                            <td><strong>Activations</strong></td>
-                            <td>Intermediate activations saved during the forward pass for backpropagation. Scales with layer count and batch size.</td>
-                            <td>~180 MB</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Total Training Memory</strong></td>
-                            <td>Sum of weights, gradients, optimizer states, and activations</td>
-                            <td><strong>~660 MB</strong></td>
+                            <td><strong>Optimizer Commit</strong></td>
+                            <td><code>optimizer.step()</code></td>
+                            <td><a href="code_guide.html#L296">train.py: step optimizer</a></td>
+                            <td>Database transaction commit</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <h2>3. Mathematical View</h2>
-                <p>During gradient accumulation over $N$ steps, the total gradient update is the average of the gradients of the micro-batches:
-                $$\nabla \mathcal{L}(D) = \frac{1}{N} \sum_{i=1}^N \nabla \mathcal{L}(d_i)$$
-                This is why we scale each micro-batch loss by $N$ (<code>grad_accum_steps</code>) before calling backpropagation:
-                $$\mathcal{L}_{scaled} = \frac{\mathcal{L}(d_i)}{N}$$
-                $$\nabla \mathcal{L}_{scaled} = \frac{\nabla \mathcal{L}(d_i)}{N}$$
-                When PyTorch accumulates these scaled gradients over $N$ steps, the final sum matches the true average gradient of the entire batch.</p>
-
-                <h2>4. What happens if we remove gradient clipping?</h2>
-                <p>If we remove gradient clipping (<code>nn.utils.clip_grad_norm_(model.parameters(), 1.0)</code>):
+                <h2>Production Relevance</h2>
                 <ul>
-                    <li>If the model encounters a steep region of the loss landscape (common when training deep transformers), the gradient values can grow extremely large.</li>
-                    <li>Without clipping, the optimizer will take a massive step, shifting model weights to extreme values.</li>
-                    <li>This typically destabilizes the model, causing activations to overflow and the loss function to return <code>NaN</code>, halting training.</li>
-                </ul></p>
+                    <li><strong>Parameter-Efficient Fine-Tuning (PEFT/LoRA):</strong> During full-parameter pre-training, we compute gradients for all 10M (or 70B) parameters. This requires keeping optimizer states for all weights, which consumes 3x more GPU memory than the weights themselves. In **LoRA**, we freeze the base model parameters (marking them read-only) and compute gradients exclusively for tiny adapter matrices, reducing optimizer RAM requirements by up to 90%.</li>
+                    <li><strong>Cosine LR Warmup:</strong> Learning rates are gradually scaled up (linear warmup) before decaying (cosine annealing). In production, this prevents the model from diverging on initial noisy batches, allowing stable optimization transitions.</li>
+                </ul>
+
+                <h2>Verification</h2>
+                <p>We verify backpropagation logic by monitoring the gradient norm printed in our console. Run this command to check that the training loss decreases and gradient norms remain under control (no NaN values):</p>
+                <pre><code class="language-bash">python3 train.py --steps 50</code></pre>
+
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>What is the difference between standard Adam and AdamW? Why is it crucial?</summary>
+                    <p>In standard Adam, L2 weight regularization is added directly to the loss function. When computing the gradient of the loss, the regularization term is added to the gradient, which gets mixed with the running average (momentum) in the optimizer.
+                    This couples weight decay with learning rate updates, causing the decay rate to scale incorrectly when the learning rate changes.
+                    **AdamW** decouples this by adding the weight decay directly to the parameters at the very end of the step, after the gradient averages have been computed:
+                    $$w_{t+1} = w_t - \eta_t (\text{update}_t + \lambda w_t)$$
+                    This ensures weights are decayed independently of learning rate changes, leading to superior model convergence.</p>
+                </details>
+
+                <details>
+                    <summary>Why do we separate parameters into decayed and non-decayed groups in train.py?</summary>
+                    <p>Weight decay regularizes parameters by pulling them towards zero, preventing weights from growing excessively large.
+                    We only want to apply this constraint to 2D parameters (weights in Linear and Embedding layers) because they are responsible for major projection transformations.
+                    We do not decay 1D parameters (biases and LayerNorm gains/biases) because they act as simple offsets and scaling values. Forcing biases to zero limits the model's ability to shift distributions, destabilizing normalization layers and degrading performance.</p>
+                </details>
+
+                <details>
+                    <summary>How does gradient accumulation simulate a batch size of 8,192 tokens when our hardware only supports a batch size of 1,024?</summary>
+                    <p>If our GPU memory is limited, loading 8,192 tokens in a single batch causes an Out-Of-Memory (OOM) error.
+                    To resolve this, we configure a micro-batch of $B=4, T=256$ (1,024 tokens).
+                    We run the forward and backward passes $N=8$ times without calling <code>optimizer.step()</code> or zeroing gradients.
+                    PyTorch automatically accumulates (sums) the gradients computed at each step.
+                    We divide the loss by $N$ to normalize the values. On the 8th step, we run `optimizer.step()` to update the weights.
+                    This achieves the exact same gradient update as processing 8,192 tokens in a single step, using only 1/8th of the GPU memory.</p>
+                </details>
 
                 <div class="prev-next-nav">
                     <a href="data_pipeline.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">05. Data Pipeline Details</span>
+                        <span class="nav-title">06. Data Loader</span>
                     </a>
                     <a href="optimization.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">07. Hardware Optimization</span>
+                        <span class="nav-title">08. Hardware Speedups</span>
                     </a>
                 </div>
             </main>

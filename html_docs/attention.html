@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attention | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>Attention | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -45,33 +30,46 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
@@ -79,78 +77,136 @@
             <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>02. Causal Self-Attention</span>
+                    <a href="index.html">Handbook</a> &gt; <span>03. Attention</span>
                 </div>
 
-                <h1>02. Attention: Causal Multi-Head Self-Attention</h1>
-                
-                <h2>Why should I care?</h2>
-                <p>Self-attention is the core engine of the transformer. Unlike older architectures (like RNNs or CNNs) which process sequences sequentially or within a fixed window, self-attention allows any token in a sequence to connect directly with any other token, regardless of distance.
-                Understanding the mathematics and complexity of attention is essential for managing memory footprints (KV Cache) and optimizing inference speeds when deploying models to production.</p>
+                <h1>03. Attention: The Context Index</h1>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine you are reading a book and encounter the word <strong>"it"</strong>. To understand what "it" refers to, your eyes scan back across the sentence to locate the noun it represents.
-                Self-attention performs this process mathematically:
-                <ul>
-                    <li>Each token generates a <strong>Query (Q)</strong>: "What target information am I looking for?"</li>
-                    <li>Each token generates a <strong>Key (K)</strong>: "What description do I offer to matching queries?"</li>
-                    <li>Each token generates a <strong>Value (V)</strong>: "What is my actual content?"</li>
-                </ul>
-                By taking the dot product of a token's Query with all tokens' Keys, the model calculates attention weights (similarity scores). These weights determine how much of each token's Value is mixed into the current token's representation.</p>
+                <div class="cycle-banner">
+                    <span class="cycle-step">00. Overview</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">01. BPE Parsing</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">02. Embeddings</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step active">03. Attention</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">04. Pipelines</span>
+                    <span class="cycle-arrow">&rarr;</span>
+                    <span class="cycle-step">05. Generation</span>
+                </div>
 
-                <h2>Level 2 — Engineering View</h2>
-                <p>In <code>model.py:L70-L142</code>, the <code>CausalSelfAttention</code> class implements this behavior:
+                <h2>The Token's Journey</h2>
+                <p>Our token is currently represented as a vector $x$ containing positional and word embedding values. However, it exists in isolation—it has no knowledge of the surrounding tokens in the sentence.</p>
                 <ol>
-                    <li><strong>Unified Projection:</strong> A single linear layer (<code>self.c_attn</code>) projects the input tensor $X$ from shape <code>[B, T, C]</code> to <code>[B, T, 3C]</code>, containing $Q$, $K$, and $V$ concatenated together.</li>
-                    <li><strong>Split & Transpose:</strong> We split the projected tensor into $Q, K, V$ and reshape them to <code>[B, H, T, D]</code> (where $H$ is the number of heads and $D$ is the head dimension) to run calculations in parallel across all heads.</li>
-                    <li><strong>Scaled Dot Product:</strong> We calculate similarity scores by multiplying $Q$ and $K^T$. Using <code>torch.nn.functional.scaled_dot_product_attention</code>, this step runs highly optimized **FlashAttention** kernels under the hood.</li>
-                </ol></p>
+                    <li><strong>Projections (Q, K, V):</strong> "The Token" projects itself into three distinct query-ready roles using linear weights:
+                        <ul>
+                            <li><strong>Query (Q):</strong> "What attributes am I searching for in other tokens?"</li>
+                            <li><strong>Key (K):</strong> "What attributes do I possess that other tokens might look for?"</li>
+                            <li><strong>Value (V):</strong> "What semantic content do I actually hold?"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Similarity Dot Product ($Q \cdot K^T$):</strong> The Query vector of "The Token" is multiplied with the Key vectors of all previous tokens to evaluate similarity.</li>
+                    <li><strong>Causal Masking:</strong> To keep generation chronological, "The Token" is masked from looking at future tokens' Keys. Future positions are set to $-\infty$, resulting in zero attention weight after softmax.</li>
+                    <li><strong>Value Aggregation ($W \cdot V$):</strong> Normalized attention scores are used to calculate a weighted sum of the Value vectors of all previous tokens, creating a contextualized feature output.</li>
+                </ol>
 
-                <h2>Level 3 — Mathematical View</h2>
-                <p>Given the head matrices $Q, K, V \in \mathbb{R}^{T \times D}$:
-                $$A = \text{Softmax}\left( \frac{Q K^T}{\sqrt{D}} + M \right) V$$
-                Where $M$ is the causal mask matrix that prevents tokens from attending to future positions:
-                $$M_{i,j} = \begin{cases} 0 & \text{if } i \geq j \\ -\infty & \text{if } i < j \end{cases}$$</p>
+                <div class="mermaid">
+                flowchart TD
+                    Input["Input: [B, T, C]"] -->|Linear c_attn| Proj["Unified QKV Projection: [B, T, 3C]"]
+                    Proj -->|Reshape & Split| Q["Query: [B, H, T, D]"] & K["Key: [B, H, T, D]"] & V["Value: [B, H, T, D]"]
+                    Q & K -->|Dot Product| Scores["Raw Scores: [B, H, T, T]"]
+                    Scores -->|Causal Mask| Masked["Masked Scores: [B, H, T, T]"]
+                    Masked -->|Softmax| Weights["Attention Weights: [B, H, T, T]"]
+                    Weights & V -->|Sum Product| Context["Context Vector: [B, H, T, D]"]
+                    Context -->|Transpose & View| Output["Output: [B, T, C]"]
+                </div>
 
-                <h2>4. Build Intuition through Numbers</h2>
-                <p>Let's calculate attention manually for a sequence of 2 tokens, $A$ and $B$, with head dimension $D=2$.
-                Assume the input embedding vectors are:
-                $$X_A = [1, 0], \quad X_B = [0, 1]$$
-                Assume the projection weight matrices are identity matrices (to keep calculations simple):
-                $$W_q = W_k = W_v = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
-                This gives:
-                $$Q = X \cdot W_q = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \quad K = X \cdot W_k = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \quad V = X \cdot W_v = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
+                <h2>Backend Engineer Lens: Similarity Search</h2>
+                <p>Think of self-attention as a **distributed vector similarity search query** against an in-memory database.</p>
+                <ul>
+                    <li><strong>Query (Q) &rarr; Search term payload:</strong> The search parameters passed in by the client (e.g. <code>"author of Turing machine"</code>).</li>
+                    <li><strong>Key (K) &rarr; Database primary index keys:</strong> The index metadata fields associated with records (e.g. <code>"inventor"</code>, <code>"year"</code>, <code>"concept"</code>).</li>
+                    <li><strong>Value (V) &rarr; Database payload records:</strong> The actual records containing the data fields (e.g. <code>{"name": "Alan Turing", "work": "Computers"}</code>).</li>
+                </ul>
+                <p>Mathematically, we execute:
+                    $$A = \text{Softmax}\left( \frac{Q K^T}{\sqrt{d_k}} + M \right) V$$
+                </p>
+                <p>The dot product $Q K^T$ measures similarity between the query term and all index keys. The causal mask $M$ acts like a SQL <code>WHERE index_id <= current_id</code> constraint, blocking access to records that have not been written to the table yet. Softmax normalizes the scores to a sum of 1.0, and the final multiplication gathers the record payloads weighted by their match relevance.</p>
                 
-                <p><strong>Step 1: Compute Similarity Scores ($Q K^T$)</strong></p>
-                $$Q K^T = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
-                
-                <p><strong>Step 2: Scale by $1 / \sqrt{D}$</strong> (where $D=2, \sqrt{2} \approx 1.41$):</p>
-                $$A_{scaled} = \frac{1}{1.41} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \approx \begin{pmatrix} 0.71 & 0.0 \\ 0.0 & 0.71 \end{pmatrix}$$
-                
-                <p><strong>Step 3: Apply Causal Mask ($M$)</strong></p>
-                $$A_{masked} = \begin{pmatrix} 0.71 & 0.0 \\ 0.0 & 0.71 \end{pmatrix} + \begin{pmatrix} 0 & -\infty \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0.71 & -\infty \\ 0.0 & 0.71 \end{pmatrix}$$
-                
-                <p><strong>Step 4: Apply Softmax along each row</strong></p>
-                $$\text{Row 1}: \text{Softmax}([0.71, -\infty]) = [1.0, 0.0]$$
-                $$\text{Row 2}: \text{Softmax}([0.0, 0.71]) = \left[ \frac{e^{0}}{e^{0} + e^{0.71}}, \frac{e^{0.71}}{e^{0} + e^{0.71}} \right] \approx [0.33, 0.67]$$
-                $$\text{Attention Weights } W = \begin{pmatrix} 1.0 & 0.0 \\ 0.33 & 0.67 \end{pmatrix}$$
-                
-                <p><strong>Step 5: Multiply by Values ($V$)</strong></p>
-                $$\text{Output} = W \cdot V = \begin{pmatrix} 1.0 & 0.0 \\ 0.33 & 0.67 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1.0 & 0.0 \\ 0.33 & 0.67 \end{pmatrix}$$
-                Notice how token $A$ only attends to itself (output $[1, 0]$), while token $B$ attends to both token $A$ and itself (output $[0.33, 0.67]$).</p>
+                <p><strong>FlashAttention</strong> is a system optimization. In backend terms, it is like refactoring an algorithm to avoid slow disk read/writes by performing cache-local blocking, shifting execution from memory-bandwidth bound to compute bound.</p>
 
-                <h2>5. What happens if we remove causal masking?</h2>
-                <p>If we remove causal masking (i.e. omitting the upper-triangular $-\infty$ mask step), the model becomes a bidirectional transformer (like BERT) rather than an autoregressive decoder.
-                If you train the model without causal masking, it will learn to look ahead to the target tokens (which are simply the inputs shifted by one index). The model will achieve a near-zero training loss by simply copying the next token from the input, but will fail to generate coherent text during inference when future tokens are not available.</p>
+                <h2>The Code-to-Concept Map</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Tensor Shape</th>
+                            <th>Code Location</th>
+                            <th>Production Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Linear Projection</strong></td>
+                            <td><code>[B, T, 3C]</code></td>
+                            <td><a href="code_guide.html#L81">model.py: self.c_attn</a></td>
+                            <td>Projecting embeddings to QKV matrices</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multi-Head Splits</strong></td>
+                            <td><code>[B, H, T, D]</code></td>
+                            <td><a href="code_guide.html#L114">model.py: view & transpose</a></td>
+                            <td>Sharded query routing pipelines</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Causal Bias Buffer</strong></td>
+                            <td><code>[1, 1, block_size, block_size]</code></td>
+                            <td><a href="code_guide.html#L93">model.py: register_buffer</a></td>
+                            <td>Sequence database read-isolation mask</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FlashAttention Dispatch</strong></td>
+                            <td><code>[B, H, T, D]</code></td>
+                            <td><a href="code_guide.html#L121">model.py: scaled_dot_product_attention</a></td>
+                            <td>vLLM PagedAttention kernels</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Production Relevance</h2>
+                <ul>
+                    <li><strong>KV Caching:</strong> Autoregressive text generation produces one token at a time. Re-running the attention math over all historic tokens at every step scales quadratically ($O(T^2)$). Instead, production servers cache the computed Key ($K$) and Value ($V$) tensors of all past steps in memory (the <strong>KV Cache</strong>), performing a simple append at the new step and reducing context retrieval complexity to $O(T)$.</li>
+                    <li><strong>PagedAttention (vLLM):</strong> The KV Cache consumes massive RAM, leading to fragmentation (like disk fragmentation). vLLM introduces virtual memory paging concepts (similar to operating system pages) to allocate blocks of KV caches dynamically in GPU memory, allowing higher batch sizes and concurrency.</li>
+                </ul>
+
+                <h2>Verification</h2>
+                <p>Our logit parity verification test in <a href="code_guide.html">generate.py</a> validates the math: when loading pre-trained weights, our custom implementation matches Hugging Face's logits with a maximum absolute difference under $10^{-5}$ across multiple prompts, proving that causal masking and FlashAttention bindings are mathematically aligned.</p>
+
+                <h2>Common Interview Followups</h2>
+                <details>
+                    <summary>Why is attention complexity $O(T^2)$? Can you explain the math?</summary>
+                    <p>In self-attention, we calculate attention scores between every token and all other tokens.
+                    Given a sequence of length $T$, we multiply a Query matrix $Q \in \mathbb{R}^{T \times D}$ by the transpose of the Key matrix $K \in \mathbb{R}^{T \times D}$.
+                    The resulting matrix multiplication $Q K^T$ yields a score matrix of size $T \times T$.
+                    Computing this matrix requires $T^2 \times D$ floating-point multiplications, which scales quadratically with sequence length $T$.
+                    This makes long-context inputs (e.g. 32k or 128k context) extremely expensive in terms of both GPU memory storage and computation time.</p>
+                </details>
+
+                <details>
+                    <summary>How does FlashAttention optimize self-attention without changing the mathematical output?</summary>
+                    <p>Standard attention writes the large intermediate $T \times T$ attention matrix to High-Bandwidth GPU memory (HBM), then reads it back to calculate softmax, and reads it again to multiply by $V$. This HBM read/write loop is a memory-bandwidth bottleneck.
+                    FlashAttention uses **tiling**. It loads small block chunks of $Q$, $K$, and $V$ into the GPU's fast, on-chip local SRAM memory. It computes attention scores, updates the softmax scaling factor incrementally using online softmax calculations, and computes the final output weighted values locally in SRAM. It only writes the final output tensor back to HBM, reducing memory access overheads and yielding up to a 3-4x speedup.</p>
+                </details>
 
                 <div class="prev-next-nav">
                     <a href="architecture.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">01. Architecture Lifecycle</span>
+                        <span class="nav-title">02. Embeddings</span>
                     </a>
                     <a href="transformer_block.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">03. Transformer Block</span>
+                        <span class="nav-title">04. MLP & LayerNorm</span>
                     </a>
                 </div>
             </main>

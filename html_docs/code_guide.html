@@ -3,36 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Reading Guide | GPT Reproduction Handbook</title>
-        <link rel="stylesheet" href="assets/styles.css">
-    <!-- Mermaid CDN (correct UMD load) -->
+    <title>How to Read the Codebase | GPT-2 Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
-    </script>
-    <!-- KaTeX CDN (Math rendering) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
     <div class="app-container">
+        <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
-                <span class="logo-text">GPT-2 Learning Handbook</span>
+                <span class="logo-text">How Text Becomes Intelligence</span>
             </div>
             <div class="header-controls">
                 <div class="search-box">
@@ -44,103 +30,139 @@
         </header>
 
         <div class="main-layout">
-                        <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation -->
+                        <nav class="sidebar">
                 <div class="sidebar-section">
-                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <div class="sidebar-nav-title">The Token's Journey</div>
                     <ul class="sidebar-nav-list">
-                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
-                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
-                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
-                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
-                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
-                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
-                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
-                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
-                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
-                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
-                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
-                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
-                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
-                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
-                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
-                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
-                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
-                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
-                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
+                        <li><a href="index.html" class="sidebar-nav-link">00. Overview</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">01. Tokenization</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">02. Embeddings</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">03. Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">04. MLP & LayerNorm</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">05. The Output & Prediction</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">The Training Cycle</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">06. Data Loader</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">07. Backpropagation</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">08. Hardware Speedups</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpointing</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Evaluation</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Engineering Landscapes</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">11. Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">12. Memory Audit</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">13. Failure Gallery</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">14. Experiment Lab</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">Production & Interviews</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">15. GPT-2 to Modern LLMs</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">16. Interview Guide</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">17. How to Read Code</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. Learning Roadmap</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">19. Glossary & Index</a></li>
                     </ul>
                 </div>
             </nav>
 
+            <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>16. Code Reading Guide</span>
+                    <a href="index.html">Handbook</a> &gt; <span>17. How to Read Code</span>
                 </div>
 
-                <h1>16. Code Reading Guide</h1>
-                
+                <h1>17. How to Read the Codebase: A Developer's Roadmap</h1>
+
                 <h2>Why should I care?</h2>
-                <p>Navigating a new codebase can be overwhelming.
-                Understanding the architecture of the repository—how files interact, where key components are implemented, and the optimal order to read them—is essential for building mental models and extending the codebase with new features.</p>
+                <p>This repository is a code-first learning tool.
+                Instead of getting lost in lines of PyTorch boilerplate, you should approach the codebase in a logical order.
+                This guide provides a step-by-step reading roadmap, detailing why each file exists, what to focus on, what to ignore initially, and what interview concepts it teaches.</p>
 
-                <h2>Backend Engineer Lens</h2>
-                <p>Think of reading this ML codebase like onboarding to a new backend project.
-                Instead of trying to understand every service simultaneously, you trace a request: starting at the routing layer (the data pipeline), following it through the controllers (the model layers), and observing how it is saved to the database (the checkpoints).</p>
-
-                <h2>File interactions Diagram</h2>
+                <h2>The Reading Roadmap</h2>
                 <div class="mermaid">
-                flowchart TD
-                    data["data.py: DataLoaderLite"] -->|Yields batches x, y| train["train.py: Main Training Loop"]
-                    model["model.py: GPT Architecture"] -->|Runs forward/backward| train
-                    train -->|Saves Pt Checkpoint| checkpoint["checkpoint_step_X.pt"]
-                    checkpoint -->|Restores State| hellaswag["hellaswag.py: Downstream eval"]
-                    model -->|Runs Parity Verification| generate["generate.py: Parity & Sampling"]
+                flowchart LR
+                    Step1["1. model.py (The Engine Blueprint)"] --> Step2["2. generate.py (Autoregressive Test)"]
+                    Step2 --> Step3["3. train.py (Optimization Loop)"]
+                    Step3 --> Step4["4. data.py (Data Stream)"]
+                    Step4 --> Step5["5. hellaswag.py (Evaluation Test)"]
                 </div>
 
-                <h2>Recommended Reading Order</h2>
+                <hr style="margin: 32px 0; border: none; border-top: 1px solid var(--border-color);">
 
-                <h3>1. data.py (The Data Ingestion Layer)</h3>
+                <h2>1. model.py</h2>
                 <ul>
-                    <li><strong>Why it exists:</strong> Handles subword tokenization and yields batches of inputs and targets.</li>
-                    <li><strong>Focus on:</strong> The sliding window math: <code>buf[:-1]</code> for inputs, and <code>buf[1:]</code> for targets.</li>
-                    <li><strong>Interview takeaways:</strong> How data preparation prevents target leakage.</li>
+                    <li><strong>Why it exists:</strong> Defines the network architecture layers, parameter blocks, initialization scales, and weight-tying properties.</li>
+                    <li><strong>What to focus on:</strong>
+                        <ul>
+                            <li>The unified projection and reshape split math in <a href="file:///Users/ahadk9/Projects/Andrej/model.py#L70">CausalSelfAttention</a>.</li>
+                            <li>The residual additions and LayerNorm ordering in <a href="file:///Users/ahadk9/Projects/Andrej/model.py#L144">Block.forward()</a>.</li>
+                            <li>Weight initialization scale adjustments in <a href="file:///Users/ahadk9/Projects/Andrej/model.py#L199">GPT._init_weights()</a>.</li>
+                        </ul>
+                    </li>
+                    <li><strong>What to ignore initially:</strong> The Hugging Face weight loading helper function <a href="file:///Users/ahadk9/Projects/Andrej/model.py#L257">from_pretrained()</a>. It is full of naming translations and Conv1D transpositions that are secondary to understanding core tensor flows.</li>
+                    <li><strong>Interview Concepts Taught:</strong> Self-attention equation, Pre-LN vs Post-LN stability, and Weight Tying parameter reductions.</li>
                 </ul>
 
-                <h3>2. model.py (The Core Architecture)</h3>
+                <h2>2. generate.py</h2>
                 <ul>
-                    <li><strong>Why it exists:</strong> Contains the structural layers of the GPT model (Embeddings, Causal Attention, MLP, Transformer Block).</li>
-                    <li><strong>Focus on:</strong> Head splitting transpositions, causal masking, weight tying, and initialization scaling.</li>
-                    <li><strong>Interview takeaways:</strong> Pre-LN gradient flow, and $O(T^2)$ attention complexity.</li>
+                    <li><strong>Why it exists:</strong> Runs a logit parity check to verify that our custom architecture yields identical math to official OpenAI GPT-2 weights. Also provides a text generation shell.</li>
+                    <li><strong>What to focus on:</strong> The logit validation loop <a href="file:///Users/ahadk9/Projects/Andrej/generate.py#L16">run_logit_parity_test()</a>. It is a perfect demonstration of loading models, setting evaluation configurations, and checking absolute delta thresholds between floating-point matrices.</li>
+                    <li><strong>What to ignore initially:</strong> Command-line parser setups in the <code>main()</code> block.</li>
+                    <li><strong>Interview Concepts Taught:</strong> Autoregressive text sampling, Temperature scaling mechanics, and Top-K distribution cropping.</li>
                 </ul>
 
-                <h3>3. train.py (The Control Loop)</h3>
+                <h2>3. train.py</h2>
                 <ul>
-                    <li><strong>Why it exists:</strong> Manages optimizer steps, learning rate scheduling, gradient accumulation, and checkpoints.</li>
-                    <li><strong>Focus on:</strong> AdamW weight decay groups, gradient accumulation math, and learning rate schedules.</li>
-                    <li><strong>Interview takeaways:</strong> Gradient clipping and mixed precision training.</li>
+                    <li><strong>Why it exists:</strong> Implements the production-grade optimization loop to train our local model, handling precision, learning rate warmup, and scaling.</li>
+                    <li><strong>What to focus on:</strong>
+                        <ul>
+                            <li>Optimizer decay group splitting in <a href="file:///Users/ahadk9/Projects/Andrej/train.py#L87">configure_optimizers()</a>.</li>
+                            <li>Gradient accumulation loops in the training step block in <a href="file:///Users/ahadk9/Projects/Andrej/train.py#L278">main()</a>.</li>
+                            <li>Mixed precision autocasting and gradient norm clipping constraints.</li>
+                        </ul>
+                    </li>
+                    <li><strong>What to ignore initially:</strong> The validation loss text logging and sample generation blocks executed every 20 steps. Focus strictly on the gradient step block.</li>
+                    <li><strong>Interview Concepts Taught:</strong> Gradient Accumulation, Weight Decay parameter groupings, and Gradient Clipping protection.</li>
                 </ul>
 
-                <h3>4. generate.py & hellaswag.py (Verification & Evaluation)</h3>
+                <h2>4. data.py</h2>
                 <ul>
-                    <li><strong>Why they exist:</strong> <code>generate.py</code> verifies model correctness using logit parity checks. <code>hellaswag.py</code> runs validation benchmark evaluations.</li>
-                    <li><strong>Focus on:</strong> Temperature scaling, top-k filtering, and completion token log-likelihood alignment.</li>
+                    <li><strong>Why it exists:</strong> Tokenizes the input dataset using tiktoken and handles slicing input matrices $x$ and shifted targets $y$.</li>
+                    <li><strong>What to focus on:</strong> The index slicing and target shifts in <a href="file:///Users/ahadk9/Projects/Andrej/data.py#L37">DataLoaderLite.next_batch()</a>. Observe how target offsets are generated.</li>
+                    <li><strong>What to ignore initially:</strong> File reading encoding details and epoch count printouts.</li>
+                    <li><strong>Interview Concepts Taught:</strong> Causal target shifts and batch memory layout.</li>
+                </ul>
+
+                <h2>5. hellaswag.py</h2>
+                <ul>
+                    <li><strong>Why it exists:</strong> Downloads a validation subset of HellaSwag and evaluates model completions to measure accuracy.</li>
+                    <li><strong>What to focus on:</strong> The log-likelihood average calculation block in <a href="file:///Users/ahadk9/Projects/Andrej/hellaswag.py#L108">evaluate_hellaswag()</a>. Notice how we slice outputs to align only with the suffix completion token logits.</li>
+                    <li><strong>What to ignore initially:</strong> Dataset download helper functions and curl requests.</li>
+                    <li><strong>Interview Concepts Taught:</strong> Commonsense reasoning benchmarks and Log-Likelihood completion evaluations.</li>
                 </ul>
 
                 <div class="prev-next-nav">
-                    <a href="debugging.html" class="prev-next-btn">
+                    <a href="interview_intent.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">15. Debugging Handbook</span>
+                        <span class="nav-title">16. Interview Guide</span>
                     </a>
-                    <a href="gpt2_to_real_llms.html" class="prev-next-btn next">
+                    <a href="engineer_roadmap.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">17. GPT-2 to Real LLMs</span>
+                        <span class="nav-title">18. Learning Roadmap</span>
                     </a>
                 </div>
             </main>
 
+            <!-- Table of Contents Sidebar -->
             <aside class="toc-sidebar">
                 <div class="toc-title">ON THIS PAGE</div>
                 <ul class="toc-list" id="toc-list"></ul>
