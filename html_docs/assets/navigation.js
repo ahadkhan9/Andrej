@@ -28,7 +28,60 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     initTheme();
 
-    // 2. Dynamic Table of Contents (TOC) Builder
+    // 2. Mobile navigation drawer. Injected here so every static page benefits
+    // without duplicating markup across the GitHub Pages HTML files.
+    const configureMobileNavigation = () => {
+        const header = document.querySelector("header");
+        const sidebar = document.querySelector(".sidebar");
+        const logoSection = document.querySelector(".logo-section");
+        if (!header || !sidebar || !logoSection) return;
+
+        let navToggle = document.getElementById("mobile-nav-toggle");
+        if (!navToggle) {
+            navToggle = document.createElement("button");
+            navToggle.type = "button";
+            navToggle.id = "mobile-nav-toggle";
+            navToggle.className = "mobile-nav-toggle";
+            navToggle.setAttribute("aria-controls", "site-navigation");
+            navToggle.setAttribute("aria-expanded", "false");
+            navToggle.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg><span>Menu</span>`;
+            logoSection.parentNode.insertBefore(navToggle, logoSection);
+        }
+
+        sidebar.id = sidebar.id || "site-navigation";
+        sidebar.setAttribute("aria-label", "Site navigation");
+
+        let navBackdrop = document.querySelector(".nav-backdrop");
+        if (!navBackdrop) {
+            navBackdrop = document.createElement("div");
+            navBackdrop.className = "nav-backdrop";
+            navBackdrop.hidden = true;
+            document.body.appendChild(navBackdrop);
+        }
+
+        const setNavigationState = (isOpen) => {
+            document.body.classList.toggle("nav-open", isOpen);
+            navToggle.setAttribute("aria-expanded", String(isOpen));
+            navBackdrop.hidden = !isOpen;
+        };
+
+        navToggle.addEventListener("click", () => {
+            setNavigationState(!document.body.classList.contains("nav-open"));
+        });
+        navBackdrop.addEventListener("click", () => setNavigationState(false));
+        sidebar.addEventListener("click", (event) => {
+            if (event.target.closest("a")) setNavigationState(false);
+        });
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") setNavigationState(false);
+        });
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 768) setNavigationState(false);
+        });
+    };
+    configureMobileNavigation();
+
+    // 3. Dynamic Table of Contents (TOC) Builder
     const buildTOC = () => {
         const tocList = document.getElementById("toc-list");
         if (!tocList) return;
@@ -63,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     buildTOC();
 
-    // 3. Syntax Highlighting Headers & Copy-to-Clipboard
+    // 4. Syntax Highlighting Headers & Copy-to-Clipboard
     const configureCodeBlocks = () => {
         const codeBlocks = document.querySelectorAll("pre");
         codeBlocks.forEach((block) => {
@@ -102,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     configureCodeBlocks();
 
-    // 4. Highlight Active Navigation Section
+    // 5. Highlight Active Navigation Section
     const highlightActiveNav = () => {
         const currentFile = window.location.pathname.split("/").pop() || "index.html";
         const navLinks = document.querySelectorAll(".sidebar-nav-link");
