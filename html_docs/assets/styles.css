@@ -724,4 +724,29 @@ summary:hover {
     .search-input {
         width: 160px;
     }
+    .content-wrapper {
+        padding: 24px 16px;
+    }
+    header {
+        padding: 0 16px;
+    }
+    .search-modal-content {
+        width: 90%;
+        margin: 0 5%;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+    .mermaid {
+        overflow-x: auto;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    .katex-display {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
 }
