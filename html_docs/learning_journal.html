@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkpointing | GPT Reproduction Handbook</title>
+    <title>Learning Journal | GPT Reproduction Handbook</title>
         <link rel="stylesheet" href="assets/styles.css">
     <!-- Mermaid CDN (correct UMD load) -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -30,7 +30,6 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
                 <span class="logo-text">GPT-2 Learning Handbook</span>
@@ -76,72 +75,64 @@
                 </div>
             </nav>
 
-            <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>09. Checkpoint Restoration</span>
+                    <a href="index.html">Handbook</a> &gt; <span>21. Learning Journal</span>
                 </div>
 
-                <h1>09. Checkpointing: Serialization & State Restoration</h1>
+                <h1>21. My Learning Journal</h1>
                 
                 <h2>Why should I care?</h2>
-                <p>Training runs often take days or weeks. Hardware failures, network drops, or kernel panics are inevitable during long runs.
-                Understanding checkpoint serialization, optimizer state restoration, and device mappings is essential for saving progress and resuming training without losing work.</p>
+                <p>Reproducing models involves significant trial-and-error. Logging your system performance measurements, learning rate configurations, overfitting outcomes, and troubleshooting notes provides a valuable personal reference for future development work.</p>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine you are reading a long book and need to pause.
-                To resume reading later:
+                <h2>Backend Engineer Lens</h2>
+                <p>Think of this journal like a system performance runbook or post-mortem log.
+                When an outage occurs, you write a post-mortem to document what broke, why it happened, how it was resolved, and preventative measures.
+                Similarly, you log model training runs, throughput speeds, and debugging findings here to track optimization progress.</p>
+
+                <h2>My Experiments Log</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Model / Config</th>
+                            <th>Hardware</th>
+                            <th>Loss (Train/Val)</th>
+                            <th>Throughput</th>
+                            <th>Observations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2026-06-04</td>
+                            <td>Custom GPT-2 (~10M parameters)</td>
+                            <td>Mac Mini M4 (16GB)</td>
+                            <td>Train: 3.12 / Val: 3.25</td>
+                            <td>70,624.9 tokens/sec</td>
+                            <td>FP16 mixed-precision (AMP) on the MPS backend provides a 15x speedup over CPU. <code>torch.compile</code> adds negligible gains on Apple Silicon.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>My Lessons Learned & Mistakes</h2>
                 <ul>
-                    <li>You save your current page number (the <strong>step index</strong>).</li>
-                    <li>You place a bookmark in the book (the <strong>model parameters</strong>).</li>
-                    <li>You write down a summary of the story's events in a notepad (the <strong>optimizer states</strong>).</li>
+                    <li><strong>Mistake:</strong> Initializing the model directly on the GPU/MPS device.
+                        <br><strong>Lesson:</strong> Always initialize model weights on the CPU first before transferring to guarantee identical weight initializations across different hardware backends.
+                    </li>
+                    <li><strong>Mistake:</strong> Forgetting to divide micro-batch loss by <code>grad_accum_steps</code> during accumulation.
+                        <br><strong>Lesson:</strong> This causes gradients to sum up unchecked, effectively scaling the learning rate by $N$ and destabilizing training.
+                    </li>
                 </ul>
-                If you forget the notepad summary, you can still read the book, but you will lose the context of the story so far. Similarly, if you load a checkpoint without the optimizer states, the model will lose its historical gradient tracking and may fail to resume training stably.</p>
-
-                <h2>Level 2 — Engineering View</h2>
-                <p>We serialize the training state using <code>torch.save</code> in <code>train.py:L254-L264</code>:</p>
-                <pre><code class="language-python">checkpoint = {
-    "model": model.state_dict(),
-    "optimizer": optimizer.state_dict(),
-    "config": config,
-    "step": step,
-    "val_loss": val_loss_accum
-}
-torch.save(checkpoint, checkpoint_path)</code></pre>
-                <p>When loading a checkpoint, we use the saved configuration to reconstruct the model architecture before restoring the weight tensors. We must set <code>map_location</code> to the target hardware device to prevent cross-device load errors:</p>
-                <pre><code class="language-python"># From hellaswag.py:L168-L176
-checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
-config = checkpoint["config"]
-model = GPT(config)
-model.load_state_dict(checkpoint["model"])
-model.to(device)</code></pre>
-
-                <h2>3. Mathematical View</h2>
-                <p>The state dictionary maps parameter layer names to weight tensors:
-                $$S = \{ \text{key}_i : W_i \}$$
-                Where $\text{key}_i$ is a string representation of the layer (e.g. <code>"transformer.h.0.attn.c_attn.weight"</code>) and $W_i \in \mathbb{R}^{D_{out} \times D_{in}}$ is the weight tensor.
-                When restoring a checkpoint, <code>load_state_dict</code> performs an element-wise copy of these tensors into the model's memory layout.</p>
-
-                <h2>4. What happens if we do not map the device location on load?</h2>
-                <p>If you call <code>torch.load(path)</code> without specifying <code>map_location</code>:
-                <ul>
-                    <li>PyTorch will attempt to load the saved tensors directly into the memory of the device they were originally saved on (e.g. CUDA GPU 0).</li>
-                    <li>If you run this load step on a machine without that hardware (such as your Mac Mini M4, which only has MPS and CPU), the operation will throw a runtime error (e.g. <code>RuntimeError: Attempting to deserialize object on a CUDA device but torch.cuda.is_available() is False</code>), crashing the program.</li>
-                </ul></p>
 
                 <div class="prev-next-nav">
-                    <a href="generation.html" class="prev-next-btn">
+                    <a href="glossary.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">08. Autoregressive Generation</span>
+                        <span class="nav-title">20. Glossary of Terms</span>
                     </a>
-                    <a href="evaluation.html" class="prev-next-btn next">
-                        <span class="nav-label">Next Section</span>
-                        <span class="nav-title">10. Model Evaluation</span>
-                    </a>
+                    <div></div>
                 </div>
             </main>
 
-            <!-- Table of Contents Sidebar -->
             <aside class="toc-sidebar">
                 <div class="toc-title">ON THIS PAGE</div>
                 <ul class="toc-list" id="toc-list"></ul>

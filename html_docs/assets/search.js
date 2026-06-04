@@ -13,9 +13,16 @@ document.addEventListener("DOMContentLoaded", () => {
         { title: "Checkpointing & Restoration", url: "checkpointing.html", desc: "Serialization mappings, config and optimizer tracking, and CPU-first deterministic weight restoration patterns." },
         { title: "Evaluation & validation", url: "evaluation.html", desc: "Validation losses, HellaSwag evaluation, log-likelihood calculations, and context token ignore mappings." },
         { title: "Structural Experiments", url: "experiments.html", desc: "Systematic experiments (removing residuals, position embeddings, modifying width, custom activations)." },
+        { title: "The Tensor Shape Journey", url: "tensor_journey.html", desc: "Trace tensor shapes from input tokens to output predictions and loss scalars." },
+        { title: "Memory & Performance", url: "memory_performance.html", desc: "Analyze parameters, gradients, optimizer footprint, and activation memory." },
         { title: "Connections to Modern LLMs", url: "modern_llms.html", desc: "Evolution comparison of GPT-2 to Llama, Gemma, DeepSeek, Mistral, Claude, and GPT-4 covering RoPE, RMSNorm, GQA, SwiGLU, and MoE." },
-        { title: "Interview Preparation Guide", url: "interview_guide.html", desc: "Beginner-to-staff level transformer QA database, pitfalls, and technical follow-ups." },
-        { title: "Glossary of Terms", url: "glossary.html", desc: "Core terminology definitions including KV cache, Perplexity, FLOPs, weight tying, and BF16." }
+        { title: "The Debugging Handbook", url: "debugging.html", desc: "Troubleshooting guide covering NaN losses, exploding gradients, and mask errors." },
+        { title: "Code Reading Guide", url: "code_guide.html", desc: "File-by-file roadmap explaining architecture connections and takeaways." },
+        { title: "GPT-2 to Real LLMs", url: "gpt2_to_real_llms.html", desc: "Mapping the codebase to modern instruction tuning, serving, and RAG architectures." },
+        { title: "GenAI Engineer Roadmap", url: "engineer_roadmap.html", desc: "7-stage study curriculum connecting base models to agents." },
+        { title: "What Interviewers Are Testing", url: "interview_intent.html", desc: "Graded GenAI/AI/LLM system design questions." },
+        { title: "Glossary of Terms", url: "glossary.html", desc: "Core terminology definitions including KV cache, Perplexity, FLOPs, weight tying, and BF16." },
+        { title: "My Learning Journal", url: "learning_journal.html", desc: "A personal log to record lessons, experiment results, and observations." }
     ];
 
     // 2. Setup Search Overlay Elements

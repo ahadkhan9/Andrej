@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overview | GPT Reproduction Handbook</title>
-    <link rel="stylesheet" href="assets/styles.css">
+        <link rel="stylesheet" href="assets/styles.css">
     <!-- Mermaid CDN (correct UMD load) -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
@@ -35,7 +45,7 @@
         </header>
 
         <div class="main-layout">
-            <!-- Sidebar Navigation -->
+                        <!-- Sidebar Navigation -->
             <nav class="sidebar">
                 <div class="sidebar-section">
                     <div class="sidebar-nav-title">HANDBOOK MODULES</div>
@@ -52,9 +62,16 @@
                         <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
                         <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
                         <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
-                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
-                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
-                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                        <li><a href="tensor_journey.html" class="sidebar-nav-link">12. The Tensor Shape Journey</a></li>
+                        <li><a href="memory_performance.html" class="sidebar-nav-link">13. Memory & Performance</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">14. Connections to Modern LLMs</a></li>
+                        <li><a href="debugging.html" class="sidebar-nav-link">15. The Debugging Handbook</a></li>
+                        <li><a href="code_guide.html" class="sidebar-nav-link">16. Code Reading Guide</a></li>
+                        <li><a href="gpt2_to_real_llms.html" class="sidebar-nav-link">17. GPT-2 to Real LLMs</a></li>
+                        <li><a href="engineer_roadmap.html" class="sidebar-nav-link">18. GenAI Engineer Roadmap</a></li>
+                        <li><a href="interview_intent.html" class="sidebar-nav-link">19. What Interviewers Are Testing</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">20. Glossary of Terms</a></li>
+                        <li><a href="learning_journal.html" class="sidebar-nav-link">21. My Learning Journal</a></li>
                     </ul>
                 </div>
             </nav>

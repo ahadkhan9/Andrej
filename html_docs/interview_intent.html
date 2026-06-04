@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkpointing | GPT Reproduction Handbook</title>
+    <title>Interview Preparation | GPT Reproduction Handbook</title>
         <link rel="stylesheet" href="assets/styles.css">
     <!-- Mermaid CDN (correct UMD load) -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -30,7 +30,6 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
                 <span class="logo-text">GPT-2 Learning Handbook</span>
@@ -76,72 +75,68 @@
                 </div>
             </nav>
 
-            <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>09. Checkpoint Restoration</span>
+                    <a href="index.html">Handbook</a> &gt; <span>19. What Interviewers Are Testing</span>
                 </div>
 
-                <h1>09. Checkpointing: Serialization & State Restoration</h1>
+                <h1>19. What Interviewers Are Really Testing</h1>
                 
                 <h2>Why should I care?</h2>
-                <p>Training runs often take days or weeks. Hardware failures, network drops, or kernel panics are inevitable during long runs.
-                Understanding checkpoint serialization, optimizer state restoration, and device mappings is essential for saving progress and resuming training without losing work.</p>
+                <p>GenAI and LLM engineering interviews focus on systems-level understanding rather than theoretical math proofs.
+                Interviewers want to see that you can translate mathematical concepts into concrete engineering choices, manage memory limits, debug training instability, and design efficient serving systems.</p>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine you are reading a long book and need to pause.
-                To resume reading later:
-                <ul>
-                    <li>You save your current page number (the <strong>step index</strong>).</li>
-                    <li>You place a bookmark in the book (the <strong>model parameters</strong>).</li>
-                    <li>You write down a summary of the story's events in a notepad (the <strong>optimizer states</strong>).</li>
-                </ul>
-                If you forget the notepad summary, you can still read the book, but you will lose the context of the story so far. Similarly, if you load a checkpoint without the optimizer states, the model will lose its historical gradient tracking and may fail to resume training stably.</p>
+                <h2>Backend Engineer Lens</h2>
+                <p>Think of this interview guide like preparing for a senior system design interview.
+                Instead of simply memorizing the definitions of databases or caches, you explain *why* you chose a specific database (e.g. Postgres vs. Redis) based on its trade-offs.
+                Similarly, you explain transformer components in terms of their system constraints (memory, compute, and latency).</p>
 
-                <h2>Level 2 — Engineering View</h2>
-                <p>We serialize the training state using <code>torch.save</code> in <code>train.py:L254-L264</code>:</p>
-                <pre><code class="language-python">checkpoint = {
-    "model": model.state_dict(),
-    "optimizer": optimizer.state_dict(),
-    "config": config,
-    "step": step,
-    "val_loss": val_loss_accum
-}
-torch.save(checkpoint, checkpoint_path)</code></pre>
-                <p>When loading a checkpoint, we use the saved configuration to reconstruct the model architecture before restoring the weight tensors. We must set <code>map_location</code> to the target hardware device to prevent cross-device load errors:</p>
-                <pre><code class="language-python"># From hellaswag.py:L168-L176
-checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
-config = checkpoint["config"]
-model = GPT(config)
-model.load_state_dict(checkpoint["model"])
-model.to(device)</code></pre>
+                <h2>Core Interview Topics</h2>
 
-                <h2>3. Mathematical View</h2>
-                <p>The state dictionary maps parameter layer names to weight tensors:
-                $$S = \{ \text{key}_i : W_i \}$$
-                Where $\text{key}_i$ is a string representation of the layer (e.g. <code>"transformer.h.0.attn.c_attn.weight"</code>) and $W_i \in \mathbb{R}^{D_{out} \times D_{in}}$ is the weight tensor.
-                When restoring a checkpoint, <code>load_state_dict</code> performs an element-wise copy of these tensors into the model's memory layout.</p>
+                <details>
+                    <summary>Topic 1: Attention Mechanics</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>What the interviewer is actually testing:</strong> Your understanding of information flow and memory scaling bottleneck ($O(T^2)$) in transformers.</p>
+                        <p><strong>Good Answer:</strong> Attention uses Query, Key, and Value matrices to compute similarity scores between tokens, allowing the model to focus on related words.</p>
+                        <p><strong>Strong Answer:</strong> Self-attention projects inputs into Queries, Keys, and Values. The dot product $Q K^T$ calculates similarity weights, which are scaled by $1/\sqrt{d}$ to prevent vanishing gradients, passed through a causal mask to block future tokens, and multiplied by $V$.
+                        Its memory footprint scales quadratically ($O(T^2)$), making long context lengths expensive. This bottleneck is optimized using FlashAttention (which computes attention in fast SRAM cache blocks) and GQA (which shares KV heads to reduce the KV Cache memory footprint during inference).</p>
+                        <p><strong>Common Mistakes:</strong> Saying FlashAttention is an approximation or drops tokens (it computes the exact same mathematical outputs as standard attention).</p>
+                    </div>
+                </details>
 
-                <h2>4. What happens if we do not map the device location on load?</h2>
-                <p>If you call <code>torch.load(path)</code> without specifying <code>map_location</code>:
-                <ul>
-                    <li>PyTorch will attempt to load the saved tensors directly into the memory of the device they were originally saved on (e.g. CUDA GPU 0).</li>
-                    <li>If you run this load step on a machine without that hardware (such as your Mac Mini M4, which only has MPS and CPU), the operation will throw a runtime error (e.g. <code>RuntimeError: Attempting to deserialize object on a CUDA device but torch.cuda.is_available() is False</code>), crashing the program.</li>
-                </ul></p>
+                <details>
+                    <summary>Topic 2: Gradient Accumulation</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>What the interviewer is actually testing:</strong> Your ability to manage hardware memory limits during training.</p>
+                        <p><strong>Good Answer:</strong> We split a large batch into smaller micro-batches and sum their gradients before updating parameters, simulating a larger batch size on limited hardware.</p>
+                        <p><strong>Strong Answer:</strong> We use gradient accumulation to support large effective batch sizes (e.g. $8,192$ tokens) when GPU memory is limited. We run $N$ forward/backward passes on smaller micro-batches, accumulating gradients in the parameters' `.grad` attributes before calling <code>optimizer.step()</code>.
+                        We must divide the loss by $N$ (<code>grad_accum_steps</code>) at each micro-step to normalize the accumulated gradients, preventing the effective learning rate from scaling by $N$.</p>
+                        <p><strong>Common Mistakes:</strong> Forgetting to normalize the loss, which destabilizes training and causes gradients to blow up.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Topic 3: Fine-Tuning & LoRA</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>What the interviewer is actually testing:</strong> Your understanding of model adaptation and parameter efficiency.</p>
+                        <p><strong>Good Answer:</strong> LoRA makes fine-tuning faster and cheaper by training small adapter layers instead of updating all model parameters.</p>
+                        <p><strong>Strong Answer:</strong> LoRA (Low-Rank Adaptation) freezes the pre-trained base model weights ($W_0 \in \mathbb{R}^{d \times k}$) and decomposes weight updates into two low-rank matrices $A \in \mathbb{R}^{d \times r}$ and $B \in \mathbb{R}^{r \times k}$ (where rank $r \ll d$).
+                        During training, we only compute gradients and update optimizer states for these low-rank matrices, reducing memory overhead by up to 90% and enabling fine-tuning on consumer hardware.</p>
+                    </div>
+                </details>
 
                 <div class="prev-next-nav">
-                    <a href="generation.html" class="prev-next-btn">
+                    <a href="engineer_roadmap.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">08. Autoregressive Generation</span>
+                        <span class="nav-title">18. GenAI Engineer Roadmap</span>
                     </a>
-                    <a href="evaluation.html" class="prev-next-btn next">
+                    <a href="glossary.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">10. Model Evaluation</span>
+                        <span class="nav-title">20. Glossary of Terms</span>
                     </a>
                 </div>
             </main>
 
-            <!-- Table of Contents Sidebar -->
             <aside class="toc-sidebar">
                 <div class="toc-title">ON THIS PAGE</div>
                 <ul class="toc-list" id="toc-list"></ul>

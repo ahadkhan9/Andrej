@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkpointing | GPT Reproduction Handbook</title>
+    <title>Code Reading Guide | GPT Reproduction Handbook</title>
         <link rel="stylesheet" href="assets/styles.css">
     <!-- Mermaid CDN (correct UMD load) -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -30,7 +30,6 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
                 <span class="logo-text">GPT-2 Learning Handbook</span>
@@ -76,72 +75,72 @@
                 </div>
             </nav>
 
-            <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>09. Checkpoint Restoration</span>
+                    <a href="index.html">Handbook</a> &gt; <span>16. Code Reading Guide</span>
                 </div>
 
-                <h1>09. Checkpointing: Serialization & State Restoration</h1>
+                <h1>16. Code Reading Guide</h1>
                 
                 <h2>Why should I care?</h2>
-                <p>Training runs often take days or weeks. Hardware failures, network drops, or kernel panics are inevitable during long runs.
-                Understanding checkpoint serialization, optimizer state restoration, and device mappings is essential for saving progress and resuming training without losing work.</p>
+                <p>Navigating a new codebase can be overwhelming.
+                Understanding the architecture of the repository—how files interact, where key components are implemented, and the optimal order to read them—is essential for building mental models and extending the codebase with new features.</p>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Imagine you are reading a long book and need to pause.
-                To resume reading later:
+                <h2>Backend Engineer Lens</h2>
+                <p>Think of reading this ML codebase like onboarding to a new backend project.
+                Instead of trying to understand every service simultaneously, you trace a request: starting at the routing layer (the data pipeline), following it through the controllers (the model layers), and observing how it is saved to the database (the checkpoints).</p>
+
+                <h2>File interactions Diagram</h2>
+                <div class="mermaid">
+                flowchart TD
+                    data["data.py: DataLoaderLite"] -->|Yields batches x, y| train["train.py: Main Training Loop"]
+                    model["model.py: GPT Architecture"] -->|Runs forward/backward| train
+                    train -->|Saves Pt Checkpoint| checkpoint["checkpoint_step_X.pt"]
+                    checkpoint -->|Restores State| hellaswag["hellaswag.py: Downstream eval"]
+                    model -->|Runs Parity Verification| generate["generate.py: Parity & Sampling"]
+                </div>
+
+                <h2>Recommended Reading Order</h2>
+
+                <h3>1. data.py (The Data Ingestion Layer)</h3>
                 <ul>
-                    <li>You save your current page number (the <strong>step index</strong>).</li>
-                    <li>You place a bookmark in the book (the <strong>model parameters</strong>).</li>
-                    <li>You write down a summary of the story's events in a notepad (the <strong>optimizer states</strong>).</li>
+                    <li><strong>Why it exists:</strong> Handles subword tokenization and yields batches of inputs and targets.</li>
+                    <li><strong>Focus on:</strong> The sliding window math: <code>buf[:-1]</code> for inputs, and <code>buf[1:]</code> for targets.</li>
+                    <li><strong>Interview takeaways:</strong> How data preparation prevents target leakage.</li>
                 </ul>
-                If you forget the notepad summary, you can still read the book, but you will lose the context of the story so far. Similarly, if you load a checkpoint without the optimizer states, the model will lose its historical gradient tracking and may fail to resume training stably.</p>
 
-                <h2>Level 2 — Engineering View</h2>
-                <p>We serialize the training state using <code>torch.save</code> in <code>train.py:L254-L264</code>:</p>
-                <pre><code class="language-python">checkpoint = {
-    "model": model.state_dict(),
-    "optimizer": optimizer.state_dict(),
-    "config": config,
-    "step": step,
-    "val_loss": val_loss_accum
-}
-torch.save(checkpoint, checkpoint_path)</code></pre>
-                <p>When loading a checkpoint, we use the saved configuration to reconstruct the model architecture before restoring the weight tensors. We must set <code>map_location</code> to the target hardware device to prevent cross-device load errors:</p>
-                <pre><code class="language-python"># From hellaswag.py:L168-L176
-checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
-config = checkpoint["config"]
-model = GPT(config)
-model.load_state_dict(checkpoint["model"])
-model.to(device)</code></pre>
-
-                <h2>3. Mathematical View</h2>
-                <p>The state dictionary maps parameter layer names to weight tensors:
-                $$S = \{ \text{key}_i : W_i \}$$
-                Where $\text{key}_i$ is a string representation of the layer (e.g. <code>"transformer.h.0.attn.c_attn.weight"</code>) and $W_i \in \mathbb{R}^{D_{out} \times D_{in}}$ is the weight tensor.
-                When restoring a checkpoint, <code>load_state_dict</code> performs an element-wise copy of these tensors into the model's memory layout.</p>
-
-                <h2>4. What happens if we do not map the device location on load?</h2>
-                <p>If you call <code>torch.load(path)</code> without specifying <code>map_location</code>:
+                <h3>2. model.py (The Core Architecture)</h3>
                 <ul>
-                    <li>PyTorch will attempt to load the saved tensors directly into the memory of the device they were originally saved on (e.g. CUDA GPU 0).</li>
-                    <li>If you run this load step on a machine without that hardware (such as your Mac Mini M4, which only has MPS and CPU), the operation will throw a runtime error (e.g. <code>RuntimeError: Attempting to deserialize object on a CUDA device but torch.cuda.is_available() is False</code>), crashing the program.</li>
-                </ul></p>
+                    <li><strong>Why it exists:</strong> Contains the structural layers of the GPT model (Embeddings, Causal Attention, MLP, Transformer Block).</li>
+                    <li><strong>Focus on:</strong> Head splitting transpositions, causal masking, weight tying, and initialization scaling.</li>
+                    <li><strong>Interview takeaways:</strong> Pre-LN gradient flow, and $O(T^2)$ attention complexity.</li>
+                </ul>
+
+                <h3>3. train.py (The Control Loop)</h3>
+                <ul>
+                    <li><strong>Why it exists:</strong> Manages optimizer steps, learning rate scheduling, gradient accumulation, and checkpoints.</li>
+                    <li><strong>Focus on:</strong> AdamW weight decay groups, gradient accumulation math, and learning rate schedules.</li>
+                    <li><strong>Interview takeaways:</strong> Gradient clipping and mixed precision training.</li>
+                </ul>
+
+                <h3>4. generate.py & hellaswag.py (Verification & Evaluation)</h3>
+                <ul>
+                    <li><strong>Why they exist:</strong> <code>generate.py</code> verifies model correctness using logit parity checks. <code>hellaswag.py</code> runs validation benchmark evaluations.</li>
+                    <li><strong>Focus on:</strong> Temperature scaling, top-k filtering, and completion token log-likelihood alignment.</li>
+                </ul>
 
                 <div class="prev-next-nav">
-                    <a href="generation.html" class="prev-next-btn">
+                    <a href="debugging.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">08. Autoregressive Generation</span>
+                        <span class="nav-title">15. Debugging Handbook</span>
                     </a>
-                    <a href="evaluation.html" class="prev-next-btn next">
+                    <a href="gpt2_to_real_llms.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">10. Model Evaluation</span>
+                        <span class="nav-title">17. GPT-2 to Real LLMs</span>
                     </a>
                 </div>
             </main>
 
-            <!-- Table of Contents Sidebar -->
             <aside class="toc-sidebar">
                 <div class="toc-title">ON THIS PAGE</div>
                 <ul class="toc-list" id="toc-list"></ul>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experiments | GPT Reproduction Handbook</title>
+    <title>GenAI Engineer Roadmap | GPT Reproduction Handbook</title>
         <link rel="stylesheet" href="assets/styles.css">
     <!-- Mermaid CDN (correct UMD load) -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -30,7 +30,6 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Top Nav Bar -->
         <header>
             <div class="logo-section">
                 <span class="logo-text">GPT-2 Learning Handbook</span>
@@ -76,98 +75,99 @@
                 </div>
             </nav>
 
-            <!-- Main Content Wrapper -->
             <main class="content-wrapper">
                 <div class="breadcrumbs">
-                    <a href="index.html">Handbook</a> &gt; <span>11. Architecture Experiments</span>
+                    <a href="index.html">Handbook</a> &gt; <span>18. GenAI Engineer Roadmap</span>
                 </div>
 
-                <h1>11. Experiments: Structural Interventions</h1>
+                <h1>18. GenAI Engineer Roadmap Using This Repository</h1>
                 
                 <h2>Why should I care?</h2>
-                <p>Understanding a system requires knowing not only how it works, but also how it fails.
-                By examining what happens when core architectural components are removed or modified, you gain a deeper understanding of why they exist and the training failures they prevent.</p>
+                <p>Building a base transformer is the first step in your LLM engineering journey.
+                This roadmap connects the low-level mechanics you learned in this project (like attention, embeddings, and tokenization) to advanced concepts (such as fine-tuning, RAG, and serving), giving you a structured path to build production-ready LLM systems.</p>
 
-                <h2>Level 1 — Intuition & Mental Model</h2>
-                <p>Think of the transformer architecture as a suspension bridge.
-                Each steel cable, anchor point, and crossbeam has a specific purpose.
-                If you remove a main cable (residual connection), the bridge collapses. If you remove the expansion joints (LayerNorm), temperature swings will warp the steel until it snaps. If you remove the road signs (position embeddings), drivers won't know which lane to use.</p>
+                <h2>Backend Engineer Lens</h2>
+                <p>Think of this roadmap as an engineering progression plan.
+                You don't go from writing simple SQL queries to designing high-availability database replication systems overnight.
+                Similarly, you start by understanding the core engine internals (Stage 1), move to data serialization (Stage 2-3), learn network routing and caching (Stage 4-5), and finally build scalable, multi-node backend systems (Stage 6-7).</p>
 
-                <h2>Level 2 — Engineering View: Failure Scenarios</h2>
-                <p>We document six structural experiments, detailing their behaviors and failure modes:</p>
+                <h2>The 7-Stage Curriculum</h2>
 
                 <details>
-                    <summary>1. Removing Positional Embeddings</summary>
+                    <summary>Stage 1: Understand GPT Internals (Base Layer)</summary>
                     <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> The model trains and loss decreases slightly, but generated text becomes repetitive, grammatically incorrect, and loses coherence quickly. Downstream reasoning accuracy drops close to random chance.</p>
-                        <p><strong>Why it happens:</strong> Self-attention is permutation-invariant: it treats the input sequence as a "bag of words" without inherent order. Without positional embeddings, the model cannot distinguish word order.</p>
-                        <p><strong>What to observe in logs:</strong> Slower training loss decay, and repetitive generation loops (e.g. <code>"the the the"</code>).</p>
+                        <p><strong>Relevant codebase parts:</strong> <code>model.py</code>, <code>data.py</code>.</p>
+                        <p><strong>Transferable concepts:</strong> How text is tokenized, projected to embedding vectors, mixed via self-attention, and evaluated against targets.</p>
+                        <p><strong>What to learn next:</strong> Understanding modern transformer refinements like RMSNorm and Rotary Embeddings (RoPE).</p>
                     </div>
                 </details>
 
                 <details>
-                    <summary>2. Removing Residual Connections</summary>
+                    <summary>Stage 2: Fine-Tuning (PEFT, LoRA)</summary>
                     <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Training fails to converge. Gradients either vanish or explode, causing the model to return <code>NaN</code>.</p>
-                        <p><strong>Why it happens:</strong> Without residual connections ($x + f(x)$), gradients must flow back through a chain of multiplications of weights and activations. Early layers receive virtually no gradient signal during backpropagation.</p>
-                        <p><strong>What to observe in logs:</strong> Loss remains stuck at random baseline ($\approx 10.8$) or returns <code>NaN</code> within the first few steps.</p>
+                        <p><strong>Relevant codebase parts:</strong> <code>train.py</code>.</p>
+                        <p><strong>Transferable concepts:</strong> Backpropagation, weight updates using optimizers, and gradient computation.</p>
+                        <p><strong>What to learn next:</strong> Learn to use Parameter-Efficient Fine-Tuning (PEFT) libraries to freeze base weights and train small LoRA adapters on custom datasets.</p>
                     </div>
                 </details>
 
                 <details>
-                    <summary>3. Removing LayerNorm</summary>
+                    <summary>Stage 3: Embeddings & Vector Databases</summary>
                     <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Training fails immediately with loss returning <code>NaN</code>.</p>
-                        <p><strong>Why it happens:</strong> Without normalization layers, activation magnitudes grow exponentially as they pass through the blocks, causing arithmetic overflow (exceeding float range) during forward and backward passes.</p>
-                        <p><strong>What to observe in logs:</strong> Weight values and loss return <code>NaN</code> at step 0 or 1.</p>
+                        <p><strong>Relevant codebase parts:</strong> <code>model.py -> wte</code>, <code>data.py</code>.</p>
+                        <p><strong>Transferable concepts:</strong> Mapping tokens to continuous high-dimensional vector representations.</p>
+                        <p><strong>What to learn next:</strong> Learn to store embedding vectors in vector databases (e.g. Pinecone, Chroma, pgvector) and perform fast similarity search queries.</p>
                     </div>
                 </details>
 
                 <details>
-                    <summary>4. Removing Causal Masking</summary>
+                    <summary>Stage 4: Retrieval-Augmented Generation (RAG)</summary>
                     <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Training loss drops to near 0 quickly, but the model fails to generate coherent text during inference.</p>
-                        <p><strong>Why it happens:</strong> Without the causal mask, tokens can look ahead to future target tokens. The model learns to simply copy the next token from the input rather than learning semantic structures, making it useless for autoregressive generation.</p>
-                        <p><strong>What to observe in logs:</strong> Training loss decays abnormally fast to near 0, but generated outputs are repetitive loops of the prompt tokens.</p>
+                        <p><strong>Relevant codebase parts:</strong> <code>data.py</code>, <code>model.py -> generate</code>.</p>
+                        <p><strong>Transferable concepts:</strong> Generating text from context prompts.</p>
+                        <p><strong>What to learn next:</strong> Building RAG pipelines: query embedding, vector search retrieval, context injection, and generation evaluation.</p>
                     </div>
                 </details>
 
                 <details>
-                    <summary>5. Removing Weight Tying</summary>
+                    <summary>Stage 5: Inference Engines & KV Caching</summary>
                     <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Model trains successfully, but parameter count increases by $19.3\text{M}$ and training memory increases by $\approx 150\text{ MB}$.</p>
-                        <p><strong>Why it happens:</strong> Tying the weights of <code>wte</code> and <code>lm_head</code> shares their parameters. Untying them requires allocating separate memory for both layers' weights, gradients, and optimizer states.</p>
-                        <p><strong>What to observe in logs:</strong> Increased memory usage and slightly slower initial convergence.</p>
+                        <p><strong>Relevant codebase parts:</strong> <code>model.py -> CausalSelfAttention</code>.</p>
+                        <p><strong>Transferable concepts:</strong> Dot-product attention scores and generation loops.</p>
+                        <p><strong>What to learn next:</strong> Implementing Key-Value (KV) caching to save past token states, and understanding PagedAttention mechanisms to speed up inference.</p>
                     </div>
                 </details>
 
                 <details>
-                    <summary>6. Removing Gradient Clipping</summary>
+                    <summary>Stage 6: Model Serving</summary>
                     <div style="padding-top: 10px;">
-                        <p><strong>Expected Behavior:</strong> Training runs normally for a few steps, but occasionally destabilizes, with loss spikes or <code>NaN</code> errors.</p>
-                        <p><strong>Why it happens:</strong> If the model encounters a steep region of the loss landscape, gradient values can grow extremely large. Without clipping, the optimizer takes an excessively large step, pushing weights to extreme values and causing the loss to explode.</p>
-                        <p><strong>What to observe in logs:</strong> Sudden spikes in gradient norm followed by loss returning <code>NaN</code>.</p>
+                        <p><strong>Relevant codebase parts:</strong> <code>benchmark.py</code>.</p>
+                        <p><strong>Transferable concepts:</strong> Memory scaling, throughput metrics (tokens/second), and hardware bottlenecks.</p>
+                        <p><strong>What to learn next:</strong> Hosting models behind API endpoints using serving frameworks like vLLM, Hugging Face TGI, or Ollama.</p>
                     </div>
                 </details>
 
-                <h2>3. Mathematical View: Vanishing Gradients</h2>
-                <p>The derivative of the loss $\mathcal{L}$ with respect to the input $x_0$ through $L$ non-residual blocks is:
-                $$\frac{\partial \mathcal{L}}{\partial x_0} = \frac{\partial \mathcal{L}}{\partial x_L} \prod_{l=1}^L \frac{\partial f_l(x_{l-1})}{\partial x_{l-1}}$$
-                If the Jacobian matrices $\frac{\partial f_l}{\partial x}$ have singular values less than 1.0, the product decays exponentially with depth ($L$), causing gradients in early layers to approach 0. Residual connections resolve this by introducing an identity term ($I$), ensuring stable gradient flow.</p>
+                <details>
+                    <summary>Stage 7: Autonomous Agent Systems</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>Relevant codebase parts:</strong> <code>model.py -> generate</code>.</p>
+                        <p><strong>Transferable concepts:</strong> Autoregressive generation and sampling.</p>
+                        <p><strong>What to learn next:</strong> Teaching models to use tools (tool calling/gating) and build multi-step reasoning agents using LangChain or AutoGen.</p>
+                    </div>
+                </details>
 
                 <div class="prev-next-nav">
-                    <a href="evaluation.html" class="prev-next-btn">
+                    <a href="gpt2_to_real_llms.html" class="prev-next-btn">
                         <span class="nav-label">Previous Section</span>
-                        <span class="nav-title">10. Model Evaluation</span>
+                        <span class="nav-title">17. GPT-2 to Real LLMs</span>
                     </a>
-                    <a href="modern_llms.html" class="prev-next-btn next">
+                    <a href="interview_intent.html" class="prev-next-btn next">
                         <span class="nav-label">Next Section</span>
-                        <span class="nav-title">12. Connections to Modern LLMs</span>
+                        <span class="nav-title">19. What Interviewers Are Testing</span>
                     </a>
                 </div>
             </main>
 
-            <!-- Table of Contents Sidebar -->
             <aside class="toc-sidebar">
                 <div class="toc-title">ON THIS PAGE</div>
                 <ul class="toc-list" id="toc-list"></ul>
