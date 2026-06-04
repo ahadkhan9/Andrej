@@ -738,4 +738,15 @@ summary:hover {
         display: block;
         overflow-x: auto;
     }
+    .mermaid {
+        overflow-x: auto;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    .katex-display {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
 }
