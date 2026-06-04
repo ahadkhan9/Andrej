@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -143,7 +144,7 @@
                 <pre><code class="language-bash">python3 generate.py --run_test</code></pre>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>Why do we transpose Hugging Face's Conv1D weights when loading them into standard PyTorch Linear layers?</summary>
                     <p>In standard PyTorch, an <code>nn.Linear</code> layer performs matrix multiplication using:
                     $$Y = X \cdot W^T + b$$
@@ -155,7 +156,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>What is state_dict in PyTorch, and what does it contain?</summary>
                     <p>A <code>state_dict</code> is a standard Python dictionary that maps each trainable layer parameter name (string) to its corresponding tensor weights.
                     It only contains the learnable weights and biases of the model, excluding the architectural configuration or non-trainable buffers (unless registered explicitly).
@@ -183,5 +184,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

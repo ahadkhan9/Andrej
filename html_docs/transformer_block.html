@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -178,7 +179,7 @@
                 <pre><code class="language-bash">python3 train.py --overfit</code></pre>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>Why do residual skip connections solve the vanishing gradient problem?</summary>
                     <p>In backpropagation, we calculate the derivative of a block output with respect to its input.
                     Given a residual block $y = x + F(x)$, the derivative of $y$ with respect to $x$ is:
@@ -186,7 +187,7 @@
                     When computing backpropagation, the gradient is multiplied by this term. Even if the sub-layer weights degrade and the local gradient $\frac{\partial F(x)}{\partial x}$ vanishes to zero, the "$1 +$" term ensures that the gradient can flow back completely unimpeded along the entire network depth, directly back to the initial embeddings.</p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Why does GPT-2 scale weights at residual projections by $1/\sqrt{2 \cdot \text{n\_layer}}$ during initialization?</summary>
                     <p>Every time we pass through a transformer block, we add a residual block output to the main vector stream: $x_{next} = x + F(x)$.
                     Adding these independent random variables increases the variance of the activation signals. If the variance grows too large, activations blow up near output layers, destabilizing training.
@@ -214,5 +215,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

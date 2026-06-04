@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -151,7 +152,7 @@
                 <pre><code class="language-bash">python3 hellaswag.py --checkpoint checkpoint_step_20.pt</code></pre>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>How does the HellaSwag benchmark evaluate an LLM? Describe the prediction math.</summary>
                     <p>HellaSwag evaluates commonsense reasoning by presenting a context sentence and four possible ending options.
                     For each ending option:
@@ -166,7 +167,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Why do we slice logits starting at index `num_ctx - 1` in hellaswag.py?</summary>
                     <p>In PyTorch, the outputs are shifted by 1 index because the model predicts the next token.
                     If the context length (number of context tokens) is <code>num_ctx</code>:
@@ -201,5 +202,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -89,7 +90,7 @@
 
                 <h2>1. Core Transformer Architecture Questions</h2>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Question: Write down the Multi-Head Attention formula. Explain each term and its shape.</summary>
                     <p>The core self-attention formula is:
                     $$\text{Attention}(Q, K, V) = \text{Softmax}\left( \frac{Q K^T}{\sqrt{d_k}} \right) V$$
@@ -105,7 +106,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Question: Why do we normalize features BEFORE sub-layers (Pre-LN) instead of AFTER sub-layers (Post-LN)?</summary>
                     <p>In original transformers (Post-LN), LayerNorm was applied after residual additions:
                     $$x_{t+1} = \text{LN}(x_t + F(x_t))$$
@@ -119,7 +120,7 @@
 
                 <h2>2. Memory & Performance Questions</h2>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Question: Audit the memory footprint required to train a 70B parameter model using AdamW in FP32 precision. What about FP16/BF16?</summary>
                     <p>For a model with $N$ parameters, training memory is distributed as:
                     <ol>
@@ -138,7 +139,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Question: What is KV Cache, why do we use it in production serving, and what are its memory implications?</summary>
                     <p>In autoregressive text generation, generating token $t+1$ requires attention scores computed over all past tokens $0..t$.
                     Re-computing Queries, Keys, and Values for all past tokens at every step scales quadratically ($O(T^2)$), bottlenecking inference.
@@ -150,7 +151,7 @@
 
                 <h2>3. Debugging & Optimization Questions</h2>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Question: Your training loss suddenly spikes to NaN at step 50. How do you diagnose and fix it?</summary>
                     <p>A NaN loss typically indicates floating-point overflow or optimization instability:
                     <ol>
@@ -183,5 +184,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

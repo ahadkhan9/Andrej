@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -152,7 +153,7 @@
                 <pre><code class="language-bash">python3 train.py --steps 50</code></pre>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>What is the difference between standard Adam and AdamW? Why is it crucial?</summary>
                     <p>In standard Adam, L2 weight regularization is added directly to the loss function. When computing the gradient of the loss, the regularization term is added to the gradient, which gets mixed with the running average (momentum) in the optimizer.
                     This couples weight decay with learning rate updates, causing the decay rate to scale incorrectly when the learning rate changes.
@@ -161,14 +162,14 @@
                     This ensures weights are decayed independently of learning rate changes, leading to superior model convergence.</p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Why do we separate parameters into decayed and non-decayed groups in train.py?</summary>
                     <p>Weight decay regularizes parameters by pulling them towards zero, preventing weights from growing excessively large.
                     We only want to apply this constraint to 2D parameters (weights in Linear and Embedding layers) because they are responsible for major projection transformations.
                     We do not decay 1D parameters (biases and LayerNorm gains/biases) because they act as simple offsets and scaling values. Forcing biases to zero limits the model's ability to shift distributions, destabilizing normalization layers and degrading performance.</p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>How does gradient accumulation simulate a batch size of 8,192 tokens when our hardware only supports a batch size of 1,024?</summary>
                     <p>If our GPU memory is limited, loading 8,192 tokens in a single batch causes an Out-Of-Memory (OOM) error.
                     To resolve this, we configure a micro-batch of $B=4, T=256$ (1,024 tokens).
@@ -199,5 +200,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

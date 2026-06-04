@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -146,7 +147,7 @@
                 </table>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>What is the difference between Supervised Fine-Tuning (SFT) and Reinforcement Learning from Human Feedback (RLHF)?</summary>
                     <p>
                     <ul>
@@ -156,7 +157,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>How does Tool Calling work under the hood in Agent systems? Does the LLM execute the function?</summary>
                     <p>No, the LLM never executes the tool code itself. The tool execution loop is handled by your backend application:
                     <ol>
@@ -189,5 +190,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

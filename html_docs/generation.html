@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -169,7 +170,7 @@
                 <pre><code class="language-bash">python3 generate.py --prompt "Alan Turing determined that" --max_tokens 30</code></pre>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>What is the mathematical role of Temperature in generation? Show the equations.</summary>
                     <p>Temperature $T$ scales the logits before applying the Softmax function:
                     $$P(x_i) = \frac{e^{z_i / T}}{\sum_j e^{z_j / T}}$$
@@ -181,7 +182,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>What is the difference between Top-K and Top-P (nucleus) sampling?</summary>
                     <p>
                     <ul>
@@ -191,7 +192,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Why must we crop the input context window before passing it to the model during generation?</summary>
                     <p>In our model configuration, the positional embedding matrix <code>wpe</code> has a fixed size of <code>block_size=256</code> (or 1024 for official GPT-2).
                     If a sequence length exceeds this capacity, accessing <code>wpe</code> throws an index out-of-bounds error.
@@ -221,5 +222,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

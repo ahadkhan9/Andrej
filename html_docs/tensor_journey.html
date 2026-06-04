@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -202,7 +203,7 @@
                 </table>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>Why do we transpose Q, K, V from [B, T, H, D] to [B, H, T, D] before computing attention?</summary>
                     <p>In PyTorch, the batch matrix multiplication operator (<code>@</code> or <code>torch.matmul</code>) performs matrix multiplications on the **final two dimensions** of a tensor, treating all preceding dimensions as batch index dimensions.
                     If we kept the shape as <code>[B, T, H, D]</code>, running <code>Q @ K.transpose(-2, -1)</code> would try to multiply dimension $H$ by $H$, which is mathematically incorrect for our attention heads.
@@ -215,7 +216,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Why must we call .contiguous() before calling .view() when merging attention heads in model.py?</summary>
                     <p>In PyTorch, tensors are stored in memory as contiguous blocks of bytes.
                     Operations like <code>.transpose()</code> do not actually move data in memory; they simply modify the metadata stride index mapping to tell PyTorch how to read the tensor.
@@ -248,5 +249,19 @@ y = y.transpose(1, 2).contiguous().view(B, T, C)</code></pre>
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

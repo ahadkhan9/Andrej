@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -165,13 +166,13 @@
                 <p>We verify embedding shape behavior by checking the output size of the summed embeddings in `forward`: `tok_emb` of shape <code>[4, 256, 384]</code> and `pos_emb` of shape <code>[256, 384]</code> correctly sum to produce a <code>[4, 256, 384]</code> tensor due to PyTorch broadcast rules. All logit outputs match HF expectations to $10^{-5}$ precision.</p>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>Why do we sum token and position embeddings instead of concatenating them?</summary>
                     <p>Concatenating them would result in a larger vector dimension (e.g. $384 + 384 = 768$), which doubles the parameter count and computation cost of all subsequent linear projection layers.
                     Summing keeps the dimension size at 384. Because our transformer blocks are composed of linear layers, the model can mathematically learn to project and separate the position information from semantic features internally, behaving identically to concatenation without the memory penalty.</p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>What is the limitation of absolute positional embeddings (wpe) used in GPT-2 compared to Rotary Position Embeddings (RoPE)?</summary>
                     <p>Absolute positional embeddings (used in GPT-2) learn a static index parameter for every step up to <code>block_size</code> (e.g. 0 to 1023). If you try to feed the model a context sequence of length 2048, it will crash because the position matrix lacks rows beyond index 1023.
                     Rotary Position Embeddings (RoPE, used in Llama 3) apply a rotational transform to Query and Key vectors during the attention step. This calculates relative distances between tokens dynamically rather than absolute indexes, allowing context length extrapolation during serving.</p>
@@ -198,5 +199,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

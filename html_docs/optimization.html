@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -181,7 +182,7 @@
                 </table>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>What is the difference between FP16 and BF16? Why is BF16 preferred in modern LLM training?</summary>
                     <p>Both FP16 and BF16 are 16-bit floating-point numbers, but they allocate their 16 bits differently:
                     <ul>
@@ -191,7 +192,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>What is kernel fusion, and how does torch.compile implement it?</summary>
                     <p>In standard PyTorch, every operation (e.g. adding residual streams and applying LayerNorm) requires reading a tensor from GPU memory, executing the mathematical operation on GPU cores, and writing the output tensor back to GPU memory.
                     **Kernel Fusion** compiles these sequential operations into a single merged CUDA or Metal kernel. The GPU loads the tensor once, executes the entire chain of addition and normalization on-chip, and writes only the final result back to memory, saving significant memory-bandwidth time.</p>
@@ -218,5 +219,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

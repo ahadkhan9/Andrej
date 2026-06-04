@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -189,7 +190,7 @@
                 <p>We audit parameters using the optimizer configuration step in `train.py`. The ~10M model correctly reports ~10.4 Million learnable parameters, taking up less than 200MB of static training RAM on our local Mac Mini M4, well within the 16GB system limit.</p>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>Why does training a model require significantly more GPU memory than running inference on the same model?</summary>
                     <p>In inference, we only need to load the model parameters into GPU RAM, and we do not calculate gradients or track optimizer metrics. The only dynamic memory consumer is the KV Cache, which is minor.
                     In training, we require:
@@ -203,7 +204,7 @@
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>What is Activation Checkpointing, and what engineering trade-off does it present?</summary>
                     <p>Activation Checkpointing is a memory optimization technique that trades compute cycles for RAM.
                     During the standard forward pass, the model caches activations for all layers in memory so the backward pass can use them to compute gradients.
@@ -237,5 +238,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -163,7 +164,7 @@ self.gelu = nn.ReLU()</code></pre>
                 </ol>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>Why do we use GELU instead of ReLU in modern transformer networks?</summary>
                     <p>ReLU is defined as:
                     $$\text{ReLU}(x) = \max(0, x)$$
@@ -173,7 +174,7 @@ self.gelu = nn.ReLU()</code></pre>
                     Where $\Phi(x)$ is the cumulative distribution function of the standard normal distribution. Because it is non-zero for negative inputs, it allows a small gradient to propagate, preventing dead neurons and stabilizing training.</p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>What occurs if you remove position embeddings from a transformer model?</summary>
                     <p>If you remove position embeddings, the model becomes completely order-blind.
                     Because the self-attention formula computes dot-products between all token pairs, the output for "dog bites man" and "man bites dog" will be identical.
@@ -201,5 +202,19 @@ self.gelu = nn.ReLU()</code></pre>
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

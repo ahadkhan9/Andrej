@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -171,7 +172,7 @@ x.view(B, T, H, D).transpose(1, 2)</code></pre>
                 </ul>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>If your training loss suddenly becomes NaN at step 100, what are the first three troubleshooting steps you should take?</summary>
                     <p>
                     <ol>
@@ -182,7 +183,7 @@ x.view(B, T, H, D).transpose(1, 2)</code></pre>
                     </p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>What is Causal Mask Leakage? What symptom does it produce in validation metrics?</summary>
                     <p>Causal Mask Leakage occurs when the causal mask in the attention layer is missing or configured incorrectly, allowing tokens to attend to future tokens in the sequence.
                     Because the target tokens in training are simply the input sequence shifted right by 1, a model with mask leakage can simply copy the target token from its immediate right neighbor.
@@ -211,5 +212,19 @@ x.view(B, T, H, D).transpose(1, 2)</code></pre>
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

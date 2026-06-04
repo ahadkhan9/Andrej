@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -149,7 +150,7 @@ print("Targets:", y[0].tolist())
 # Expected: Targets should be identical to Inputs, shifted right by 1 element.</code></pre>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>Why do we shift target token IDs by exactly one position relative to inputs?</summary>
                     <p>Because the transformer block uses a causal attention mask, each token can only attend to current and previous positions.
                     By aligning input sequence $x = [x_0, x_1, x_2]$ with shifted targets $y = [x_1, x_2, x_3]$:
@@ -161,7 +162,7 @@ print("Targets:", y[0].tolist())
                     This allows us to run training parallel calculations for $T$ distinct tokens in a single forward pass, rather than generating them one-by-one, maximizing GPU tensor core utilization.</p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>What is epoch wrap-around, and why does the loader need a "+ 1" buffer margin during batch slicing?</summary>
                     <p>Epoch wrap-around occurs when the streaming database cursor reaches the end of the token list.
                     To generate a valid batch of inputs $x$ and targets $y$ of size $B \times T$, we need $B \times T$ input tokens and $B \times T$ target tokens.
@@ -194,5 +195,19 @@ print("Targets:", y[0].tolist())
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>

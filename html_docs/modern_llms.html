@@ -14,6 +14,7 @@
     </script>
 </head>
 <body>
+    <div id="progress" aria-hidden="true"></div>
     <div class="app-container">
         <!-- Top Nav Bar -->
         <header>
@@ -164,7 +165,7 @@
                 </ul>
 
                 <h2>Common Interview Followups</h2>
-                <details>
+                <details name="interview-questions">
                     <summary>Why do modern LLMs use Grouped-Query Attention (GQA) instead of standard Multi-Head Attention (MHA)?</summary>
                     <p>In Multi-Head Attention, every Query head has a corresponding Key and Value head. During autoregressive generation, we cache all Key and Value tensors in memory (KV Cache).
                     At large batch sizes and long context lengths, this KV Cache consumes massive GPU RAM, limiting throughput.
@@ -172,7 +173,7 @@
                     This reduces the memory footprint of the KV Cache by up to 8x, allowing significantly larger serving batch sizes and longer context windows while maintaining near-identical model accuracy.</p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>What is SwiGLU Gated Activation, and why is it preferred over GELU?</summary>
                     <p>SwiGLU is a Gated Linear Unit activation function defined as:
                     $$\text{SwiGLU}(x) = (\text{Swish}(x W) \otimes x V)$$
@@ -181,7 +182,7 @@
                     This gating structure increases representational capacity, allowing the network to learn complex logical relationships more efficiently than standard GELU networks.</p>
                 </details>
 
-                <details>
+                <details name="interview-questions">
                     <summary>Compare Fine-Tuning, RAG, and Prompt Engineering in terms of cost, dynamic updates, and architectural focus.</summary>
                     <p>
                     <table>
@@ -242,5 +243,19 @@
     </div>
     <script src="assets/navigation.js"></script>
     <script src="assets/search.js"></script>
+
+    <script>
+        if (!CSS.supports('animation-timeline', 'scroll()')) {
+            const progress = document.querySelector('#progress');
+            if (progress) {
+                window.addEventListener('scroll', () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                    progress.style.transform = `scaleX(${progressPercentage})`;
+                });
+            }
+        }
+    </script>
 </body>
 </html>
