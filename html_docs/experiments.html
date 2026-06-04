@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiments | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>11. Architecture Experiments</span>
+                </div>
+
+                <h1>11. Experiments: Structural Interventions</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>Understanding a system requires knowing not only how it works, but also how it fails.
+                By examining what happens when core architectural components are removed or modified, you gain a deeper understanding of why they exist and the training failures they prevent.</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Think of the transformer architecture as a suspension bridge.
+                Each steel cable, anchor point, and crossbeam has a specific purpose.
+                If you remove a main cable (residual connection), the bridge collapses. If you remove the expansion joints (LayerNorm), temperature swings will warp the steel until it snaps. If you remove the road signs (position embeddings), drivers won't know which lane to use.</p>
+
+                <h2>Level 2 — Engineering View: Failure Scenarios</h2>
+                <p>We document six structural experiments, detailing their behaviors and failure modes:</p>
+
+                <details>
+                    <summary>1. Removing Positional Embeddings</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>Expected Behavior:</strong> The model trains and loss decreases slightly, but generated text becomes repetitive, grammatically incorrect, and loses coherence quickly. Downstream reasoning accuracy drops close to random chance.</p>
+                        <p><strong>Why it happens:</strong> Self-attention is permutation-invariant: it treats the input sequence as a "bag of words" without inherent order. Without positional embeddings, the model cannot distinguish word order.</p>
+                        <p><strong>What to observe in logs:</strong> Slower training loss decay, and repetitive generation loops (e.g. <code>"the the the"</code>).</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>2. Removing Residual Connections</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>Expected Behavior:</strong> Training fails to converge. Gradients either vanish or explode, causing the model to return <code>NaN</code>.</p>
+                        <p><strong>Why it happens:</strong> Without residual connections ($x + f(x)$), gradients must flow back through a chain of multiplications of weights and activations. Early layers receive virtually no gradient signal during backpropagation.</p>
+                        <p><strong>What to observe in logs:</strong> Loss remains stuck at random baseline ($\approx 10.8$) or returns <code>NaN</code> within the first few steps.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>3. Removing LayerNorm</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>Expected Behavior:</strong> Training fails immediately with loss returning <code>NaN</code>.</p>
+                        <p><strong>Why it happens:</strong> Without normalization layers, activation magnitudes grow exponentially as they pass through the blocks, causing arithmetic overflow (exceeding float range) during forward and backward passes.</p>
+                        <p><strong>What to observe in logs:</strong> Weight values and loss return <code>NaN</code> at step 0 or 1.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>4. Removing Causal Masking</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>Expected Behavior:</strong> Training loss drops to near 0 quickly, but the model fails to generate coherent text during inference.</p>
+                        <p><strong>Why it happens:</strong> Without the causal mask, tokens can look ahead to future target tokens. The model learns to simply copy the next token from the input rather than learning semantic structures, making it useless for autoregressive generation.</p>
+                        <p><strong>What to observe in logs:</strong> Training loss decays abnormally fast to near 0, but generated outputs are repetitive loops of the prompt tokens.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>5. Removing Weight Tying</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>Expected Behavior:</strong> Model trains successfully, but parameter count increases by $19.3\text{M}$ and training memory increases by $\approx 150\text{ MB}$.</p>
+                        <p><strong>Why it happens:</strong> Tying the weights of <code>wte</code> and <code>lm_head</code> shares their parameters. Untying them requires allocating separate memory for both layers' weights, gradients, and optimizer states.</p>
+                        <p><strong>What to observe in logs:</strong> Increased memory usage and slightly slower initial convergence.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>6. Removing Gradient Clipping</summary>
+                    <div style="padding-top: 10px;">
+                        <p><strong>Expected Behavior:</strong> Training runs normally for a few steps, but occasionally destabilizes, with loss spikes or <code>NaN</code> errors.</p>
+                        <p><strong>Why it happens:</strong> If the model encounters a steep region of the loss landscape, gradient values can grow extremely large. Without clipping, the optimizer takes an excessively large step, pushing weights to extreme values and causing the loss to explode.</p>
+                        <p><strong>What to observe in logs:</strong> Sudden spikes in gradient norm followed by loss returning <code>NaN</code>.</p>
+                    </div>
+                </details>
+
+                <h2>3. Mathematical View: Vanishing Gradients</h2>
+                <p>The derivative of the loss $\mathcal{L}$ with respect to the input $x_0$ through $L$ non-residual blocks is:
+                $$\frac{\partial \mathcal{L}}{\partial x_0} = \frac{\partial \mathcal{L}}{\partial x_L} \prod_{l=1}^L \frac{\partial f_l(x_{l-1})}{\partial x_{l-1}}$$
+                If the Jacobian matrices $\frac{\partial f_l}{\partial x}$ have singular values less than 1.0, the product decays exponentially with depth ($L$), causing gradients in early layers to approach 0. Residual connections resolve this by introducing an identity term ($I$), ensuring stable gradient flow.</p>
+
+                <div class="prev-next-nav">
+                    <a href="evaluation.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">10. Model Evaluation</span>
+                    </a>
+                    <a href="modern_llms.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">12. Connections to Modern LLMs</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

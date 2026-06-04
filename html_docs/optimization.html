@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimization | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>07. Hardware Optimization</span>
+                </div>
+
+                <h1>07. Optimization: Apple Silicon & Compilers</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>Training transformers is highly compute-intensive. Without hardware and compiler optimizations, training even a small model can take hours or days.
+                Understanding memory bandwidth, mixed-precision arithmetic, and GPU execution queues allows you to maximize throughput and make full use of local hardware resources (like Apple Silicon GPU cores).</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Imagine a kitchen where a chef is preparing complex dishes.
+                In standard eager mode, the chef walks to the refrigerator, grabs one ingredient, walks back to the counter, chops it, walks back to the refrigerator for the next ingredient, and so on. This constant back-and-forth is slow.</p>
+                <p>To optimize this process:
+                <ul>
+                    <li><strong>Kernel Fusion (torch.compile):</strong> Plan ahead and bring all necessary ingredients to the counter at once, completing multiple steps in place before returning anything to the refrigerator.</li>
+                    <li><strong>Mixed Precision (AMP):</strong> Package ingredients in smaller containers (float16 instead of float32) so the chef can carry twice as much in each trip.</li>
+                    <li><strong>FlashAttention:</strong> Keep the most frequently used ingredients in a small basket right next to the cutting board (fast SRAM cache) instead of walking to the pantry (High Bandwidth Memory) every time.</li>
+                </ul></p>
+
+                <h2>Level 2 — Engineering View: "Why is this faster?"</h2>
+                <p>We trace performance improvements by analyzing how specific bottlenecks are resolved:</p>
+                <ul>
+                    <li><strong>CPU vs. GPU:</strong> The CPU executes instructions sequentially on a few powerful cores. The GPU (or MPS backend) contains thousands of smaller cores designed to perform simple arithmetic operations (like matrix multiplications) in parallel, providing an immediate speedup.</li>
+                    <li><strong>FP32 vs. FP16 (AMP):</strong> FP32 uses 4 bytes per number, while FP16 uses 2 bytes. Moving to FP16 halves the amount of data transferred between memory and the GPU cores, resolving memory bandwidth bottlenecks and nearly doubling throughput.</li>
+                    <li><strong>FlashAttention:</strong> Standard attention writes the intermediate $(T, T)$ score matrix to High Bandwidth Memory (HBM) and reads it back multiple times. FlashAttention tiles the inputs to run attention calculations entirely in the GPU's fast, on-chip SRAM cache, reducing slow memory access from $O(T^2)$ to $O(T)$.</li>
+                    <li><strong>Graph Compilation (torch.compile):</strong> Standard eager mode executes PyTorch operations one-by-one, introducing overhead. <code>torch.compile</code> fuses adjacent operations (e.g. LayerNorm + Bias Add + Activation) into a single compiled kernel, keeping activations on-chip instead of round-tripping them to HBM.</li>
+                </ul>
+
+                <h2>3. Mathematical View</h2>
+                <p>Compiler graph tracing models the execution path as a Directed Acyclic Graph (DAG) of operations:
+                $$\mathcal{G} = (\mathcal{V}, \mathcal{E})$$
+                Where $\mathcal{V}$ represents operation kernels (e.g., Matrix Multiply, Add, Softmax) and $\mathcal{E}$ represents tensor data dependencies.
+                The compiler optimizes this graph by merging adjacent nodes to minimize data transfers, ensuring the GPU spends its time performing computations rather than waiting for memory transfers.</p>
+
+                <div class="prev-next-nav">
+                    <a href="training_loop.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">06. Training Loop Mechanics</span>
+                    </a>
+                    <a href="generation.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">08. Autoregressive Generation</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

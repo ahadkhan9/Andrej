@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generation | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>08. Autoregressive Generation</span>
+                </div>
+
+                <h1>08. Generation: Autoregressive Decoding</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>Generating text from an LLM is a dynamic process.
+                Adjusting decoding parameters (like temperature and top-k) determines whether the model's outputs are deterministic, creative, repetitive, or nonsensical.
+                Understanding these sampling algorithms is essential for tuning generation behavior to fit specific use cases (such as creative writing vs. code generation).</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Imagine you are a writer picking the next word in a story. You look at the sentence you have written so far, and list possible next words with their likelihoods.</p>
+                <p>To write the next sentence, you use a few rules:
+                <ul>
+                    <li><strong>Greedy Selection (Argmax):</strong> Always pick the single most probable word. This often leads to repetitive and boring sentences.</li>
+                    <li><strong>Temperature:</strong> Control how willing you are to choose less likely words. A low temperature makes you stick strictly to safe, highly probable words, while a high temperature encourages you to pick more creative, unusual words.</li>
+                    <li><strong>Top-k Filtering:</strong> Throw out the bottom portion of your word list. This ensures you never pick a completely irrelevant word from the tail of the distribution.</li>
+                </ul></p>
+
+                <h2>Level 2 — Engineering View</h2>
+                <p>In <code>model.py:L327-L370</code>, the <code>generate</code> function coordinates this process.
+                Because the position embedding matrix (<code>wpe</code>) has a fixed context length of <code>block_size</code> (256), the model cannot accept sequences longer than 256. We crop the context window before passing it to the forward pass:</p>
+                <pre><code class="language-python"># From model.py:L348
+idx_cond = idx[:, -self.config.block_size:]</code></pre>
+                <p>We scale the raw outputs (logits) by the temperature parameter:
+                <pre><code class="language-python"># From model.py:L354
+logits = logits[:, -1, :] / temperature</code></pre>
+                We then apply top-k filtering, setting all logits below the top-k threshold to $-\infty$ so they receive a probability of 0:
+                <pre><code class="language-python"># From model.py:L357-L359
+if top_k is not None:
+    v, _ = torch.topk(logits, min(top_k, logits.size(-1)))
+    logits[logits < v[:, [-1]]] = -float('Inf')</code></pre>
+                Finally, we convert these filtered logits to a probability distribution using softmax and sample a token ID using <code>torch.multinomial</code>:</p>
+                <pre><code class="language-python">probs = F.softmax(logits, dim=-1)
+idx_next = torch.multinomial(probs, num_samples=1)
+idx = torch.cat((idx, idx_next), dim=1)</code></pre>
+
+                <h2>3. Mathematical View</h2>
+                <p>Temperature scaling modifies the softmax probability distribution:
+                $$P(x_i) = \frac{e^{z_i / T}}{\sum_j e^{z_j / T}}$$
+                Where $z_i$ represents the raw logit score for token $i$, and $T$ is the temperature.
+                <ul>
+                    <li>As $T \to 0$, the probability of the most likely token approaches 1, matching greedy decoding (argmax).</li>
+                    <li>As $T \to \infty$, the probability distribution becomes uniform, making token selection completely random.</li>
+                </ul></p>
+
+                <h2>4. What happens if we remove top-k filtering?</h2>
+                <p>If we remove top-k filtering (and keep temperature $T = 1.0$ or higher):
+                <ul>
+                    <li>The model will occasionally sample low-probability tokens from the long tail of the vocabulary distribution.</li>
+                    <li>Once an incorrect or nonsensical token is generated, it becomes part of the context for subsequent predictions, causing errors to compound.</li>
+                    <li>This typically causes the generated text to quickly devolve into gibberish or spelling errors.</li>
+                </ul></p>
+
+                <div class="prev-next-nav">
+                    <a href="optimization.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">07. Hardware Optimization</span>
+                    </a>
+                    <a href="checkpointing.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">09. Checkpoint Restoration</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

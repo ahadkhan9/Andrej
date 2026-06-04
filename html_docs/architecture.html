@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>01. Architecture Lifecycle</span>
+                </div>
+
+                <h1>01. Architecture: Token-to-Loss Lifecycle</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>An LLM is a complex mathematical pipeline. When you scale up training across thousands of GPUs, or deploy a model to run on edge devices, you must be able to track every single tensor dimension and state modification.
+                If you cannot trace the exact shapes, parameter counts, and memory layout at every line of code, you cannot debug shape mismatch errors, optimize memory allocations, or calculate the hardware limits of your training infrastructure.</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Think of the transformer architecture as a factory production line. Raw materials (text characters) enter at the front, get processed, packaged, and stamped with predictions at the end.</p>
+                <p>The core layout consists of three primary zones:
+                <ul>
+                    <li><strong>The Loading Dock (Embeddings):</strong> Raw text characters are translated into numerical tokens, which are then mapped to continuous embedding vectors. Positional embeddings are added to provide spatial context.</li>
+                    <li><strong>The Assembly Line (Transformer Blocks):</strong> The vectors pass sequentially through multiple blocks. In each block, self-attention mixes information between tokens, while the MLP extracts features from each token individually.</li>
+                    <li><strong>The Packaging Station (Head & Loss):</strong> The vectors are mapped back to vocabulary scores (logits) to predict the next token. During training, the cross-entropy loss measures the difference between these predictions and the target tokens.</li>
+                </ul></p>
+
+                <h2>Level 2 — Engineering View: The Tensor Shape Journey</h2>
+                <p>Let's trace a batch of data through our model using our active repository hyperparameters:
+                <br>Batch Size $B=4$, context length $T=256$, embedding dimension $C=384$, vocabulary size $V=50257$, and heads $H=6$ (dimension per head $D=64$).</p>
+                
+                <div class="mermaid">
+                flowchart TD
+                    Input["Raw Text: 'Alan Turing...'"]
+                    Shape1["idx Tensor: shape [4, 256]"]
+                    Shape2["wte Tensor: shape [4, 256, 384]"]
+                    Shape3["wpe Tensor: shape [256, 384]"]
+                    Shape4["x_0 Tensor: shape [4, 256, 384]"]
+                    Shape5["x_out Tensor: shape [4, 256, 384]"]
+                    Shape6["Normalized States: shape [4, 256, 384]"]
+                    Shape7["Logits: shape [4, 256, 50257]"]
+                    Targets["Targets: shape [4, 256]"]
+                    Loss["Loss: Scalar Tensor"]
+
+                    Input -->|data.py: DataLoaderLite| Shape1
+                    Shape1 -->|model.py: self.transformer.wte| Shape2
+                    Shape1 -->|model.py: self.transformer.wpe| Shape3
+                    Shape2 & Shape3 -->|Sum| Shape4
+                    Shape4 -->|6x Blocks| Shape5
+                    Shape5 -->|model.py: self.transformer.ln_f| Shape6
+                    Shape6 -->|model.py: self.lm_head| Shape7
+                    Shape7 & Targets -->|train.py: F.cross_entropy| Loss
+                </div>
+
+                <h3>Detailed Shape Stages:</h3>
+                <ul>
+                    <li><strong>Input Tensors:</strong> <code>idx</code> is a 2D integer tensor of shape <code>[B, T]</code> ($4 \times 256$).</li>
+                    <li><strong>Token Embeddings:</strong> <code>wte(idx)</code> maps each integer token to a dense representation, returning shape <code>[B, T, C]</code> ($4 \times 256 \times 384$).</li>
+                    <li><strong>Position Embeddings:</strong> <code>wpe(pos)</code> maps sequence positions to vectors of shape <code>[T, C]</code> ($256 \times 384$). When added to the token embeddings, PyTorch broadcasts the positional vectors across the batch dimension, returning a summed tensor of shape <code>[B, T, C]</code>.</li>
+                    <li><strong>Transformer Blocks:</strong> The hidden state maintains the shape <code>[B, T, C]</code> through all 6 blocks, ensuring compatibility with residual connections.</li>
+                    <li><strong>Final Logits:</strong> The final linear layer (<code>lm_head</code>) maps each token vector from dimension $C$ to the vocabulary size $V$, returning a tensor of shape <code>[B, T, V]</code> ($4 \times 256 \times 50257$).</li>
+                </ul>
+
+                <h2>3. Mathematical View</h2>
+                <p>Each block update can be written as:
+                $$x^{(l)} = x^{(l-1)} + \text{Attention}(\text{LayerNorm}(x^{(l-1)}))$$
+                $$x^{(l)} = x^{(l)} + \text{MLP}(\text{LayerNorm}(x^{(l)}))$$
+                The final classification score (logits) for a target token at index $t$ is:
+                $$z_t = W_{tie} \cdot \text{LayerNorm}(x_t^{(L)})$$
+                Where $W_{tie}$ is the shared weight tensor of shape $(V, C)$ used for both the input embeddings and output projection.</p>
+
+                <h2>4. What happens if we remove residual connections?</h2>
+                <p>If we remove the residual connections (i.e., updating states as $x_{l+1} = f(x_l)$ rather than $x_{l+1} = x_l + f(x_l)$), the model fails to train entirely.
+                Mathematically, the derivative of the output with respect to the input through $L$ residual layers is:
+                $$\frac{\partial x_L}{\partial x_0} = I + \sum_{l=1}^L \frac{\partial f_l(x_{l-1})}{\partial x_0}$$
+                This addition of the identity matrix $I$ ensures that gradients can propagate back to early layers without being scaled down. Without the identity path, gradients must flow back through a chain of multiplications of weights and non-linearities:
+                $$\frac{\partial x_L}{\partial x_0} = \prod_{l=1}^L \frac{\partial f_l(x_{l-1})}{\partial x_{l-1}}$$
+                If the weight values are small ($< 1.0$), gradients vanish to zero. If they are large ($> 1.0$), gradients explode, causing the model to return <code>NaN</code> within the first few steps.</p>
+
+                <h2>5. Build Intuition through Numbers: Parameter Sizing</h2>
+                <p>Let's calculate the exact parameter count for our custom model config:
+                <ul>
+                    <li><strong>Embeddings:</strong>
+                        <ul>
+                            <li><code>wte</code>: $50257 \times 384 = 19,298,688$ parameters.</li>
+                            <li><code>wpe</code>: $256 \times 384 = 98,304$ parameters.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Layers per Block (x6 Blocks):</strong>
+                        <ul>
+                            <li><code>ln_1</code> and <code>ln_2</code>: $2 \times (384 \text{ weights} + 384 \text{ biases}) = 1,536$ parameters.</li>
+                            <li><code>c_attn</code>: $(384 \times 1152) \text{ weights} + 1152 \text{ biases} = 443,520$ parameters.</li>
+                            <li><code>c_proj</code> (attention output): $(384 \times 384) \text{ weights} + 384 \text{ biases} = 147,840$ parameters.</li>
+                            <li><code>c_fc</code> (MLP expand): $(384 \times 1536) \text{ weights} + 1536 \text{ biases} = 591,360$ parameters.</li>
+                            <li><code>c_proj</code> (MLP contract): $(1536 \times 384) \text{ weights} + 384 \text{ biases} = 590,208$ parameters.</li>
+                            <li><strong>Block total:</strong> $1,536 + 443,520 + 147,840 + 591,360 + 590,208 = 1,774,464$ parameters.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Total Non-Embedding parameters:</strong>
+                        $$6 \times 1,774,464 \text{ (Blocks)} + 768 \text{ (ln\_f)} = \mathbf{10,745,856 \text{ parameters}}$$
+                    </li>
+                </ul></p>
+
+                <div class="prev-next-nav">
+                    <a href="index.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">00. Welcome & Overview</span>
+                    </a>
+                    <a href="attention.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">02. Causal Self-Attention</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

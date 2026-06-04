@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pipeline | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>05. Data Pipeline Details</span>
+                </div>
+
+                <h1>05. Data Pipeline: Batch Construction & Offsets</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>A machine learning model is only as good as the data fed into it.
+                Because language modeling is self-supervised (predicting the next token based on previous tokens), we must structure our data loaders to align input sequences and target sequences correctly.
+                If your data loader contains a coordinate alignment bug or a target leakage error, the model will learn incorrect sequence patterns or simply fail to train.</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Imagine you are teaching a child to read by showing them a sentence, one word at a time.
+                If the sentence is <code>"The quick brown fox jumps"</code>:
+                <ul>
+                    <li>When you show the child <code>"The"</code>, their target is to guess <code>"quick"</code>.</li>
+                    <li>When you show them <code>"The quick"</code>, the target is <code>"brown"</code>.</li>
+                    <li>When you show them <code>"The quick brown"</code>, the target is <code>"fox"</code>.</li>
+                </ul>
+                To train the model, we need to construct pairs of input sequences ($X$) and target sequences ($Y$) shifted by exactly one position.
+                This means for every batch we load, we must fetch $N$ tokens for the input sequence, and the same tokens shifted by one position for the targets.</p>
+
+                <h2>Level 2 — Engineering View</h2>
+                <p>In <code>data.py</code>, the <code>DataLoaderLite</code> class implements this sliding window approach.
+                To construct a batch of size $B$ (batch size) and $T$ (sequence length), we slice $B \times T + 1$ contiguous tokens from the raw data buffer:
+                <pre><code class="language-python"># From data.py:L47-L51
+buf = self.tokens[self.current_position : self.current_position + B * T + 1]
+x = buf[:-1].view(B, T)
+y = buf[1:].view(B, T)</code></pre>
+                We advance <code>self.current_position</code> by $B \times T$ at each step. If the next step would overflow the dataset boundaries, we wrap the position back to 0:</p>
+                <pre><code class="language-python"># From data.py:L57-L58
+if self.current_position + B * T + 1 > len(self.tokens):
+    self.current_position = 0</code></pre>
+
+                <h2>3. Mathematical View</h2>
+                <p>Let $S$ be the sequence of tokens loaded from the dataset:
+                $$S = [s_0, s_1, s_2, \dots, s_{B \cdot T}]$$
+                The input tensor $X \in \mathbb{R}^{B \times T}$ and target tensor $Y \in \mathbb{R}^{B \times T}$ are constructed as:
+                $$X_{i, j} = S_{i \cdot T + j}$$
+                $$Y_{i, j} = S_{i \cdot T + j + 1}$$
+                Where $0 \leq i < B$ represents the batch index, and $0 \leq j < T$ represents the sequence index.</p>
+
+                <h2>4. Build Intuition through Numbers</h2>
+                <p>Let's walk through batch construction manually for a batch size $B=2$ and context length $T=3$ (requiring $2 \times 3 + 1 = 7$ contiguous tokens).
+                Assume our raw dataset contains the tokens:
+                $$S = [45, 12, 98, 30, 87, 54, 21]$$
+                
+                <p><strong>Step 1: Slice the Buffer</strong></p>
+                $$\text{buf} = [45, 12, 98, 30, 87, 54, 21]$$
+                
+                <p><strong>Step 2: Construct Input Tensor ($X$)</strong> (take all but the last token, and reshape to $2 \times 3$):</p>
+                $$X_{flat} = [45, 12, 98, 30, 87, 54]$$
+                $$X = \begin{pmatrix} 45 & 12 & 98 \\ 30 & 87 & 54 \end{pmatrix}$$
+                
+                <p><strong>Step 3: Construct Target Tensor ($Y$)</strong> (take all but the first token, and reshape to $2 \times 3$):</p>
+                $$Y_{flat} = [12, 98, 30, 87, 54, 21]$$
+                $$Y = \begin{pmatrix} 12 & 98 & 30 \\ 87 & 54 & 21 \end{pmatrix}$$
+                Comparing $X$ and $Y$ row-by-row, you can see that the target for each token is the next token in the sequence (e.g., the target for token 45 is 12, and the target for token 30 is 87).</p>
+
+                <h2>5. What happens if we remove the shifted target offset?</h2>
+                <p>If we fail to shift the target tokens by one position (i.e. setting $Y = X$):
+                <ul>
+                    <li>The model's training objective changes from predicting the *next* token to predicting the *current* token (identity mapping).</li>
+                    <li>The model will easily achieve a near-zero loss by simply copying each input token to its output, without learning any semantic relationships or sequence structures.</li>
+                    <li>During inference generation, the model will generate repetitive strings of the prompt token (e.g., generating <code>"Alan Alan Alan"</code> for the prompt <code>"Alan"</code>) because it has only learned to predict the input token itself.</li>
+                </ul></p>
+
+                <div class="prev-next-nav">
+                    <a href="tokenization.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">04. Byte Pair Encoding</span>
+                    </a>
+                    <a href="training_loop.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">06. Training Loop Mechanics</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

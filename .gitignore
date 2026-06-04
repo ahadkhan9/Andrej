@@ -1,0 +1,14 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Local checkpoints
+checkpoint_step_*.pt
+
+# Data partitions & downloaded subsets
+input_train.txt
+input_val.txt
+hellaswag_val_subset.jsonl
+
+# Scratch scripts
+scratch/

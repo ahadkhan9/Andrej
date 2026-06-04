@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overview | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>Welcome & Overview</span>
+                </div>
+
+                <h1>00. Welcome & Course Overview</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>Most software engineers treat Large Language Models (LLMs) as black boxes, calling APIs (like OpenAI or Anthropic) or loading pre-trained models via library imports. But the moment you need to optimize inference latency, write custom fine-tuning code, reduce KV Cache memory usage, debug a model returning NaN, or discuss core scaling architectures during a staff-level systems interview, black-box knowledge fails.
+                Understanding transformers from first principles—down to the exact PyTorch tensors, gradient updates, and memory allocations—is the dividing line between an application developer and a senior AI/ML systems engineer.</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Imagine a team of 6 researchers (the <strong>Transformer Blocks</strong>) sitting in a line. A document is passed down the line, page by page. 
+                Before the document enters the room, we translate all words into a standardized numeric format (<strong>Tokenization</strong>) and assign each word a baseline folder containing its raw definition and its page number (<strong>Embeddings</strong>).</p>
+                <p>As the document passes through the researchers:
+                <ul>
+                    <li>Each researcher runs a "Self-Attention" pass: they look at all pages received so far, drawing red marker lines between words that relate to each other (e.g., connecting "he" back to "Alan Turing").</li>
+                    <li>Then, they run an "MLP" pass: each researcher works individually on their assigned page, using their own reference manual to look up facts, cross-reference data, and rewrite the summary details.</li>
+                    <li>Finally, the document reaches the supervisor (the <strong>LM Head</strong>), who looks at the final summary of the final word and makes a prediction on what word should come next.</li>
+                </ul></p>
+
+                <h2>Level 2 — Engineering View</h2>
+                <p>This codebase (located under <code>/Users/ahadk9/Projects/Andrej/</code>) implements this complete workflow by separating concerns across components. The raw dataset loader feeds batched inputs, embeddings map indices to dense layers, and block modules orchestrate self-attention passes.</p>
+                <h2>System Flowchart</h2>
+                <p>The following diagram traces the end-to-end forward pass lifecycle from raw text inputs to training loss calculation:</p>
+                <div class="mermaid">
+                flowchart TD
+                    RawText["Raw Text Input"]
+                    TokenIDs["Token IDs: shape [B, T]"]
+                    TokenEmbed["Token Embeddings: shape [B, T, C]"]
+                    PosEmbed["Positional Embeddings: shape [T, C]"]
+                    InputState["X_0: shape [B, T, C]"]
+                    Block1["Block 1"]
+                    Block6["Block 6"]
+                    FinalNorm["Normalized X: shape [B, T, C]"]
+                    Logits["Logits: shape [B, T, V]"]
+                    Loss["Loss Scalar"]
+
+                    RawText -->|data.py: tiktoken BPE| TokenIDs
+                    TokenIDs -->|model.py: wte| TokenEmbed
+                    TokenIDs -->|model.py: wpe| PosEmbed
+                    TokenEmbed & PosEmbed -->|Sum| InputState
+                    
+                    subgraph Blocks["6x Transformer Blocks"]
+                        InputState --> Block1
+                        Block1 --> Block6
+                    end
+                    
+                    Block6 -->|model.py: ln_f| FinalNorm
+                    FinalNorm -->|model.py: lm_head| Logits
+                    Logits & Targets[Targets: shape B, T] -->|CrossEntropyLoss| Loss
+                </div>
+
+                <h2>Level 3 — Mathematical View</h2>
+                <p>The core training objective is to find parameter weights $\theta$ that minimize the cross-entropy loss over a sequence of tokens.
+                Given a sequence of input tokens $x = (x_1, x_2, \dots, x_T)$, the model computes conditional probabilities for each position $t$:
+                $$P(x_t \mid x_{1}, \dots, x_{t-1}) = \text{Softmax}(\text{lm\_head}(h_t^{(L)}))$$
+                Where $h_t^{(L)}$ is the final representation of token $t$ after passing through all $L$ transformer blocks.
+                The loss function (negative log-likelihood) is computed over the entire sequence:
+                $$\mathcal{L} = -\frac{1}{T} \sum_{t=1}^T \ln P(x_t \mid x_{1}, \dots, x_{t-1})$$
+                By calculating the derivative of this loss with respect to all parameter weights ($\nabla_\theta \mathcal{L}$), the optimizer (AdamW) updates the model parameters to make correct word predictions more likely.</p>
+
+                <div class="prev-next-nav">
+                    <div></div>
+                    <a href="architecture.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">01. Architecture Lifecycle</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

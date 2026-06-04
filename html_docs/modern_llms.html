@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern LLMs | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>12. Connections to Modern LLMs</span>
+                </div>
+
+                <h1>12. Connections to Modern LLMs</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>The transformer architecture has evolved significantly since GPT-2 was introduced in 2019.
+                Modern models (such as Llama, Gemma, and Mistral) incorporate optimizations designed to scale context lengths, reduce inference latency, and speed up training.
+                Understanding these evolutionary steps is essential for designing custom training runs, optimizing model deployment, and working with modern LLM systems.</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Think of GPT-2 as an early internal combustion engine. It established the core principles of operation, but was inefficient and lacked refinements.
+                Modern models are like modern hybrid engines:
+                <ul>
+                    <li><strong>RoPE:</strong> Replaces absolute position markings with a relative system, allowing the model to generalize to much longer context windows.</li>
+                    <li><strong>RMSNorm:</strong> Simplifies LayerNorm by assuming the mean of activations is 0, reducing computational overhead.</li>
+                    <li><strong>Grouped Query Attention (GQA):</strong> Divides Query heads into groups that share Key-Value heads, significantly reducing KV cache memory usage during inference.</li>
+                    <li><strong>SwiGLU:</strong> Introduces a gating mechanism to the MLP block, allowing the model to learn complex coordinate-wise multiplicative interactions.</li>
+                </ul></p>
+
+                <h2>Level 2 — Engineering View: Comparative Evolution</h2>
+                <p>The following table tracks how these core components evolved from GPT-2 to modern architectures:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>GPT-2 Design</th>
+                            <th>Modern Design (Llama-3, Gemma-2, Qwen-2.5)</th>
+                            <th>Why it changed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Position Representation</strong></td>
+                            <td>Absolute Positional Embeddings (learnable matrix of size $T \times C$)</td>
+                            <td>Rotary Position Embeddings (RoPE)</td>
+                            <td>Enables context length scaling (e.g. from 1k to 128k+ tokens) during inference.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Normalization</strong></td>
+                            <td>LayerNorm (calculates both mean and variance)</td>
+                            <td>RMSNorm (calculates root mean square only)</td>
+                            <td>Reduces computational overhead by 10-50% for normalization layers, improving training speed.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Attention</strong></td>
+                            <td>Multi-Head Attention (MHA)</td>
+                            <td>Grouped Query Attention (GQA)</td>
+                            <td>Reduces the KV cache memory footprint by 8x, allowing larger batch sizes during inference.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MLP block</strong></td>
+                            <td>Standard FFN with GELU activation</td>
+                            <td>SwiGLU FFN</td>
+                            <td>Introduces a gating mechanism that improves model convergence rates.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Model Architecture</strong></td>
+                            <td>Dense model</td>
+                            <td>Mixture of Experts (MoE) (in DeepSeek, Mixtral, GPT-4)</td>
+                            <td>Allows scaling the total parameter count while keeping the active parameter count per token small.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>3. Mathematical View: RoPE and RMSNorm</h2>
+                <h3>RMSNorm:</h3>
+                <p>RMSNorm simplifies LayerNorm by omitting the mean calculation, normalizing activations using only the root mean square value:
+                $$\text{RMSNorm}(x) = \frac{x}{\sqrt{\frac{1}{d} \sum_{i=1}^d x_i^2 + \epsilon}} \odot \gamma$$</p>
+
+                <h3>Rotary Position Embeddings (RoPE):</h3>
+                <p>RoPE represents Query and Key vectors in the complex plane, applying a rotation matrix based on token position $m$:
+                $$R_{\Theta, m}^d = \text{diag}\left( R_{\theta_1, m}, R_{\theta_2, m}, \dots, R_{\theta_{d/2}, m} \right)$$
+                Where $R_{\theta_i, m}$ is a 2D rotation matrix:
+                $$R_{\theta_i, m} = \begin{pmatrix} \cos(m\theta_i) & -\sin(m\theta_i) \\ \sin(m\theta_i) & \cos(m\theta_i) \end{pmatrix}$$
+                By applying this rotation to $Q$ and $K$, the attention dot product becomes dependent only on the relative distance between tokens ($m - n$), allowing the model to generalize to longer context windows.</p>
+
+                <div class="prev-next-nav">
+                    <a href="experiments.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">11. Architecture Experiments</span>
+                    </a>
+                    <a href="interview_guide.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">13. LLM Interview Guide</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokenization | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>04. Byte Pair Encoding</span>
+                </div>
+
+                <h1>04. Tokenization: Byte Pair Encoding (BPE)</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>Computers do not process words directly. How you split text into numerical tokens affects everything downstream: the model's vocabulary size, context window efficiency, parameter counts, and its ability to represent new or rare words.
+                Understanding BPE tokenization prevents common bugs, such as character set representation errors, out-of-vocabulary crashes, or excessive parameter counts in the embedding layers.</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Imagine you have a dictionary with a limited number of pages.
+                If you assign a unique code to every individual character, your dictionary will be very small, but writing a single sentence will require a massive string of codes.
+                If you assign a unique code to every single word, writing a sentence will be short, but your dictionary will need millions of pages and will fail whenever you encounter a new word (like a name or slang).</p>
+                <p><strong>Byte Pair Encoding (BPE)</strong> is the middle ground:
+                <ul>
+                    <li>We start with a dictionary of the basic building blocks (individual bytes).</li>
+                    <li>We scan our text and find the most common pairs of blocks (e.g. <code>t</code> and <code>h</code>) and merge them into a single new block (<code>th</code>).</li>
+                    <li>We repeat this process until our dictionary reaches a target size (50,257).</li>
+                </ul>
+                This allows common words (like "the") to be represented by a single code, while rare words are broken down into smaller, recognized sub-words or characters, ensuring we can represent any text without needing an infinite dictionary.</p>
+
+                <h2>Level 2 — Engineering View</h2>
+                <p>In our data pipeline (<code>data.py:L26-L29</code>), we use OpenAI's <code>tiktoken</code> library to load the GPT-2 BPE tokenizer, convert input text to token IDs, and store them as a PyTorch tensor:</p>
+                <pre><code class="language-python">enc = tiktoken.get_encoding("gpt2")
+tokens = enc.encode(text)
+self.tokens = torch.tensor(tokens, dtype=torch.long)</code></pre>
+                <p>Because the token embedding matrix (<code>wte</code>) and the output classification layer (<code>lm_head</code>) both depend on the vocabulary size ($V$), they account for a large portion of our model's parameters.
+                To save memory, we tie the weights of these two layers in <code>model.py:L194</code>:</p>
+                <pre><code class="language-python">self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
+self.transformer.wte.weight = self.lm_head.weight</code></pre>
+
+                <h2>3. Mathematical View</h2>
+                <p>The token embedding lookup is a matrix multiplication:
+                $$E = O_x \cdot W_{emb}$$
+                Where $O_x \in \{0, 1\}^{B \times T \times V}$ is a one-hot representation of the input tokens, and $W_{emb} \in \mathbb{R}^{V \times C}$ is the embedding matrix.
+                In practice, PyTorch performs this lookup efficiently using index offsets rather than large matrix multiplications, but the mathematical representation remains equivalent.</p>
+
+                <h2>4. What happens if we remove weight tying?</h2>
+                <p>If we untie the weights of <code>wte</code> and <code>lm_head</code>:
+                <ul>
+                    <li>The model's parameter footprint increases by $V \times C = 19.3\text{M}$ parameters (growing from 30M to 49M parameters).</li>
+                    <li>During training, we must allocate additional GPU memory to store the gradients and optimizer states for this second matrix, increasing memory overhead by approximately $150\text{ MB}$.</li>
+                    <li>Convergence will be slightly slower, as the input embeddings and output projections must learn their semantic representations independently rather than sharing updates.</li>
+                </ul></p>
+
+                <div class="prev-next-nav">
+                    <a href="transformer_block.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">03. Transformer Block</span>
+                    </a>
+                    <a href="data_pipeline.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">05. Data Pipeline Details</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

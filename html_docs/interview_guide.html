@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Guide | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>13. LLM Interview Guide</span>
+                </div>
+
+                <h1>13. LLM Interview Preparation Guide</h1>
+                <p>This guide compiles common interview questions and demonstrates how answer quality scales across Junior, Mid-level, and Senior engineering levels.</p>
+
+                <h2>Question 1: Explain the purpose of weight tying in transformers.</h2>
+                <div style="margin-left: 16px; margin-bottom: 24px;">
+                    <h4>Junior Level Answer:</h4>
+                    <p style="color: var(--text-secondary); font-style: italic;">"Weight tying is used to share parameters between the input embeddings and output projection layer, saving memory."</p>
+                    
+                    <h4>Mid-level Level Answer:</h4>
+                    <p style="color: var(--text-secondary); font-style: italic;">"We share weights between the token embedding matrix (wte) and output linear head (lm_head). Since they share dimensions ($V \times C$), we tie them. This reduces parameter counts by about 19.3M parameters and reduces memory footprint during training, while enforcing semantic matching between token inputs and prediction outputs."</p>
+                    
+                    <h4>Senior Level Answer:</h4>
+                    <p style="color: var(--text-secondary); font-style: italic;">"Weight tying shares the weights of the input projection $X \cdot W_{emb}^T$ and output logit classification $H \cdot W_{head}$. We enforce $W_{head} = W_{emb}$.
+                    This acts as a regularizer, forcing semantic vectors in the embedding space to directly align with the prediction log-likelihood coordinates.
+                    During backpropagation, gradients from both lookup operations accumulate into the same physical weight tensor, which is then updated by the optimizer. This saves memory (specifically, $V \times C \times 4\text{ bytes}$ for weights, plus gradients and optimizer states) and improves convergence rate on smaller vocabularies."</p>
+                </div>
+
+                <h2>Question 2: Why do we normalize micro-batch loss during gradient accumulation?</h2>
+                <div style="margin-left: 16px; margin-bottom: 24px;">
+                    <h4>Junior Level Answer:</h4>
+                    <p style="color: var(--text-secondary); font-style: italic;">"We divide the loss by the number of accumulation steps so that the final gradient update step has the correct size."</p>
+                    
+                    <h4>Mid-level Level Answer:</h4>
+                    <p style="color: var(--text-secondary); font-style: italic;">"PyTorch loss functions compute the average loss over the batch. If we accumulate gradients over $N$ steps, the gradients sum up. Without normalization, the final gradient step would be $N$ times larger. Dividing each micro-batch loss by $N$ before calling backward normalizes the gradients, matching the step size of a single large batch."</p>
+                    
+                    <h4>Senior Level Answer:</h4>
+                    <p style="color: var(--text-secondary); font-style: italic;">"Mathematically, the gradient of the average loss over a batch $D$ partitioned into $N$ micro-batches $d_i$ is:
+                    $$\nabla \mathcal{L}(D) = \frac{1}{N} \sum_{i=1}^N \nabla \mathcal{L}(d_i)$$
+                    Because PyTorch's `.backward()` accumulates gradients additively:
+                    $$\text{accumulated\_grad} = \sum_{i=1}^N \nabla \mathcal{L}(d_i)$$
+                    We must scale each micro-batch loss by $1/N$ beforehand to ensure the final sum matches the true average gradient. Failing to normalize is equivalent to scaling the learning rate by $N$, which typically destabilizes training and causes the loss to explode."</p>
+                </div>
+
+                <h2>Question 3: How does FlashAttention optimize the self-attention bottleneck?</h2>
+                <div style="margin-left: 16px; margin-bottom: 24px;">
+                    <h4>Junior Level Answer:</h4>
+                    <p style="color: var(--text-secondary); font-style: italic;">"FlashAttention makes self-attention faster and use less memory by running on the GPU."</p>
+                    
+                    <h4>Mid-level Level Answer:</h4>
+                    <p style="color: var(--text-secondary); font-style: italic;">"Standard attention stores the intermediate $(T, T)$ attention score matrix in High Bandwidth Memory (HBM), which scales quadratically ($O(T^2)$). FlashAttention tiles the inputs to run attention calculations entirely in the GPU's fast, on-chip SRAM cache, reducing memory bandwidth bottlenecks and speeding up execution."</p>
+                    
+                    <h4>Senior Level Answer:</h4>
+                    <p style="color: var(--text-secondary); font-style: italic;">"Self-attention is typically memory-bandwidth-bound rather than compute-bound. FlashAttention reorganizes the attention computation by tiling the input matrices $Q, K, V$ into blocks that fit within the GPU's fast, on-chip SRAM cache. It computes attention incrementally using online softmax normalization, writing only the final output matrix of shape $(B, T, C)$ back to HBM.
+                    This reduces HBM memory access from $O(T^2)$ to $O(T)$, converting attention from a memory-bandwidth-bound operation to a compute-bound operation. During the backward pass, FlashAttention recomputes the intermediate attention matrix on-the-fly using stored SRAM blocks, eliminating the need to store the massive forward attention matrix in memory."</p>
+                </div>
+
+                <div class="prev-next-nav">
+                    <a href="modern_llms.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">12. Connections to Modern LLMs</span>
+                    </a>
+                    <a href="glossary.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">14. Glossary of Terms</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

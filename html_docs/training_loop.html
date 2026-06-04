@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Loop | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>06. Training Loop Mechanics</span>
+                </div>
+
+                <h1>06. Training Loop: Mechanics & Schedule</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>The training loop controls how the model learns from data.
+                Understanding the mechanics of gradient accumulation, learning rate scheduling, and weight decay is essential for stabilizing training and preventing issues like exploding gradients or stuck loss curves.
+                Configuring these parameters correctly is critical for ensuring the model converges efficiently.</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Imagine you are guiding a hiker down a foggy mountain to find the lowest valley (the lowest loss).
+                If you take steps that are too large, you might overshoot the valley and end up on another peak. If you take steps that are too small, the journey will take forever.</p>
+                <p>To guide the hiker effectively, we use a few strategies:
+                <ul>
+                    <li><strong>Warmup:</strong> Start with small, cautious steps (low learning rate) until the hiker gets their bearings, then increase step size.</li>
+                    <li><strong>Cosine Decay:</strong> As the hiker gets closer to the valley floor, gradually reduce the step size to avoid overshooting.</li>
+                    <li><strong>Gradient Accumulation:</strong> Instead of asking the hiker to make a decision after every step, let them take a few steps, average their path, and then make a correction.</li>
+                    <li><strong>Gradient Clipping:</strong> If the hiker starts sliding down a steep cliff (exploding gradient), pull them back to prevent a crash.</li>
+                </ul></p>
+
+                <h2>Level 2 — Engineering View: What is happening in memory?</h2>
+                <p>Let's estimate the GPU/MPS memory requirements during a training step for our configuration ($30\text{M}$ parameters, $B=4$, $T=256$):</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Memory Element</th>
+                            <th>Calculation / Value Tracking</th>
+                            <th>Estimated Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Model Parameters</strong></td>
+                            <td>$30\text{M}$ weights stored in float32 (4 bytes per param)</td>
+                            <td>~120 MB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gradients</strong></td>
+                            <td>$30\text{M}$ gradients stored in float32 (4 bytes per param)</td>
+                            <td>~120 MB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Optimizer States</strong></td>
+                            <td>AdamW tracks 2 moments (mean/variance) per weight in float32 (8 bytes per param)</td>
+                            <td>~240 MB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Activations</strong></td>
+                            <td>Intermediate activations saved during the forward pass for backpropagation. Scales with layer count and batch size.</td>
+                            <td>~180 MB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Training Memory</strong></td>
+                            <td>Sum of weights, gradients, optimizer states, and activations</td>
+                            <td><strong>~660 MB</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>3. Mathematical View</h2>
+                <p>During gradient accumulation over $N$ steps, the total gradient update is the average of the gradients of the micro-batches:
+                $$\nabla \mathcal{L}(D) = \frac{1}{N} \sum_{i=1}^N \nabla \mathcal{L}(d_i)$$
+                This is why we scale each micro-batch loss by $N$ (<code>grad_accum_steps</code>) before calling backpropagation:
+                $$\mathcal{L}_{scaled} = \frac{\mathcal{L}(d_i)}{N}$$
+                $$\nabla \mathcal{L}_{scaled} = \frac{\nabla \mathcal{L}(d_i)}{N}$$
+                When PyTorch accumulates these scaled gradients over $N$ steps, the final sum matches the true average gradient of the entire batch.</p>
+
+                <h2>4. What happens if we remove gradient clipping?</h2>
+                <p>If we remove gradient clipping (<code>nn.utils.clip_grad_norm_(model.parameters(), 1.0)</code>):
+                <ul>
+                    <li>If the model encounters a steep region of the loss landscape (common when training deep transformers), the gradient values can grow extremely large.</li>
+                    <li>Without clipping, the optimizer will take a massive step, shifting model weights to extreme values.</li>
+                    <li>This typically destabilizes the model, causing activations to overflow and the loss function to return <code>NaN</code>, halting training.</li>
+                </ul></p>
+
+                <div class="prev-next-nav">
+                    <a href="data_pipeline.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">05. Data Pipeline Details</span>
+                    </a>
+                    <a href="optimization.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">07. Hardware Optimization</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>

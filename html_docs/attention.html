@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attention | GPT Reproduction Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Mermaid CDN (correct UMD load) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+    <!-- KaTeX CDN (Math rendering) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Nav Bar -->
+        <header>
+            <div class="logo-section">
+                <span class="logo-text">GPT-2 Learning Handbook</span>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search... (Press '/' or Cmd+K)" readonly>
+                </div>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme"></button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-nav-title">HANDBOOK MODULES</div>
+                    <ul class="sidebar-nav-list">
+                        <li><a href="index.html" class="sidebar-nav-link">00. Welcome & Overview</a></li>
+                        <li><a href="architecture.html" class="sidebar-nav-link">01. Architecture Lifecycle</a></li>
+                        <li><a href="attention.html" class="sidebar-nav-link">02. Causal Self-Attention</a></li>
+                        <li><a href="transformer_block.html" class="sidebar-nav-link">03. Transformer Block</a></li>
+                        <li><a href="tokenization.html" class="sidebar-nav-link">04. Byte Pair Encoding</a></li>
+                        <li><a href="data_pipeline.html" class="sidebar-nav-link">05. Data Pipeline Details</a></li>
+                        <li><a href="training_loop.html" class="sidebar-nav-link">06. Training Loop Mechanics</a></li>
+                        <li><a href="optimization.html" class="sidebar-nav-link">07. Hardware Optimization</a></li>
+                        <li><a href="generation.html" class="sidebar-nav-link">08. Autoregressive Generation</a></li>
+                        <li><a href="checkpointing.html" class="sidebar-nav-link">09. Checkpoint Restoration</a></li>
+                        <li><a href="evaluation.html" class="sidebar-nav-link">10. Model Evaluation</a></li>
+                        <li><a href="experiments.html" class="sidebar-nav-link">11. Architecture Experiments</a></li>
+                        <li><a href="modern_llms.html" class="sidebar-nav-link">12. Connections to Modern LLMs</a></li>
+                        <li><a href="interview_guide.html" class="sidebar-nav-link">13. LLM Interview Guide</a></li>
+                        <li><a href="glossary.html" class="sidebar-nav-link">14. Glossary of Terms</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Wrapper -->
+            <main class="content-wrapper">
+                <div class="breadcrumbs">
+                    <a href="index.html">Handbook</a> &gt; <span>02. Causal Self-Attention</span>
+                </div>
+
+                <h1>02. Attention: Causal Multi-Head Self-Attention</h1>
+                
+                <h2>Why should I care?</h2>
+                <p>Self-attention is the core engine of the transformer. Unlike older architectures (like RNNs or CNNs) which process sequences sequentially or within a fixed window, self-attention allows any token in a sequence to connect directly with any other token, regardless of distance.
+                Understanding the mathematics and complexity of attention is essential for managing memory footprints (KV Cache) and optimizing inference speeds when deploying models to production.</p>
+
+                <h2>Level 1 — Intuition & Mental Model</h2>
+                <p>Imagine you are reading a book and encounter the word <strong>"it"</strong>. To understand what "it" refers to, your eyes scan back across the sentence to locate the noun it represents.
+                Self-attention performs this process mathematically:
+                <ul>
+                    <li>Each token generates a <strong>Query (Q)</strong>: "What target information am I looking for?"</li>
+                    <li>Each token generates a <strong>Key (K)</strong>: "What description do I offer to matching queries?"</li>
+                    <li>Each token generates a <strong>Value (V)</strong>: "What is my actual content?"</li>
+                </ul>
+                By taking the dot product of a token's Query with all tokens' Keys, the model calculates attention weights (similarity scores). These weights determine how much of each token's Value is mixed into the current token's representation.</p>
+
+                <h2>Level 2 — Engineering View</h2>
+                <p>In <code>model.py:L70-L142</code>, the <code>CausalSelfAttention</code> class implements this behavior:
+                <ol>
+                    <li><strong>Unified Projection:</strong> A single linear layer (<code>self.c_attn</code>) projects the input tensor $X$ from shape <code>[B, T, C]</code> to <code>[B, T, 3C]</code>, containing $Q$, $K$, and $V$ concatenated together.</li>
+                    <li><strong>Split & Transpose:</strong> We split the projected tensor into $Q, K, V$ and reshape them to <code>[B, H, T, D]</code> (where $H$ is the number of heads and $D$ is the head dimension) to run calculations in parallel across all heads.</li>
+                    <li><strong>Scaled Dot Product:</strong> We calculate similarity scores by multiplying $Q$ and $K^T$. Using <code>torch.nn.functional.scaled_dot_product_attention</code>, this step runs highly optimized **FlashAttention** kernels under the hood.</li>
+                </ol></p>
+
+                <h2>Level 3 — Mathematical View</h2>
+                <p>Given the head matrices $Q, K, V \in \mathbb{R}^{T \times D}$:
+                $$A = \text{Softmax}\left( \frac{Q K^T}{\sqrt{D}} + M \right) V$$
+                Where $M$ is the causal mask matrix that prevents tokens from attending to future positions:
+                $$M_{i,j} = \begin{cases} 0 & \text{if } i \geq j \\ -\infty & \text{if } i < j \end{cases}$$</p>
+
+                <h2>4. Build Intuition through Numbers</h2>
+                <p>Let's calculate attention manually for a sequence of 2 tokens, $A$ and $B$, with head dimension $D=2$.
+                Assume the input embedding vectors are:
+                $$X_A = [1, 0], \quad X_B = [0, 1]$$
+                Assume the projection weight matrices are identity matrices (to keep calculations simple):
+                $$W_q = W_k = W_v = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
+                This gives:
+                $$Q = X \cdot W_q = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \quad K = X \cdot W_k = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \quad V = X \cdot W_v = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
+                
+                <p><strong>Step 1: Compute Similarity Scores ($Q K^T$)</strong></p>
+                $$Q K^T = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
+                
+                <p><strong>Step 2: Scale by $1 / \sqrt{D}$</strong> (where $D=2, \sqrt{2} \approx 1.41$):</p>
+                $$A_{scaled} = \frac{1}{1.41} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \approx \begin{pmatrix} 0.71 & 0.0 \\ 0.0 & 0.71 \end{pmatrix}$$
+                
+                <p><strong>Step 3: Apply Causal Mask ($M$)</strong></p>
+                $$A_{masked} = \begin{pmatrix} 0.71 & 0.0 \\ 0.0 & 0.71 \end{pmatrix} + \begin{pmatrix} 0 & -\infty \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0.71 & -\infty \\ 0.0 & 0.71 \end{pmatrix}$$
+                
+                <p><strong>Step 4: Apply Softmax along each row</strong></p>
+                $$\text{Row 1}: \text{Softmax}([0.71, -\infty]) = [1.0, 0.0]$$
+                $$\text{Row 2}: \text{Softmax}([0.0, 0.71]) = \left[ \frac{e^{0}}{e^{0} + e^{0.71}}, \frac{e^{0.71}}{e^{0} + e^{0.71}} \right] \approx [0.33, 0.67]$$
+                $$\text{Attention Weights } W = \begin{pmatrix} 1.0 & 0.0 \\ 0.33 & 0.67 \end{pmatrix}$$
+                
+                <p><strong>Step 5: Multiply by Values ($V$)</strong></p>
+                $$\text{Output} = W \cdot V = \begin{pmatrix} 1.0 & 0.0 \\ 0.33 & 0.67 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1.0 & 0.0 \\ 0.33 & 0.67 \end{pmatrix}$$
+                Notice how token $A$ only attends to itself (output $[1, 0]$), while token $B$ attends to both token $A$ and itself (output $[0.33, 0.67]$).</p>
+
+                <h2>5. What happens if we remove causal masking?</h2>
+                <p>If we remove causal masking (i.e. omitting the upper-triangular $-\infty$ mask step), the model becomes a bidirectional transformer (like BERT) rather than an autoregressive decoder.
+                If you train the model without causal masking, it will learn to look ahead to the target tokens (which are simply the inputs shifted by one index). The model will achieve a near-zero training loss by simply copying the next token from the input, but will fail to generate coherent text during inference when future tokens are not available.</p>
+
+                <div class="prev-next-nav">
+                    <a href="architecture.html" class="prev-next-btn">
+                        <span class="nav-label">Previous Section</span>
+                        <span class="nav-title">01. Architecture Lifecycle</span>
+                    </a>
+                    <a href="transformer_block.html" class="prev-next-btn next">
+                        <span class="nav-label">Next Section</span>
+                        <span class="nav-title">03. Transformer Block</span>
+                    </a>
+                </div>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">ON THIS PAGE</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </aside>
+        </div>
+    </div>
+    <script src="assets/navigation.js"></script>
+    <script src="assets/search.js"></script>
+</body>
+</html>
