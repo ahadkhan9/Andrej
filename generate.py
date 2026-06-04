@@ -84,7 +84,8 @@ def run_logit_parity_test(device: str = "cpu") -> bool:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate text or verify custom GPT-2 implementation.")
     parser.add_argument("--prompt", type=str, default="Alan Turing determined that", help="Prompt to generate text from")
-    parser.add_argument("--model_type", type=str, default="gpt2", choices=["gpt2", "gpt2-medium", "gpt2-large", "gpt2-xl"], help="Pretrained model type")
+    parser.add_argument("--checkpoint", type=str, default=None, help="Path to a local .pt checkpoint file (overrides --model_type)")
+    parser.add_argument("--model_type", type=str, default="gpt2", choices=["gpt2", "gpt2-medium", "gpt2-large", "gpt2-xl"], help="Pretrained HF model type (ignored if --checkpoint is set)")
     parser.add_argument("--max_tokens", type=int, default=30, help="Maximum number of tokens to generate")
     parser.add_argument("--temp", type=float, default=1.0, help="Temperature for generation (randomness)")
     parser.add_argument("--top_k", type=int, default=50, help="Top-k sampling parameter")
@@ -109,8 +110,23 @@ def main() -> None:
         run_logit_parity_test(device)
         return
 
-    # Load custom model with pretrained weights
-    model = GPT.from_pretrained(args.model_type).to(device)
+    if args.checkpoint is not None:
+        # Load your own trained checkpoint
+        print(f"Loading local checkpoint: {args.checkpoint}")
+        ckpt = torch.load(args.checkpoint, map_location=device)
+        config = ckpt["config"]
+        model = GPT(config).to(device)
+        # Strip 'module.' prefix from keys if the model was compiled with torch.compile
+        state_dict = ckpt["model"]
+        state_dict = {k.replace("_orig_mod.", ""): v for k, v in state_dict.items()}
+        model.load_state_dict(state_dict)
+        print(f"Loaded checkpoint from step {ckpt.get('step', '?')} "
+              f"| val_loss: {ckpt.get('val_loss', float('nan')):.4f}")
+        print(f"Model config: n_layer={config.n_layer}, n_head={config.n_head}, "
+              f"n_embd={config.n_embd}, block_size={config.block_size}")
+    else:
+        # Load HuggingFace pre-trained weights
+        model = GPT.from_pretrained(args.model_type).to(device)
     model.eval()
 
     # Encode prompt
