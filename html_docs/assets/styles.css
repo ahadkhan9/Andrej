@@ -763,7 +763,7 @@ summary:hover {
 
 @media (max-width: 768px) {
     :root {
-        --header-height: 72px;
+        --header-height: 116px;
     }
 
     body {
@@ -775,12 +775,18 @@ summary:hover {
     }
 
     header {
-        padding: 10px 12px;
-        gap: 10px;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        grid-template-areas:
+            "menu logo controls"
+            "search search search";
+        gap: 10px 10px;
         align-items: center;
+        padding: 10px 12px;
     }
 
     .logo-section {
+        grid-area: logo;
         min-width: 0;
         flex: 1 1 auto;
     }
@@ -796,27 +802,30 @@ summary:hover {
     }
 
     .header-controls {
-        flex: 0 0 auto;
-        gap: 8px;
+        display: contents;
     }
 
     .mobile-nav-toggle {
         display: inline-flex;
-        order: -1;
+        grid-area: menu;
     }
 
     .theme-toggle-btn {
+        grid-area: controls;
         width: 40px;
         height: 40px;
         border-radius: 8px;
     }
 
     .search-box {
-        position: fixed;
-        left: 12px;
-        right: 12px;
-        top: calc(var(--header-height) + 8px);
-        z-index: 40;
+        grid-area: search;
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
+        z-index: auto;
+        width: 100%;
+        min-width: 0;
     }
 
     .search-input {
@@ -829,11 +838,12 @@ summary:hover {
 
     #progress {
         top: var(--header-height);
+        z-index: 45;
     }
 
     .main-layout {
         display: block;
-        padding-top: 60px;
+        padding-top: 0;
         min-width: 0;
     }
 
