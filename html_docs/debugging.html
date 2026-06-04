@@ -94,7 +94,7 @@
                 This gallery maps the most common training bugs to their diagnostics and code solutions.</p>
 
                 <h2>Backend Engineer Lens: Crash Logs</h2>
-                <p>Debugging neural network training collapse maps directly to **interpreting server crash logs and troubleshooting database leaks**.</p>
+                <p>Debugging neural network training collapse maps directly to <strong>interpreting server crash logs and troubleshooting database leaks</strong>.</p>
                 <ul>
                     <li><strong>NaN Loss &rarr; Silent segmentation faults / divide-by-zero:</strong> A <code>NaN</code> (Not a Number) value is a silent database corruption. It usually originates from dividing by zero in softmax or floating-point overflow, propagating to corrupt every subsequent weight record.</li>
                     <li><strong>Exploding Gradients &rarr; Stack overflow:</strong> Occurs when feedback adjustments compound across deep recursive calls, causing gradient numbers to grow exponentially until they exceed memory buffers, crashing the optimizer. We prevent this by setting a rate-limit guard (gradient clipping).</li>
@@ -183,7 +183,7 @@ x.view(B, T, H, D).transpose(1, 2)</code></pre>
                     <p>
                     <ol>
                         <li><strong>Check gradient norm values:</strong> If the gradient norm is spiking before NaN, apply or tighten gradient clipping (e.g., reduce clip threshold from 1.0 to 0.5) to prevent optimization steps from overshooting.</li>
-                        <li><strong>Audit FP16 precision:</strong> FP16 has a maximum value of 65,504. If weight values exceed this, they overflow to NaN. Switch to **BF16** or FP32, or add a gradient scaler (<code>GradScaler</code>) to scale loss down before backward passes.</li>
+                        <li><strong>Audit FP16 precision:</strong> FP16 has a maximum value of 65,504. If weight values exceed this, they overflow to NaN. Switch to <strong>BF16</strong> or FP32, or add a gradient scaler (<code>GradScaler</code>) to scale loss down before backward passes.</li>
                         <li><strong>Reduce learning rate:</strong> A learning rate that is too high can cause parameters to step into divergent mathematical spaces, causing logits to overflow. Reduce the learning rate by a factor of 2 or 10.</li>
                     </ol>
                     </p>
@@ -193,7 +193,7 @@ x.view(B, T, H, D).transpose(1, 2)</code></pre>
                     <summary>What is Causal Mask Leakage? What symptom does it produce in validation metrics?</summary>
                     <p>Causal Mask Leakage occurs when the causal mask in the attention layer is missing or configured incorrectly, allowing tokens to attend to future tokens in the sequence.
                     Because the target tokens in training are simply the input sequence shifted right by 1, a model with mask leakage can simply copy the target token from its immediate right neighbor.
-                    This produces a **near-zero training loss** almost immediately.
+                    This produces a <strong>near-zero training loss</strong> almost immediately.
                     However, during validation or inference where future tokens are not visible, the model fails completely, yielding high validation loss and generating repetitive, incoherent text.</p>
                 </details>
 

@@ -103,7 +103,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Integration & Regression Testing</h2>
-                <p>In backend engineering, evaluation mirrors **regression and integration validation testing**.</p>
+                <p>In backend engineering, evaluation mirrors <strong>regression and integration validation testing</strong>.</p>
                 <ul>
                     <li><strong>Validation Loss &rarr; Integration Test:</strong> We run validation batches without updating model weights (<code>with torch.no_grad()</code>). This is identical to running a unit/integration test on a staging database to verify that API response error rates are within expected SLA bounds.</li>
                     <li><strong>HellaSwag Completion &rarr; Comparative Routing cost:</strong> In routing systems, we calculate path costs before choosing an execution route. In HellaSwag, we calculate the negative average log probability of the generated tokens for each of the 4 completions. We route our prediction to the option that has the lowest path cost (minimum negative log probability, representing the highest likelihood).</li>
@@ -169,7 +169,7 @@
                         <li>We apply a <code>log_softmax</code> to the logits to retrieve the log probability of each predicted token.</li>
                         <li>We gather the log probabilities of the actual target completion tokens and compute their average.</li>
                     </ol>
-                    The model predicts the option that yields the **highest average log-likelihood** (the smallest negative value).
+                    The model predicts the option that yields the <strong>highest average log-likelihood</strong> (the smallest negative value).
                     </p>
                 </details>
 

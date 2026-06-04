@@ -93,7 +93,7 @@
                 <p>By conducting systematic ablation studies (removing or altering specific model structures), we observe exactly how each component affects the token's information flow and training convergence.</p>
 
                 <h2>Backend Engineer Lens: Infrastructure A/B Testing</h2>
-                <p>Systematic ablation studies mirror **A/B testing database indexing structures and disabling middleware components** to isolate performance bottlenecks.</p>
+                <p>Systematic ablation studies mirror <strong>A/B testing database indexing structures and disabling middleware components</strong> to isolate performance bottlenecks.</p>
                 <ul>
                     <li><strong>Removing Residual Skip Connections &rarr; Disabling request context bypass:</strong> If we delete residual additions, the gradient feedback trace cannot bypass layers. Optimization fails because the feedback never reaches the initial layers.</li>
                     <li><strong>Removing Position Embeddings &rarr; Dropping database sort order indexes:</strong> Removing positional embeddings is identical to stripping a database query of <code>ORDER BY</code> indexes. The database treats records as a bag-of-words. The model loses all grammatical and semantic order awareness.</li>
@@ -175,7 +175,7 @@ self.gelu = nn.ReLU()</code></pre>
                     <p>ReLU is defined as:
                     $$\text{ReLU}(x) = \max(0, x)$$
                     If a neuron receives a negative input, its output is zero, and its gradient is also zero. If weights update such that a neuron always receives negative inputs, its weights will never update again, rendering it permanently inactive ("dead neuron").
-                    **GELU** (Gaussian Error Linear Unit) scales inputs smoothly:
+                    <strong>GELU</strong> (Gaussian Error Linear Unit) scales inputs smoothly:
                     $$\text{GELU}(x) = x \cdot \Phi(x)$$
                     Where $\Phi(x)$ is the cumulative distribution function of the standard normal distribution. Because it is non-zero for negative inputs, it allows a small gradient to propagate, preventing dead neurons and stabilizing training.</p>
                 </details>

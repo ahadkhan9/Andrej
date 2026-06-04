@@ -93,7 +93,7 @@
                 <p>Reproducing a base transformer model like GPT-2 is the foundation of LLM engineering. However, in modern production architectures (e.g. Llama 3, Mistral, Gemini), the token flows through refined structural gates (RoPE, RMSNorm, GQA) and operates within a layered enterprise system stack (Fine-Tuning, Serving, RAG, and Agents).</p>
 
                 <h2>Backend Engineer Lens: Architecture Evolution & Serving Layers</h2>
-                <p>Think of this codebase as a **raw database storage engine**.
+                <p>Think of this codebase as a <strong>raw database storage engine</strong>.
                 You understand how it writes parameters to disk (checkpointing) and retrieves indexes (attention).
                 But in production, you don't expose raw storage layers directly to users.
                 You wrap the database in an ORM (PEFT/LoRA), place it behind an API Gateway proxy (inference servers like vLLM), cache context requests (RAG), and script automation workflows (Agents).</p>
@@ -155,19 +155,19 @@
                 <h3>1. PagedAttention & Serving (vLLM)</h3>
                 <ul>
                     <li><strong>This Repository:</strong> Standard Multi-Head Attention dot products in <a href="code_guide.html#L70">model.py:CausalSelfAttention</a>.</li>
-                    <li><strong>Production Equivalent:</strong> **vLLM** serving engines. Sharing KV states (KV Cache) in GPU memory is critical to handle multiple concurrent clients. vLLM uses virtual memory paging concepts (PagedAttention) to prevent fragmentation, allowing a 10x throughput speedup during high-concurrency API calls.</li>
+                    <li><strong>Production Equivalent:</strong> <strong>vLLM</strong> serving engines. Sharing KV states (KV Cache) in GPU memory is critical to handle multiple concurrent clients. vLLM uses virtual memory paging concepts (PagedAttention) to prevent fragmentation, allowing a 10x throughput speedup during high-concurrency API calls.</li>
                 </ul>
 
                 <h3>2. Adapter Fine-Tuning (LoRA / QLoRA)</h3>
                 <ul>
                     <li><strong>This Repository:</strong> Full parameter backpropagation updating every single weight in <a href="code_guide.html#L142">train.py</a>.</li>
-                    <li><strong>Production Equivalent:</strong> Parameter-Efficient Fine-Tuning (**PEFT**) using **LoRA** (Low-Rank Adaptation). Base weights are frozen (read-only), and tiny sidecar projection weights are trained. **QLoRA** quantizes base weights to 4-bit, allowing fine-tuning on consumer-grade hardware.</li>
+                    <li><strong>Production Equivalent:</strong> Parameter-Efficient Fine-Tuning (<strong>PEFT</strong>) using <strong>LoRA</strong> (Low-Rank Adaptation). Base weights are frozen (read-only), and tiny sidecar projection weights are trained. <strong>QLoRA</strong> quantizes base weights to 4-bit, allowing fine-tuning on consumer-grade hardware.</li>
                 </ul>
 
                 <h3>3. RAG & Vector Search Databases</h3>
                 <ul>
                     <li><strong>This Repository:</strong> Local tiktoken subword encoding in <a href="code_guide.html#L17">data.py:DataLoaderLite</a>.</li>
-                    <li><strong>Production Equivalent:</strong> Retrieval-Augmented Generation (**RAG**). In production, context is dynamically injected. Unstructured document payloads are split, converted into embedding vectors, and stored in vector databases (e.g. pgvector, Pinecone). When a query arrives, we perform a vector similarity search, retrieve matching records, and paste them into the LLM context.</li>
+                    <li><strong>Production Equivalent:</strong> Retrieval-Augmented Generation (<strong>RAG</strong>). In production, context is dynamically injected. Unstructured document payloads are split, converted into embedding vectors, and stored in vector databases (e.g. pgvector, Pinecone). When a query arrives, we perform a vector similarity search, retrieve matching records, and paste them into the LLM context.</li>
                 </ul>
 
                 <h2>Common Interview Followups</h2>
@@ -175,7 +175,7 @@
                     <summary>Why do modern LLMs use Grouped-Query Attention (GQA) instead of standard Multi-Head Attention (MHA)?</summary>
                     <p>In Multi-Head Attention, every Query head has a corresponding Key and Value head. During autoregressive generation, we cache all Key and Value tensors in memory (KV Cache).
                     At large batch sizes and long context lengths, this KV Cache consumes massive GPU RAM, limiting throughput.
-                    **Grouped-Query Attention** (GQA) groups Query heads (e.g., 8 Query heads per group) and shares a single Key and Value head pair across each group.
+                    <strong>Grouped-Query Attention</strong> (GQA) groups Query heads (e.g., 8 Query heads per group) and shares a single Key and Value head pair across each group.
                     This reduces the memory footprint of the KV Cache by up to 8x, allowing significantly larger serving batch sizes and longer context windows while maintaining near-identical model accuracy.</p>
                 </details>
 

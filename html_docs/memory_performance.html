@@ -103,7 +103,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Memory Profiling</h2>
-                <p>Auditing training memory is identical to **profiling a high-concurrency API server under heavy request loads**.</p>
+                <p>Auditing training memory is identical to <strong>profiling a high-concurrency API server under heavy request loads</strong>.</p>
                 <ul>
                     <li><strong>Model Weights & Gradients &rarr; Static Heap Allocation:</strong> These occupy a fixed size on the heap. Once the server boots, they remain constant, comparable to loading config caches and thread pools.</li>
                     <li><strong>Optimizer States &rarr; Index Metadata Overhead:</strong> AdamW tracks historical values (mean and variance) for each parameter. This is like maintaining secondary index logs, consuming a static 8 bytes per parameter.</li>
@@ -111,7 +111,7 @@
                 </ul>
 
                 <h2>Peak Training Memory Breakdown</h2>
-                <p>For a model with $N$ parameters, trained using **AdamW** in **FP32** precision, memory is distributed as follows:</p>
+                <p>For a model with $N$ parameters, trained using <strong>AdamW</strong> in <strong>FP32</strong> precision, memory is distributed as follows:</p>
                 <table>
                     <thead>
                         <tr>

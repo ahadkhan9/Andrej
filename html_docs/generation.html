@@ -126,7 +126,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Streaming Buffers</h2>
-                <p>In backend engineering, autoregressive text generation is structured like an **incremental queue/buffer append loop** (similar to pushing events to an HTTP Server-Sent Events (SSE) stream).</p>
+                <p>In backend engineering, autoregressive text generation is structured like an <strong>incremental queue/buffer append loop</strong> (similar to pushing events to an HTTP Server-Sent Events (SSE) stream).</p>
                 <ul>
                     <li><strong>Logits &rarr; Priority Values:</strong> Think of logits as raw, unnormalized priority metrics. They represent raw voting counts for each item in the token database.</li>
                     <li><strong>Temperature &rarr; Load Balancing:</strong> High temperature acts like round-robin load balancing, spreading traffic across less optimal routes (creating creative, diverse outputs). Low temperature acts like rigid failover routing, forwarding all requests exclusively to the primary node with the highest score (greedy deterministic outputs).</li>
@@ -167,8 +167,8 @@
 
                 <h2>Production Relevance</h2>
                 <ul>
-                    <li><strong>Time-to-First-Token (TTFT) vs Inter-Token Latency:</strong> Generating text token-by-token is slow because each step must reload all model parameters to project the new logit. This makes generation **memory-bandwidth bound**. In serving frameworks (vLLM, Hugging Face TGI), we stream each token to the client as it is sampled using SSE events, minimizing TTFT and improving user perceived latency.</li>
-                    <li><strong>Speculative Decoding:</strong> To bypass memory loading bottlenecks, speculative decoding runs a fast, lightweight "draft model" (e.g. 1B parameters) to generate 5-10 draft tokens in a row. The large "target model" (e.g. 70B parameters) evaluates all draft tokens in parallel in a **single forward pass**, accepting or rejecting them. This yields up to a 2x inference speedup without altering output mathematics.</li>
+                    <li><strong>Time-to-First-Token (TTFT) vs Inter-Token Latency:</strong> Generating text token-by-token is slow because each step must reload all model parameters to project the new logit. This makes generation <strong>memory-bandwidth bound</strong>. In serving frameworks (vLLM, Hugging Face TGI), we stream each token to the client as it is sampled using SSE events, minimizing TTFT and improving user perceived latency.</li>
+                    <li><strong>Speculative Decoding:</strong> To bypass memory loading bottlenecks, speculative decoding runs a fast, lightweight "draft model" (e.g. 1B parameters) to generate 5-10 draft tokens in a row. The large "target model" (e.g. 70B parameters) evaluates all draft tokens in parallel in a <strong>single forward pass</strong>, accepting or rejecting them. This yields up to a 2x inference speedup without altering output mathematics.</li>
                 </ul>
 
                 <h2>Verification</h2>

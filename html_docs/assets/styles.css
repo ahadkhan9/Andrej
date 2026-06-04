@@ -162,6 +162,11 @@ header {
     }
 }
 
+/* Hide KaTeX MathML duplicate text to prevent double-rendering bugs */
+.katex-mathml {
+    display: none !important;
+}
+
 .main-layout {
     display: flex;
     flex: 1;

@@ -130,7 +130,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Similarity Search</h2>
-                <p>Think of self-attention as a **distributed vector similarity search query** against an in-memory database.</p>
+                <p>Think of self-attention as a <strong>distributed vector similarity search query</strong> against an in-memory database.</p>
                 <ul>
                     <li><strong>Query (Q) &rarr; Search term payload:</strong> The search parameters passed in by the client (e.g. <code>"author of Turing machine"</code>).</li>
                     <li><strong>Key (K) &rarr; Database primary index keys:</strong> The index metadata fields associated with records (e.g. <code>"inventor"</code>, <code>"year"</code>, <code>"concept"</code>).</li>
@@ -203,7 +203,7 @@
                 <details name="interview-questions">
                     <summary>How does FlashAttention optimize self-attention without changing the mathematical output?</summary>
                     <p>Standard attention writes the large intermediate $T \times T$ attention matrix to High-Bandwidth GPU memory (HBM), then reads it back to calculate softmax, and reads it again to multiply by $V$. This HBM read/write loop is a memory-bandwidth bottleneck.
-                    FlashAttention uses **tiling**. It loads small block chunks of $Q$, $K$, and $V$ into the GPU's fast, on-chip local SRAM memory. It computes attention scores, updates the softmax scaling factor incrementally using online softmax calculations, and computes the final output weighted values locally in SRAM. It only writes the final output tensor back to HBM, reducing memory access overheads and yielding up to a 3-4x speedup.</p>
+                    FlashAttention uses <strong>tiling</strong>. It loads small block chunks of $Q$, $K$, and $V$ into the GPU's fast, on-chip local SRAM memory. It computes attention scores, updates the softmax scaling factor incrementally using online softmax calculations, and computes the final output weighted values locally in SRAM. It only writes the final output tensor back to HBM, reducing memory access overheads and yielding up to a 3-4x speedup.</p>
                 </details>
 
                 <div class="prev-next-nav">

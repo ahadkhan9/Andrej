@@ -135,10 +135,10 @@
                         <li><strong>Optimizer states (AdamW):</strong> $8 \text{ bytes} \times N$ (560 GB to store moving average of gradients and squared gradients).</li>
                     </ol>
                     This totals $16 \text{ bytes} \times N$, which is 1.12 Terabytes of static RAM (before counting dynamic activations).
-                    If we transition to **FP16/BF16 mixed precision** training:
+                    If we transition to <strong>FP16/BF16 mixed precision</strong> training:
                     <ul>
                         <li>Model weights and gradients are compressed to 2 bytes per parameter.</li>
-                        <li>However, to prevent optimization drift, AdamW must maintain a master copy of weights in **FP32** (4 bytes), and its optimizer state registers remain in FP32 (8 bytes).</li>
+                        <li>However, to prevent optimization drift, AdamW must maintain a master copy of weights in <strong>FP32</strong> (4 bytes), and its optimizer state registers remain in FP32 (8 bytes).</li>
                         <li>This reduces total footprint to $20 \text{ bytes} \times N$ (or $16 \text{ bytes} \times N$ with optimization), still requiring hundreds of gigabytes.</li>
                     </ul>
                     <strong>Code Connection:</strong> Audited in <a href="code_guide.html#L113">train.py: configure_optimizers()</a>.
@@ -149,7 +149,7 @@
                     <summary>Question: What is KV Cache, why do we use it in production serving, and what are its memory implications?</summary>
                     <p>In autoregressive text generation, generating token $t+1$ requires attention scores computed over all past tokens $0..t$.
                     Re-computing Queries, Keys, and Values for all past tokens at every step scales quadratically ($O(T^2)$), bottlenecking inference.
-                    **KV Cache** stores the computed Key ($K$) and Value ($V$) tensors of past tokens in GPU memory. At step $t+1$, we only compute $Q$, $K$, and $V$ for the single new token, append $K$ and $V$ to the cache, and calculate attention, reducing computational complexity to $O(T)$.
+                    <strong>KV Cache</strong> stores the computed Key ($K$) and Value ($V$) tensors of past tokens in GPU memory. At step $t+1$, we only compute $Q$, $K$, and $V$ for the single new token, append $K$ and $V$ to the cache, and calculate attention, reducing computational complexity to $O(T)$.
                     <strong>Memory Implication:</strong> The cache size scales linearly with batch size, sequence length, head count, and layer depth. At scale, this consumes massive GPU RAM, limiting maximum batch sizes until optimizations like vLLM (PagedAttention) or GQA are applied.
                     <strong>Code Connection:</strong> The generation loop without KV Cache cache-building is in <a href="code_guide.html#L346">model.py: GPT.generate()</a>.
                     </p>
@@ -162,7 +162,7 @@
                     <p>A NaN loss typically indicates floating-point overflow or optimization instability:
                     <ol>
                         <li><strong>Check for Gradient Explosion:</strong> Print the gradient norm. If it is spiking, apply or tighten gradient clipping (e.g. `clip_grad_norm_(model.parameters(), 1.0)`).</li>
-                        <li><strong>Audit FP16 mixed precision limits:</strong> FP16 cannot represent values above 65,504. If values exceed this, they become NaN. Switch to **BF16** (which matches FP32's exponent range) or verify that a `GradScaler` is active to scale down losses before backward passes.</li>
+                        <li><strong>Audit FP16 mixed precision limits:</strong> FP16 cannot represent values above 65,504. If values exceed this, they become NaN. Switch to <strong>BF16</strong> (which matches FP32's exponent range) or verify that a `GradScaler` is active to scale down losses before backward passes.</li>
                         <li><strong>Reduce learning rate:</strong> A learning rate that is too high can cause parameters to step into divergent mathematical spaces, causing logits to overflow. Reduce the learning rate by a factor of 2 or 5.</li>
                     </ol>
                     <strong>Code Connection:</strong> Handled in <a href="code_guide.html#L295">train.py: main() gradient clipping and AMP blocks</a>.

@@ -102,7 +102,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Batch Processing</h2>
-                <p>In backend engineering, backpropagation acts like a **distributed transaction rollback and performance log ledger**.</p>
+                <p>In backend engineering, backpropagation acts like a <strong>distributed transaction rollback and performance log ledger</strong>.</p>
                 <ul>
                     <li><strong>Loss Metric &rarr; Exception Rate / SLA Drift:</strong> The loss represents how far our system deviated from the target SLA. A zero loss means the system processed the request flawlessly.</li>
                     <li><strong>Gradient &rarr; Stack Trace:</strong> The gradient is a backward stack trace. It traces the exception back through all services (layers), assigning an exact coefficient of error contribution to each database table and API interface.</li>
@@ -150,7 +150,7 @@
 
                 <h2>Production Relevance</h2>
                 <ul>
-                    <li><strong>Parameter-Efficient Fine-Tuning (PEFT/LoRA):</strong> During full-parameter pre-training, we compute gradients for all 10M (or 70B) parameters. This requires keeping optimizer states for all weights, which consumes 3x more GPU memory than the weights themselves. In **LoRA**, we freeze the base model parameters (marking them read-only) and compute gradients exclusively for tiny adapter matrices, reducing optimizer RAM requirements by up to 90%.</li>
+                    <li><strong>Parameter-Efficient Fine-Tuning (PEFT/LoRA):</strong> During full-parameter pre-training, we compute gradients for all 10M (or 70B) parameters. This requires keeping optimizer states for all weights, which consumes 3x more GPU memory than the weights themselves. In <strong>LoRA</strong>, we freeze the base model parameters (marking them read-only) and compute gradients exclusively for tiny adapter matrices, reducing optimizer RAM requirements by up to 90%.</li>
                     <li><strong>Cosine LR Warmup:</strong> Learning rates are gradually scaled up (linear warmup) before decaying (cosine annealing). In production, this prevents the model from diverging on initial noisy batches, allowing stable optimization transitions.</li>
                 </ul>
 
@@ -163,7 +163,7 @@
                     <summary>What is the difference between standard Adam and AdamW? Why is it crucial?</summary>
                     <p>In standard Adam, L2 weight regularization is added directly to the loss function. When computing the gradient of the loss, the regularization term is added to the gradient, which gets mixed with the running average (momentum) in the optimizer.
                     This couples weight decay with learning rate updates, causing the decay rate to scale incorrectly when the learning rate changes.
-                    **AdamW** decouples this by adding the weight decay directly to the parameters at the very end of the step, after the gradient averages have been computed:
+                    <strong>AdamW</strong> decouples this by adding the weight decay directly to the parameters at the very end of the step, after the gradient averages have been computed:
                     $$w_{t+1} = w_t - \eta_t (\text{update}_t + \lambda w_t)$$
                     This ensures weights are decayed independently of learning rate changes, leading to superior model convergence.</p>
                 </details>

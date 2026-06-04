@@ -110,7 +110,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Shape API Contracts</h2>
-                <p>In software engineering, tensor shapes act as **data model type contracts** between layers.</p>
+                <p>In software engineering, tensor shapes act as <strong>data model type contracts</strong> between layers.</p>
                 <p>If you pass a list payload when an API gateway expects a map object, the validation parser throws a schema exception.
                 Similarly, in PyTorch, layers expect precise dimension schemas.
                 A shape mismatch error (e.g. <code>RuntimeError: mat1 and mat2 shapes cannot be multiplied</code>) is simply a schema validation crash.
@@ -211,7 +211,7 @@
                 <h2>Common Interview Followups</h2>
                 <details name="interview-questions">
                     <summary>Why do we transpose Q, K, V from [B, T, H, D] to [B, H, T, D] before computing attention?</summary>
-                    <p>In PyTorch, the batch matrix multiplication operator (<code>@</code> or <code>torch.matmul</code>) performs matrix multiplications on the **final two dimensions** of a tensor, treating all preceding dimensions as batch index dimensions.
+                    <p>In PyTorch, the batch matrix multiplication operator (<code>@</code> or <code>torch.matmul</code>) performs matrix multiplications on the <strong>final two dimensions</strong> of a tensor, treating all preceding dimensions as batch index dimensions.
                     If we kept the shape as <code>[B, T, H, D]</code>, running <code>Q @ K.transpose(-2, -1)</code> would try to multiply dimension $H$ by $H$, which is mathematically incorrect for our attention heads.
                     By transposing the dimensions to <code>[B, H, T, D]</code>:
                     <ul>

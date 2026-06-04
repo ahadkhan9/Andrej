@@ -100,7 +100,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Snapshots & Migrations</h2>
-                <p>In backend engineering, checkpointing matches **application snapshot serialization and database backup restoration**.</p>
+                <p>In backend engineering, checkpointing matches <strong>application snapshot serialization and database backup restoration</strong>.</p>
                 <ul>
                     <li><strong>Serialization &rarr; Redis Snapshot:</strong> A checkpoint dictionary maps parameter names (like database schema columns) to multi-dimensional float arrays. Saving this is identical to serializing an in-memory session cache to disk.</li>
                     <li><strong>map_location &rarr; Target Environment Configuration:</strong> If you try to restore a database backup saved on a production Postgres instance directly to your local development host without mapping target parameters, connection configurations crash. Similarly, loading a checkpoint saved on GPU memory directly to a machine without a GPU will cause a crash unless you specify <code>map_location=device</code> to direct the tensors to the local host's CPU/MPS RAM.</li>
@@ -142,7 +142,7 @@
                 <h2>Production Relevance</h2>
                 <ul>
                     <li><strong>Model Registries:</strong> In enterprise ML pipelines, checkpoints are versioned and stored in Model Registries (such as Hugging Face Hub, MLflow, or Weights & Biases) to serve as release tags for staging and production serving environments.</li>
-                    <li><strong>Safetensors Format:</strong> PyTorch's default `.pt` checkpoint format uses Python's `pickle` library for serialization. Pickled files can execute arbitrary Python scripts on the host system during load, presenting a security vulnerability. Modern production pipelines enforce the use of **Safetensors** files, which only store raw tensor byte values, completely preventing Remote Code Execution (RCE) hazards.</li>
+                    <li><strong>Safetensors Format:</strong> PyTorch's default `.pt` checkpoint format uses Python's `pickle` library for serialization. Pickled files can execute arbitrary Python scripts on the host system during load, presenting a security vulnerability. Modern production pipelines enforce the use of <strong>Safetensors</strong> files, which only store raw tensor byte values, completely preventing Remote Code Execution (RCE) hazards.</li>
                 </ul>
 
                 <h2>Verification</h2>

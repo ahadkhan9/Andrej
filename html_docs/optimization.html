@@ -100,7 +100,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Compression & Compilation</h2>
-                <p>In backend engineering, GPU optimization mirrors **data compression and kernel compilation**.</p>
+                <p>In backend engineering, GPU optimization mirrors <strong>data compression and kernel compilation</strong>.</p>
                 <ul>
                     <li><strong>Mixed Precision (AMP) &rarr; Data Type Compression:</strong> Storing database entries as <code>DOUBLE</code> (8 bytes) when <code>FLOAT</code> (4 bytes) is sufficient wastes memory bandwidth and storage. Mixed precision (AMP) compresses feature weights from float32 (4 bytes) down to float16 (2 bytes) before matrix multiplication, doubling memory throughput and slashing network data transfer times.</li>
                     <li><strong>torch.compile &rarr; Kernel Fusion (Stored Procedures):</strong> In typical PyTorch execution, each layer operation (e.g., adding vectors, applying GELU, LayerNorm) makes an independent call from the Python interpreter to the GPU. This is like executing 10 separate SQL queries in a loop, causing massive interpreter overhead. <code>torch.compile</code> fuses these steps into a single C++ execution kernel (like compiling queries into a database stored procedure), running the entire sequence on the GPU in one round-trip.</li>
@@ -201,7 +201,7 @@
                 <details name="interview-questions">
                     <summary>What is kernel fusion, and how does torch.compile implement it?</summary>
                     <p>In standard PyTorch, every operation (e.g. adding residual streams and applying LayerNorm) requires reading a tensor from GPU memory, executing the mathematical operation on GPU cores, and writing the output tensor back to GPU memory.
-                    **Kernel Fusion** compiles these sequential operations into a single merged CUDA or Metal kernel. The GPU loads the tensor once, executes the entire chain of addition and normalization on-chip, and writes only the final result back to memory, saving significant memory-bandwidth time.</p>
+                    <strong>Kernel Fusion</strong> compiles these sequential operations into a single merged CUDA or Metal kernel. The GPU loads the tensor once, executes the entire chain of addition and normalization on-chip, and writes only the final result back to memory, saving significant memory-bandwidth time.</p>
                 </details>
 
                 <div class="prev-next-nav">

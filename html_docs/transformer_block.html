@@ -129,7 +129,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Middleware Chains</h2>
-                <p>In software architecture, the Transformer Block structure mirrors a **middleware request-response preservation chain**.</p>
+                <p>In software architecture, the Transformer Block structure mirrors a <strong>middleware request-response preservation chain</strong>.</p>
                 <ul>
                     <li><strong>LayerNorm &rarr; Input Standardization:</strong> Think of this as parameter formatting middleware. It standardizes inputs so that data anomalies don't cause processing exceptions (underflow/overflow) down the line.</li>
                     <li><strong>Residual Streams &rarr; Request Context Bypass:</strong> Think of the residual connection as passing the original HTTP <code>Request Context</code> object down the handler chain. Each handler (Attention or MLP) returns a payload difference that is added to the context. Even if a handler fails or collapses values to zero, the original request payload is still safely preserved and bypassed down the stream.</li>

@@ -101,7 +101,7 @@
                 </div>
 
                 <h2>Backend Engineer Lens: Transaction Logs</h2>
-                <p>In backend engineering, the data loading pipeline is a **streaming cursor reading a database transaction log**.</p>
+                <p>In backend engineering, the data loading pipeline is a <strong>streaming cursor reading a database transaction log</strong>.</p>
                 <ul>
                     <li><strong>Inputs & Targets &rarr; State Log Transitions:</strong> Think of the input sequence as a state transition ledger. If your input sequence $x$ is <code>[S0, S1, S2]</code>, the targets $y$ are <code>[S1, S2, S3]</code>. We feed the model the state at <code>S0</code> to predict <code>S1</code>, then <code>S0, S1</code> to predict <code>S2</code>. It's a simple state machine transition check: <code>current_state -> next_state</code>.</li>
                     <li><strong>Batching &rarr; Database Cursors:</strong> We don't read the entire database into memory. We use a cursor (`DataLoaderLite.current_position`) to stream chunked batches of tokens from disk, wrapping the cursor back to <code>0</code> when we reach the end of the file.</li>
